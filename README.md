@@ -1,6 +1,6 @@
-# Complete App from database to front
+# Complete Application from database (mongodb) to front (react)
 
-[![TravisCI](https://travis-ci.org/jfperrin/accounts.svg?branch=master)](https://travis-ci.org/jfperrin/accounts)
+[![TravisCI](https://travis-ci.org/jfperrin/accounts.svg?branch=master)](https://travis-ci.org/jfperrin/accounts-react)
 
 I build this application for my personnal use. The purpose was a self formation on js tech and eventualy I ended up with a complete application with express, graphQL, react/redux, passport.
 
