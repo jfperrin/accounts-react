@@ -1,0 +1,19 @@
+language: node_js
+
+node_js:
+  - "9"
+
+sudo: required
+
+services:
+- docker
+
+deploy:
+  - provider: script
+    script: bash docker_build_push.sh
+    on:
+      branch: master
+  - provider: script
+    script: bash docker_build_push.sh tag
+    on:
+      tags: true
