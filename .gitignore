@@ -1,0 +1,7 @@
+cra-server-ex.graffle
+node_modules
+server/dist/
+.DS_Store
+.idea/
+*.css
+*.log
