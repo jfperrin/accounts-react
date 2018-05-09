@@ -3,9 +3,9 @@
 docker login -u $HEROKU_USER -p "$HEROKU_TOKEN"  registry.heroku.com
 
 if [ "$1" = "tag" ]; then
-  heroku_app = $HEROKU_APP_TAGGED
+  heroku_app=$HEROKU_APP_TAGGED
 else
-  heroku_app = $HEROKU_APP
+  heroku_app=$HEROKU_APP
 fi
 
 docker build -t "registry.heroku.com/$heroku_app/web" .
