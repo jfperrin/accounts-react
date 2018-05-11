@@ -21,7 +21,6 @@ docker run --name redis-account -d -p 6379:6379 redis
 docker run --name mongo-account -d -p 27017:27017 mongo:3.7.9
 ```
 
-
 Once everything is set, start the application with
 ```
 yarn start
@@ -33,7 +32,22 @@ After that create your banks, your basics operations a period and enjoy.
 
 ## Deploy
 
-I choose [Travis-ci](https://travis-ci.org/) to deploy in docker container into [Heroku](https://www.heroku.com/) (to host this website)
+I choose [Travis-ci](https://travis-ci.org/) to deploy in docker container into [Heroku](https://www.heroku.com/) (to host this website). 
+On the travis.yml file, I set two deployment profiles. One use on each commit, and one on tag only.
 
+On heroku you have to set thoose config variables in order to acces to the databases.
+```
+REDIS_PORT # Redis Port
+REDIS_URI # Redis Uri
+REDIS_PWD # Redis password. Do not set this one your redis server is not secured
 
+MONGO_URI # Full mongodb Uri including user and password (ex: mongodb://user:pwd@uri:port/path)
+```
+For travis-ci you have to set 4 environment variables
+```
+HEROKU_APP # Name of the application targeted by travis on each commit
+HEROKU_APP_TAGGED # Name of the application targeted by travis on tag
+HEROKU_TOKEN # Heroku API Key 
+HEROKU_USER # Heroku user
+```
 
