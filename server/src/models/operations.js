@@ -9,12 +9,14 @@ const operationsSchema = new Schema({
   isRecurrent: { type: Boolean },
   period: {
     type: Schema.Types.ObjectId,
-    ref: 'periods'
+    ref: 'periods',
   },
   user: {
     type: Schema.Types.ObjectId,
-    ref: 'users'
+    ref: 'users',
   },
+}, {
+  usePushEach: true,
 });
 
 const Model = mongoose.model('operations', operationsSchema);

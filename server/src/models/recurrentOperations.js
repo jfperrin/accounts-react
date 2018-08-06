@@ -7,8 +7,10 @@ const recurrentOperationsSchema = new Schema({
   day: { type: Number },
   user: {
     type: Schema.Types.ObjectId,
-    ref: 'users'
+    ref: 'users',
   },
+}, {
+  usePushEach: true,
 });
 
 const Model = mongoose.model('recurrentoperations', recurrentOperationsSchema);
