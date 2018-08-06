@@ -17,8 +17,10 @@ const BalancesSchema = new Schema({
   },
   user: {
     type: Schema.Types.ObjectId,
-    ref: 'users'
+    ref: 'users',
   },
+}, {
+  usePushEach: true,
 });
 
 const Model = mongoose.model('balances', BalancesSchema);

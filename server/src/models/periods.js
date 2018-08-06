@@ -19,8 +19,10 @@ const PeriodsSchema = new Schema({
   } ],
   user: {
     type: Schema.Types.ObjectId,
-    ref: 'users'
+    ref: 'users',
   },
+}, {
+  usePushEach: true,
 });
 
 PeriodsSchema.statics.addOperation = function(id, label, dt, amount, user) {
