@@ -15,8 +15,6 @@ const operationsSchema = new Schema({
     type: Schema.Types.ObjectId,
     ref: 'users',
   },
-}, {
-  usePushEach: true,
 });
 
 const Model = mongoose.model('operations', operationsSchema);

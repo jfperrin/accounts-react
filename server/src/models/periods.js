@@ -9,35 +9,33 @@ const PeriodsSchema = new Schema({
   month: { type: Number },
   year: { type: Number },
   archivedAt: { type: Date },
-  operations: [ {
+  operations: [{
     type: Schema.Types.ObjectId,
     ref: 'operations',
-  } ],
-  balances: [ {
+  }],
+  balances: [{
     type: Schema.Types.ObjectId,
     ref: 'balances',
-  } ],
+  }],
   user: {
     type: Schema.Types.ObjectId,
     ref: 'users',
   },
-}, {
-  usePushEach: true,
 });
 
 PeriodsSchema.statics.addOperation = function(id, label, dt, amount, user) {
   return this.findOne({ _id: id, user }).then(period => {
-    const operation = new OperationModel({ label, dt, amount, period, user});
-    period.operations.push(operation);
-    return Promise.all([ operation.save(), period.save() ]).then(([ operation, period ]) => period);
+    const operation = new OperationModel({ label, dt, amount, period, user });
+    period.operations = period.operations.concat([operation]);
+    return Promise.all([operation.save(), period.save()]).then(([operation, period]) => period);
   });
 };
 
 PeriodsSchema.statics.deleteOperation = function(id, idOperation, user) {
   return OperationModel.remove({ _id: idOperation, user }).then(() => {
     return this.findById(id).then(period => {
-      period.operations = period.operations.filter(_id => (_id.toString() !== idOperation));
-      return period.save().then(period => (period))
+      period.operations = period.operations = period.operations.filter(_id => (_id.toString() !== idOperation));
+      return period.save().then(period => (period));
     });
   });
 };
@@ -61,7 +59,7 @@ PeriodsSchema.statics.importRecurrentOperations = function(id, user) {
           period,
           user,
         });
-        period.operations.push(newOperation);
+        period.operations = period.operations.concat([newOperation]);
         promises.push(newOperation.save());
       });
       promises.push(period.save());
@@ -87,8 +85,8 @@ PeriodsSchema.statics.initializeBankBalances = function(id, user) {
           amount: 0,
           user,
         });
-        bank.balances.push(balance);
-        period.balances.push(balance);
+        bank.balances = bank.balances.concat([balance]);
+        period.balances = period.balances.concat([balance]);
         promises.push(balance.save());
         promises.push(bank.save());
       });
@@ -122,8 +120,8 @@ PeriodsSchema.statics.periodBalance = async function(id, user) {
         period: new mongoose.Types.ObjectId(id),
         user: new mongoose.Types.ObjectId(user.id),
         $or: [
-          { pointedAt: { $exists: false}},
-          { pointedAt: null},
+          { pointedAt: { $exists: false } },
+          { pointedAt: null },
         ]
       }
     },
