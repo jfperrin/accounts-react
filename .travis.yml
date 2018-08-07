@@ -6,7 +6,7 @@ node_js:
 sudo: required
 
 services:
-  - docker
+- docker:dind
 
 deploy:
   - provider: script
