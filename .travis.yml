@@ -13,7 +13,3 @@ deploy:
     script: bash docker_build_push.sh
     on:
       branch: master
-  - provider: script
-    script: bash docker_build_push.sh tag
-    on:
-      branch: master
