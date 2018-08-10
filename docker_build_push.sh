@@ -10,3 +10,4 @@ fi
 
 docker build -t "registry.heroku.com/$heroku_app/web" .
 docker push "registry.heroku.com/$heroku_app/web:latest"
+./heroku_release.sh $heroku_app
