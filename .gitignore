@@ -5,3 +5,4 @@ server/dist/
 .idea/
 *.css
 *.log
+deploy.sh
