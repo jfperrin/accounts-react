@@ -11,7 +11,7 @@ fi
 docker build -t "registry.heroku.com/$heroku_app/web" .
 docker push "registry.heroku.com/$heroku_app/web:latest"
 
-imageId=$(docker inspect registry.heroku.com/p/web --format={{.Id}})
+imageId=$(docker inspect registry.heroku.com/$heroku_app/web --format={{.Id}})
 payload='{"updates":[{"type":"web","docker_image":"'"$imageId"'"}]}'
 curl -n -X PATCH https://api.heroku.com/apps/$heroku_app/formation \
 -d "$payload" \
