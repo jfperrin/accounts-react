@@ -6,9 +6,9 @@ RUN cd /app/client && yarn install && NODE_ENV=production yarn build
 COPY server /app/server
 RUN cd /app/server && yarn install && NODE_ENV=production yarn run build
 
-ENV PORT 80
+ENV PORT 3333
 ENV NODE_ENV production
 
 CMD node /app/server/dist/server.js
 
-EXPOSE 80
+EXPOSE 3333
