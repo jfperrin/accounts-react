@@ -25,13 +25,14 @@ const httpLink = new HttpLink({
 });
 
 // Create a WebSocket link:
+console.log('window.location.host', window.location.host);
 const GRAPHQL_ENDPOINT = `://${window.location.host}/graphql-subscription`;
 const GRAPHQL_ENDPOINT_PREFIX = process.env.NODE_ENV !== 'production' ? 'ws' : 'wss';
 const wsLink = new WebSocketLink({
   uri: GRAPHQL_ENDPOINT_PREFIX + GRAPHQL_ENDPOINT,
   options: {
-    reconnect: true
-  }
+    reconnect: true,
+  },
 });
 
 // using the ability to split links, you can send data to each link
