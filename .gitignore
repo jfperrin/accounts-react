@@ -6,3 +6,4 @@ server/dist/
 *.css
 *.log
 deploy.sh
+env.*
