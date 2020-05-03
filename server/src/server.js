@@ -12,7 +12,7 @@ import schema from './schema/schema';
 const app = express();
 const MongoStore = require('connect-mongo')(session);
 
-const MONGO_URI = process.env.MONGO_URI || 'mongodb://localhost:27017/accounts';
+const MONGO_URI = process.env.MONGO_URI || 'mongodb://atraxi-dev:Shallassan69@ds117935.mlab.com:17935/accounts';
 if (!MONGO_URI) {
   throw new Error('You must provide a MongoLab URI');
 }
