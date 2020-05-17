@@ -5,11 +5,6 @@ import Show from './Show/index';
 import Edit from './Edit/index';
 
 class OperationComponent extends Component {
-
-  constructor() {
-    super();
-  }
-
   render() {
     const { operation, edit, idPeriod, hideAction } = this.props;
 
