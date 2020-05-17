@@ -44,7 +44,7 @@ class Operations extends Component {
         }
         {this.props.displayCreateForm && <NewOperation id={this.props.idPeriod} />}
         {this.props.displayCreateButton &&
-        <FloatingActionButton className="add" backgroundColor="red" onClick={this.props.showCreateForm}>
+        <FloatingActionButton className="add" color="secondary" onClick={this.props.showCreateForm}>
           <PlusOneIcon />
         </FloatingActionButton>
         }

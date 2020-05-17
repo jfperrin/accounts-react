@@ -42,7 +42,7 @@ class RecurrentOperations extends Component {
         {this.props.displayCreateForm && <NewRecurrentOperation />}
 
         {this.props.displayCreateButton &&
-        <FloatingActionButton className="floating-right" backgroundColor="red" onClick={this.props.showCreateForm}>
+        <FloatingActionButton className="floating-right" color="secondary" onClick={this.props.showCreateForm}>
           <PlusOneIcon />
         </FloatingActionButton>}
       </div>

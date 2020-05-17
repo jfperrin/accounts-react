@@ -48,7 +48,7 @@ class Banks extends Component {
         {this.renderBanks()}
         {this.props.displayCreateForm && <NewBank />}
         {this.props.displayCreateButton &&
-        <FloatingActionButton className="floating-right" backgroundcolor="red" onClick={this.props.showCreateForm}>
+        <FloatingActionButton className="floating-right" color="secondary" onClick={this.props.showCreateForm}>
           <PlusOneIcon />
         </FloatingActionButton>}
       </div>

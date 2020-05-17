@@ -20,7 +20,7 @@ class Period extends Component {
   }
 
 
-  componentWillReceiveProps() {
+  componentDidUpdate() {
     if (!this.props.data.loading) {
       this.props.updateLayoutTitle(`Operations#${this.props.data.period.display}`);
     }
@@ -57,9 +57,8 @@ class Period extends Component {
                   Solde
                 </h3>
               </div>
-              <div style={{ width: '45px', paddingTop: '5px' }}>
-                <FloatingActionButton mini={true}
-                                      onClick={() => this.addRecurrentOperations(this.props.data.period.id)}>
+              <div style={{ width: 45, paddingTop: '5px' }}>
+                <FloatingActionButton size={"small"} onClick={() => this.addRecurrentOperations(this.props.data.period.id)}>
                   <ImportIcon />
                 </FloatingActionButton>
               </div>

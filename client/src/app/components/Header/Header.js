@@ -80,7 +80,7 @@ class HeaderComponent extends Component {
 
         {!data.loading && data.user &&
         <AppBar position="static">
-          <Toolbar>
+          <Toolbar style={{ backgroundColor: 'rgb(232, 232, 232)'}}>
             <Button component={Link} to="/periods">Périodes</Button>
             <Button component={Link} to="/banks">Banques</Button>
             <Button component={Link} to="/recurrent-operations">Opérations récurrentes</Button>

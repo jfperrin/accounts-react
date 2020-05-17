@@ -39,7 +39,7 @@ class Balances extends Component {
             </h3>
           </div>
           <div style={{ width: '45px', paddingTop: '5px' }}>
-            <FloatingActionButton mini={true} onClick={() => this.initializeBankBalances(this.props.data.period.id)} >
+            <FloatingActionButton size={"small"} onClick={() => this.initializeBankBalances(this.props.data.period.id)} >
               <BalanceIcon />
             </FloatingActionButton>
           </div>

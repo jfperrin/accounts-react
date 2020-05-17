@@ -56,7 +56,7 @@ class Periods extends Component {
         {this.renderPeriods()}
         {this.props.displayCreateForm && <NewPeriod />}
         {this.props.displayCreateButton &&
-        <FloatingActionButton className="floating-right" backgroundColor="red" onClick={this.props.showCreateForm}>
+        <FloatingActionButton className="floating-right" color="secondary" onClick={this.props.showCreateForm}>
           <PlusOneIcon />
         </FloatingActionButton>}
       </div>
