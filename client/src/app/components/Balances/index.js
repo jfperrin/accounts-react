@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
-import { graphql, compose } from 'react-apollo';
-import BalanceIcon from 'material-ui/svg-icons/action/account-balance';
-import FloatingActionButton from 'material-ui/FloatingActionButton';
+import { graphql } from 'react-apollo';
+import * as compose from 'lodash.flowright';
+import BalanceIcon from '@material-ui/icons/AccountBalance';
+import FloatingActionButton from '@material-ui/core/Fab';
 import initializeBankBalances from '../Periods/gqlQueries/initializeBankBalances';
 import query from '../Periods/gqlQueries/get';
 import Balance from './Balance/index';

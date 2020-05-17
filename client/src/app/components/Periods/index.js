@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { graphql } from 'react-apollo';
-import PlusOneIcon from 'material-ui/svg-icons/social/plus-one';
-import FloatingActionButton from 'material-ui/FloatingActionButton';
+import PlusOneIcon from '@material-ui/icons/PlusOne';
+import FloatingActionButton from '@material-ui/core/Fab';
 import query from './gqlQueries/list';
 import NewPeriod from './ListItem/New';
 import Period from './ListItem/index';
@@ -41,7 +41,7 @@ class Periods extends Component {
     }
   }
 
-  componentWillMount() {
+  componentDidMount() {
     this.props.updateLayoutTitle('Périodes');
   }
 

@@ -3,8 +3,8 @@ import { connect } from 'react-redux';
 import { graphql } from 'react-apollo';
 import mutation from '../../gqlQueries/update';
 import { Field, reduxForm } from 'redux-form';
-import Button from 'material-ui/FlatButton';
-import { TextField } from 'redux-form-material-ui';
+import Button from '@material-ui/core/Button';
+import TextField from '../../../common/TextField';
 import query from '../../gqlQueries/list';
 import { toggleEditForm as toggleEditFormAction } from '../../../../actions/ui/crud/updateForm';
 
@@ -15,8 +15,8 @@ class Edit extends Component {
     props.mutate({
       variables:  {
         label: formObject.label,
-        amount: formObject.amount,
-        day: formObject.day,
+        amount: parseFloat(formObject.amount),
+        day: parseInt(formObject.day),
         id: props.recurrentOperation.id,
       },
       refetchQueries: [ { query } ]
@@ -48,7 +48,7 @@ class Edit extends Component {
       </form>
     );
   }
-};
+}
 
 function mapDispatchToProps(dispatch, ownProps) {
   return {

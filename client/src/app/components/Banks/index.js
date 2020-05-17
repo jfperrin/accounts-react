@@ -2,8 +2,8 @@ import React, { Component } from 'react';
 import { graphql } from 'react-apollo';
 import { connect } from 'react-redux';
 import query, { CREATE_BANK_SUBSCRIPTION } from './gqlQueries/list';
-import PlusOneIcon from 'material-ui/svg-icons/social/plus-one';
-import FloatingActionButton from 'material-ui/FloatingActionButton';
+import PlusOneIcon from '@material-ui/icons/PlusOne';
+import FloatingActionButton from '@material-ui/core/Fab';
 import NewBank from './Bank/New';
 import Bank from './Bank/index';
 import { hideCreateButton } from '../../actions/ui/crud/createButton';
@@ -28,7 +28,7 @@ class Banks extends Component {
     });
   }
 
-  componentWillMount() {
+  componentDidMount() {
     this.props.updateLayoutTitle('Banques');
     this.unsubscribe = this.props.data.subscribeToMore({
       document: CREATE_BANK_SUBSCRIPTION,
@@ -48,7 +48,7 @@ class Banks extends Component {
         {this.renderBanks()}
         {this.props.displayCreateForm && <NewBank />}
         {this.props.displayCreateButton &&
-        <FloatingActionButton className="floating-right" backgroundColor="red" onClick={this.props.showCreateForm}>
+        <FloatingActionButton className="floating-right" backgroundcolor="red" onClick={this.props.showCreateForm}>
           <PlusOneIcon />
         </FloatingActionButton>}
       </div>

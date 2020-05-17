@@ -1,10 +1,10 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Field, reduxForm } from 'redux-form';
-import Button from 'material-ui/FlatButton';
+import Button from '@material-ui/core/Button';
 import { graphql } from 'react-apollo';
 import { withRouter } from "react-router-dom";
-import { TextField } from 'redux-form-material-ui';
+import TextField from '../../common/TextField';
 import mutation from '../gqlQueries/login';
 import query from '../gqlQueries/currentUser';
 import { getLoginErrors as getLoginErrorsSelector } from '../../../selectors/ui';
@@ -14,7 +14,7 @@ import client from '../../../../apolloClient';
 
 class LoginForm extends Component {
 
-  componentWillUpdate(nextProps) {
+  componentDidUpdate(nextProps) {
     if (!this.props.data.user && nextProps.data.user) {
       this.props.history.push('/');
     }

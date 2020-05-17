@@ -18,7 +18,7 @@ if (!MONGO_URI) {
 }
 
 mongoose.set('debug', true);
-mongoose.connect(MONGO_URI, { useMongoClient: true });
+mongoose.connect(MONGO_URI, {useNewUrlParser: true, useUnifiedTopology: true});
 mongoose.Promise = global.Promise;
 // eslint-disable-next-line no-console
 mongoose.connection.on('error', console.error.bind(console, 'connection error:'));
@@ -74,4 +74,3 @@ app.use('/graphql', expressGraphQL({
   schema,
   graphiql: true,
 }));
-

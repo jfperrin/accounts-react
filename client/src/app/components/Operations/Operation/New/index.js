@@ -3,10 +3,11 @@ import { graphql } from 'react-apollo';
 import mutation from '../../../Periods/gqlQueries/createOperation';
 import { Field, reduxForm } from 'redux-form';
 import { connect } from 'react-redux';
-import DoneIcon from 'material-ui/svg-icons/action/done';
-import CancelIcon from 'material-ui/svg-icons/navigation/cancel';
-import IconButton from 'material-ui/IconButton';
-import { TextField, DatePicker } from 'redux-form-material-ui';
+import DoneIcon from '@material-ui/icons/Done';
+import CancelIcon from '@material-ui/icons/Cancel';
+import IconButton from '@material-ui/core/IconButton';
+import TextField from '../../../common/TextField';
+import DatePicker from '../../../common/DatePicker';
 import { showCreateButton as showCreateButtonAction } from '../../../../actions/ui/crud/createButton';
 import { hideCreateForm as hideCreateButtonAction } from '../../../../actions/ui/crud/createForm';
 
@@ -16,7 +17,7 @@ class New extends Component {
       variables: {
         label: formObject.label,
         dt: formObject.dt,
-        amount: formObject.amount,
+        amount: parseFloat(formObject.amount),
         periodId: props.id
       }
     }).then(() => {

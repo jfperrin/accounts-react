@@ -1,8 +1,9 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { graphql, compose } from 'react-apollo';
-import ImportIcon from 'material-ui/svg-icons/communication/import-export';
-import FloatingActionButton from 'material-ui/FloatingActionButton';
+import { graphql } from 'react-apollo';
+import * as compose from 'lodash.flowright';
+import ImportIcon from '@material-ui/icons/ImportExport';
+import FloatingActionButton from '@material-ui/core/Fab';
 import Operations from '../../Operations';
 import Balances from '../../Balances';
 import query from '../gqlQueries/get';

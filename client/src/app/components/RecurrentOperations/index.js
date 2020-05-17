@@ -2,10 +2,10 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { graphql } from 'react-apollo';
 import query from './gqlQueries/list'
-import PlusOneIcon from 'material-ui/svg-icons/social/plus-one';
+import PlusOneIcon from '@material-ui/icons/PlusOne';
 import { updateLayoutTitle as updateLayoutTitleAction } from '../../actions/ui/layout/title'
 import NewRecurrentOperation from './RecurrentOperation/New';
-import FloatingActionButton from 'material-ui/FloatingActionButton';
+import FloatingActionButton from '@material-ui/core/Fab';
 import RecurrentOperation from './RecurrentOperation/index';
 import { hideCreateButton } from '../../actions/ui/crud/createButton';
 import { showCreateForm } from "../../actions/ui/crud/createForm";
@@ -26,7 +26,7 @@ class RecurrentOperations extends Component {
     });
   }
 
-  componentWillMount() {
+  componentDidMount() {
     this.props.updateLayoutTitle('Opérations#Mensuelles');
   }
 

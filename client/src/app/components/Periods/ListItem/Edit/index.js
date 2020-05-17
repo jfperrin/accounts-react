@@ -3,8 +3,8 @@ import { connect } from 'react-redux';
 import { graphql } from 'react-apollo';
 import mutation from '../../gqlQueries/update';
 import { Field, reduxForm } from 'redux-form';
-import Button from 'material-ui/FlatButton';
-import { TextField } from 'redux-form-material-ui';
+import Button from '@material-ui/core/Button';
+import TextField from '../../../common/TextField';
 import query from '../../gqlQueries/list';
 import { toggleEditForm as toggleEditFormAction } from '../../../../actions/ui/crud/updateForm';
 
@@ -13,7 +13,10 @@ class Edit extends Component {
 
   onSubmit(formObject, dispatch, props) {
     props.mutate({
-      variables:  { year: formObject.year, month: formObject.month, id: props.period.id },
+      variables:  {
+        year: parseInt(formObject.year),
+        month: parseInt(formObject.month),
+        id: props.period.id },
       refetchQueries: [ { query } ]
     }).then(() => {
       props.cancel();

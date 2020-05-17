@@ -2,10 +2,10 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { graphql } from 'react-apollo';
 import { Field, reduxForm } from 'redux-form';
-import { TextField } from 'redux-form-material-ui';
-import IconButton from 'material-ui/IconButton';
-import DoneIcon from 'material-ui/svg-icons/action/done';
-import CancelIcon from 'material-ui/svg-icons/navigation/cancel';
+import IconButton from '@material-ui/core/IconButton';
+import DoneIcon from '@material-ui/icons/Done';
+import CancelIcon from '@material-ui/icons/Cancel';
+import TextField from '../../../common/TextField';
 import mutation from '../../gqlQueries/update';
 import { toggleEditForm as toggleEditFormAction } from '../../../../actions/ui/crud/updateForm';
 
@@ -38,7 +38,7 @@ class Edit extends Component {
       </form>
     );
   }
-};
+}
 
 function mapDispatchToProps(dispatch, ownProps) {
   return {

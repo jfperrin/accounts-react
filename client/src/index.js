@@ -1,24 +1,21 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import { Provider } from 'react-redux';
-import { ConnectedRouter } from 'react-router-redux';
-import createHistory from 'history/createBrowserHistory';
-import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
+import {Provider} from 'react-redux';
+import {BrowserRouter as Router} from "react-router-dom";
+import {createBrowserHistory} from 'history';
 import registerServiceWorker from './registerServiceWorker';
 import createStore from './app/store/store';
 import App from './app/components/App';
 import './index.css';
 
-const history = createHistory();
+const history = createBrowserHistory();
 const store = createStore(history);
 
 ReactDOM.render(
-  <MuiThemeProvider>
-    <Provider store={store}>
-      <ConnectedRouter history={history}>
-        <App />
-      </ConnectedRouter>
-    </Provider>
-  </MuiThemeProvider>, document.getElementById('root'));
+  <Provider store={store}>
+    <Router>
+      <App/>
+    </Router>
+  </Provider>, document.getElementById('root'));
 
 registerServiceWorker();

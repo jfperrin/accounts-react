@@ -1,15 +1,16 @@
 import moment from 'moment';
 import React, { Component } from 'react';
-import { graphql, compose } from 'react-apollo';
+import { graphql } from 'react-apollo';
+import * as compose from 'lodash.flowright';
 import { connect } from 'react-redux';
 
 import query from '../../../Periods/gqlQueries/get';
-import IconButton from 'material-ui/IconButton';
-import EditIcon from 'material-ui/svg-icons/image/edit';
-import DeleteIcon from 'material-ui/svg-icons/action/delete-forever';
-import RecurrentIcon from 'material-ui/svg-icons/action/bookmark';
-import CheckIcon from 'material-ui/svg-icons/navigation/check';
-import Cancelcon from 'material-ui/svg-icons/navigation/cancel';
+import IconButton from '@material-ui/core/IconButton';
+import EditIcon from '@material-ui/icons/Edit';
+import DeleteIcon from '@material-ui/icons/DeleteForever';
+import RecurrentIcon from '@material-ui/icons/Bookmark';
+import CheckIcon from '@material-ui/icons/Check';
+import Cancelcon from '@material-ui/icons/Cancel';
 import deleteOperation from '../../../Periods/gqlQueries/deleteOperation'
 import pointOperation from '../../gqlQueries/point';
 import { toggleEditForm } from '../../../../actions/ui/crud/updateForm';

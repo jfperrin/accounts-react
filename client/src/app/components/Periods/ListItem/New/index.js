@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
 import { graphql } from 'react-apollo';
 import { Field, reduxForm } from 'redux-form';
-import Button from 'material-ui/FlatButton';
+import Button from '@material-ui/core/Button';
 import { connect } from 'react-redux';
-import { TextField } from 'redux-form-material-ui';
+import TextField from '../../../common/TextField';
 import query from '../../gqlQueries/list';
 import mutation from '../../gqlQueries/create';
 import { showCreateButton as showCreateButtonAction } from '../../../../actions/ui/crud/createButton';
@@ -13,8 +13,8 @@ class New extends Component {
   onSubmit(formObject, dispatch, props) {
     props.mutate({
       variables: {
-        year: formObject.year,
-        month: formObject.month
+        year: parseInt(formObject.year),
+        month: parseInt(formObject.month),
       },
       refetchQueries: [ { query } ]
     }).then(() => {

@@ -2,8 +2,8 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { graphql } from 'react-apollo';
 import mutation from '../../gqlQueries/delete';
-import EditIcon from 'material-ui/svg-icons/image/edit';
-import DeleteIcon from 'material-ui/svg-icons/action/delete-forever';
+import EditIcon from '@material-ui/icons/Edit';
+import DeleteIcon from '@material-ui/icons/DeleteForever';
 import { toggleEditForm } from '../../../../actions/ui/crud/updateForm';
 
 class BalanceShowComponent extends Component {

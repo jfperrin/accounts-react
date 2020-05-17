@@ -4,10 +4,11 @@ import { graphql } from 'react-apollo';
 import query from '../../../Periods/gqlQueries/get';
 import mutation from '../../gqlQueries/update';
 import { Field, reduxForm } from 'redux-form';
-import DoneIcon from 'material-ui/svg-icons/action/done';
-import CancelIcon from 'material-ui/svg-icons/navigation/cancel';
-import IconButton from 'material-ui/IconButton';
-import { TextField, DatePicker } from 'redux-form-material-ui';
+import DoneIcon from '@material-ui/icons/Done';
+import CancelIcon from '@material-ui/icons/Cancel';
+import IconButton from '@material-ui/core/IconButton';
+import TextField from '../../../common/TextField';
+import DatePicker from '../../../common/DatePicker';
 import { toggleEditForm as toggleEditFormAction } from '../../../../actions/ui/crud/updateForm';
 
 class Edit extends Component {
@@ -17,7 +18,7 @@ class Edit extends Component {
       variables:  {
         label: formObject.label,
         dt: formObject.dt,
-        amount: formObject.amount,
+        amount: parseFloat(formObject.amount),
         id: props.operation.id
       },
       refetchQueries: [

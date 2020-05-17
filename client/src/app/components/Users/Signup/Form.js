@@ -3,8 +3,8 @@ import { connect } from 'react-redux';
 import { Field, reduxForm } from 'redux-form';
 import { graphql } from 'react-apollo';
 import { withRouter } from "react-router-dom";
-import { TextField } from 'redux-form-material-ui';
-import Button from 'material-ui/FlatButton';
+import TextField from '../../common/TextField';
+import Button from '@material-ui/core/Button';
 import mutation from '../gqlQueries/signup';
 import query from '../gqlQueries/currentUser';
 import { getLoginErrors as getLoginErrorsSelector } from '../../../selectors/ui';
@@ -18,7 +18,7 @@ class SignupForm extends Component {
     this.state = { errors: [] };
   }
 
-  componentWillUpdate(nextProps) {
+  componentDidUpdate(nextProps) {
     if (nextProps.data.user && !this.props.data.user) {
       this.props.history.push('/');
     }

@@ -2,14 +2,15 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import Cookies from 'universal-cookie';
-import { Toolbar, ToolbarGroup } from 'material-ui/Toolbar';
+import Toolbar from '@material-ui/core/Toolbar';
+import AppBar from '@material-ui/core/AppBar';
 import { graphql } from 'react-apollo';
-import Signup from 'material-ui/svg-icons/social/person-add';
-import LockOpened from 'material-ui/svg-icons/action/lock-open';
-import FloatingActionButton from 'material-ui/FloatingActionButton';
-import Button from 'material-ui/FlatButton';
+import Signup from '@material-ui/icons/PersonAdd';
+import LockOpened from '@material-ui/icons/LockOpen';
+import Lock from '@material-ui/icons/Lock';
+import FloatingActionButton from '@material-ui/core/Fab';
+import Button from '@material-ui/core/Button';
 import { getLayoutTitle as getLayoutTitleSelector } from '../../selectors/ui'
-import Lock from 'material-ui/svg-icons/action/lock';
 import query from '../Users/gqlQueries/currentUser';
 import mutation from '../Users/gqlQueries/logout';
 import './stylesheet.css';
@@ -78,13 +79,13 @@ class HeaderComponent extends Component {
         </div>
 
         {!data.loading && data.user &&
-        <Toolbar>
-          <ToolbarGroup>
-            <Button label="Périodes" containerElement={<Link to="/periods" />} />
-            <Button label="Banques" containerElement={<Link to="/banks" />} />
-            <Button label="Opérations récurrentes" containerElement={<Link to="/recurrent-operations" />} />
-          </ToolbarGroup>
-        </Toolbar>
+        <AppBar position="static">
+          <Toolbar>
+            <Button component={Link} to="/periods">Périodes</Button>
+            <Button component={Link} to="/banks">Banques</Button>
+            <Button component={Link} to="/recurrent-operations">Opérations récurrentes</Button>
+          </Toolbar>
+        </AppBar>
         }
       </div>
     );

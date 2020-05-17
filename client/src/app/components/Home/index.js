@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { graphql, compose } from 'react-apollo';
+import { graphql } from 'react-apollo';
+import * as compose from 'lodash.flowright';
 import query from '../Periods/gqlQueries/list';
 import current from '../Periods/gqlQueries/current';
 import Period from '../Periods/ListItem';
@@ -29,7 +30,7 @@ class PeriodComponent extends Component {
     });
   }
 
-  componentWillMount() {
+  componentDidMount() {
     this.props.updateLayoutTitle('');
   }
 

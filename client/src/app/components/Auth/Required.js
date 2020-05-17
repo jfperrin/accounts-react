@@ -5,7 +5,7 @@ import { withRouter } from "react-router-dom";
 
 export default (WrappedComponent) => {
   class AuthRequired extends Component {
-    componentWillUpdate(nextProps) {
+    componentDidUpdate(nextProps) {
       if (!nextProps.data.loading && !nextProps.data.user) {
         this.props.history.push('/login');
       }
