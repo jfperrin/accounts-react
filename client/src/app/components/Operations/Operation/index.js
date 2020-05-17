@@ -8,8 +8,6 @@ class OperationComponent extends Component {
 
   constructor() {
     super();
-
-    this.iconStyle = { cursor: 'pointer' };
   }
 
   render() {

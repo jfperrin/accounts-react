@@ -65,7 +65,7 @@ class ShowComponent extends Component {
   stylePointedTexts(operation) {
     if (operation.pointedAt) {
       return {
-        padding: '7px',
+        padding: '12px 7px',
       };
     }
     return {};
@@ -111,7 +111,7 @@ class ShowComponent extends Component {
             </div>
           </div>}
           { operation.pointedAt &&
-            <IconButton style={{ marginLeft: '18px', width: '15px', height: '15px', padding: '0px' }} onClick={() => this.pointOperation(operation.id, idPeriod)} iconStyle={{ width: '15px', height: '15px' }}>
+            <IconButton style={{ marginLeft: '18px', padding: '0px' }} onClick={() => this.pointOperation(operation.id, idPeriod)} size={"small"}>
               <Cancelcon />
             </IconButton>
           }
