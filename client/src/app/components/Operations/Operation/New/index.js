@@ -33,13 +33,13 @@ class New extends Component {
     return (
       <form className="operation operation-form" onSubmit={handleSubmit(this.onSubmit)}>
         <div className="dt">
-          <Field name="dt" component={DatePicker} fullWidth={true} />
+          <Field name="dt" component={DatePicker} />
         </div>
         <div className="label">
-          <Field name="label" component={TextField} fullWidth={true} />
+          <Field name="label" component={TextField} />
         </div>
         <div className="amount">
-          <Field name="amount" component={TextField} fullWidth={true} />
+          <Field name="amount" component={TextField} />
         </div>
         <div className="actions">
           <div style={{ flex: 1 }} />

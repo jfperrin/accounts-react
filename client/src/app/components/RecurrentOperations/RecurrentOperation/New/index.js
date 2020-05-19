@@ -11,16 +11,18 @@ import { hideCreateForm as hideCreateButtonAction } from '../../../../actions/ui
 
 class New extends Component {
   onSubmit(formObject, dispatch, props) {
-    props.mutate({
-      variables: {
-        label: formObject.label,
-        amount: parseFloat(formObject.amount),
-        day: parseInt(formObject.day),
-      },
-      refetchQueries: [ { query } ]
-    }).then(() => {
-      props.cancelCreation();
-    });
+    props
+      .mutate({
+        variables: {
+          label: formObject.label,
+          amount: parseFloat(formObject.amount),
+          day: parseInt(formObject.day, 10),
+        },
+        refetchQueries: [{ query }],
+      })
+      .then(() => {
+        props.cancelCreation();
+      });
   }
 
   render() {
@@ -30,17 +32,17 @@ class New extends Component {
       <form onSubmit={handleSubmit(this.onSubmit)}>
         <div style={{ display: 'flex', marginBottom: '25px' }}>
           <div style={{ margin: 'auto 10px', paddingTop: '5px' }}>
-            <Field name="day" component={TextField} floatingLabelText="Jours" fullWidth={true} />
+            <Field name="day" component={TextField} floatingLabelText="Jours" />
           </div>
           <div style={{ flex: 1, fontWeight: 'bold', paddingTop: '5px' }}>
-            <Field name="label" component={TextField} floatingLabelText="Label" fullWidth={true} />
+            <Field name="label" component={TextField} floatingLabelText="Label" />
           </div>
           <div style={{ margin: 'auto 10px', paddingTop: '5px' }}>
-            <Field name="amount" component={TextField} floatingLabelText="Montant" fullWidth={true} />
+            <Field name="amount" component={TextField} floatingLabelText="Montant" />
           </div>
         </div>
         <div style={{ float: 'right' }}>
-          <Button type="submit" primary={true} label={'Ok'} />
+          <Button type="submit" primary label={'Ok'} />
           <Button primary={false} label={'Cancel'} onClick={cancelCreation} />
         </div>
       </form>
@@ -59,7 +61,7 @@ function mapDispatchToProps(dispatch) {
 
 function mapStateToProps() {
   return {
-    form: 'newRecurrentOperation'
+    form: 'newRecurrentOperation',
   };
 }
 

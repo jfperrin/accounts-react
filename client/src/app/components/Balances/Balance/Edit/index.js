@@ -10,14 +10,15 @@ import mutation from '../../gqlQueries/update';
 import { toggleEditForm as toggleEditFormAction } from '../../../../actions/ui/crud/updateForm';
 
 class Edit extends Component {
-
   onSubmit(formObject, dispatch, props) {
-    props.mutate({
-      variables:  { amount: formObject.amount, id: props.balance.id }
-    }).then(() => {
-      props.refetch();
-      props.cancel();
-    });
+    props
+      .mutate({
+        variables: { amount: formObject.amount, id: props.balance.id },
+      })
+      .then(() => {
+        props.refetch();
+        props.cancel();
+      });
   }
 
   render() {
@@ -25,15 +26,17 @@ class Edit extends Component {
 
     return (
       <form className="balance balance-form" onSubmit={handleSubmit(this.onSubmit)}>
-        <div className="label">
-          {balance.bank.label}
-        </div>
+        <div className="label">{balance.bank.label}</div>
         <div className="amount">
-          <Field name="amount" component={TextField} fullWidth={true} />
+          <Field name="amount" component={TextField} />
         </div>
         <div className="actions">
-          <IconButton type="submit"><DoneIcon /></IconButton>
-          <IconButton onClick={cancel}><CancelIcon /></IconButton>
+          <IconButton type="submit">
+            <DoneIcon />
+          </IconButton>
+          <IconButton onClick={cancel}>
+            <CancelIcon />
+          </IconButton>
         </div>
       </form>
     );

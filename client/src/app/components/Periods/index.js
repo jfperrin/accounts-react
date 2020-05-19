@@ -6,38 +6,36 @@ import FloatingActionButton from '@material-ui/core/Fab';
 import query from './gqlQueries/list';
 import NewPeriod from './ListItem/New';
 import Period from './ListItem/index';
-import { updateLayoutTitle as updateLayoutTitleAction } from '../../actions/ui/layout/title'
+import { updateLayoutTitle as updateLayoutTitleAction } from '../../actions/ui/layout/title';
 import { hideCreateButton } from '../../actions/ui/crud/createButton';
 import { showCreateForm } from '../../actions/ui/crud/createForm';
-import {
-  getCrudCreateButtonState as getCrudCreateButtonStateSelector,
-  getCrudCreateFormState as getCrudCreateFormStateSelector,
-} from '../../selectors/ui';
+import { getCrudCreateButtonState as getCrudCreateButtonStateSelector, getCrudCreateFormState as getCrudCreateFormStateSelector } from '../../selectors/ui';
 
 class Periods extends Component {
-
   keyForSorting(period) {
-    return parseInt(`${period.year}${period.month.toLocaleString('en-US', {
-      minimumIntegerDigits: 2,
-      useGrouping: false
-    })}`, 10)
+    return parseInt(
+      `${period.year}${period.month.toLocaleString('en-US', {
+        minimumIntegerDigits: 2,
+        useGrouping: false,
+      })}`,
+      10,
+    );
   }
 
   renderPeriods() {
-
     if (this.props.data.loading) {
       return <div>Loading...</div>;
     }
 
     if (this.props.data.periods) {
       const periods = Object.assign([], this.props.data.periods);
-      return periods.sort((a, b) => this.keyForSorting(a) < this.keyForSorting(b)).map((period) => {
-        return (
-          <Period refetch={this.props.data.refetch} key={period.id} period={period} />
-        );
-      });
+      return periods
+        .sort((a, b) => this.keyForSorting(a) < this.keyForSorting(b))
+        .map(period => {
+          return <Period refetch={this.props.data.refetch} key={period.id} period={period} />;
+        });
     } else {
-      return <div>Error</div>
+      return <div>Error</div>;
     }
   }
 
@@ -46,7 +44,6 @@ class Periods extends Component {
   }
 
   render() {
-
     if (this.props.data.loading) {
       return <div>Loading...</div>;
     }
@@ -55,10 +52,11 @@ class Periods extends Component {
       <div>
         {this.renderPeriods()}
         {this.props.displayCreateForm && <NewPeriod />}
-        {this.props.displayCreateButton &&
-        <FloatingActionButton className="floating-right" color="secondary" onClick={this.props.showCreateForm}>
-          <PlusOneIcon />
-        </FloatingActionButton>}
+        {this.props.displayCreateButton && (
+          <FloatingActionButton className="floating-right" color="secondary" onClick={this.props.showCreateForm}>
+            <PlusOneIcon />
+          </FloatingActionButton>
+        )}
       </div>
     );
   }
@@ -66,7 +64,7 @@ class Periods extends Component {
 
 function mapDispatchToProps(dispatch) {
   return {
-    updateLayoutTitle: (title) => {
+    updateLayoutTitle: title => {
       dispatch(updateLayoutTitleAction(title));
     },
     showCreateForm: () => {
