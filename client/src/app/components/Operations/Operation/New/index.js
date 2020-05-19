@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import { graphql } from 'react-apollo';
-import mutation from '../../../Periods/gqlQueries/createOperation';
 import { Field, reduxForm } from 'redux-form';
 import { connect } from 'react-redux';
 import DoneIcon from '@material-ui/icons/Done';
@@ -8,21 +7,24 @@ import CancelIcon from '@material-ui/icons/Cancel';
 import IconButton from '@material-ui/core/IconButton';
 import TextField from '../../../common/TextField';
 import DatePicker from '../../../common/DatePicker';
+import mutation from '../../../Periods/gqlQueries/createOperation';
 import { showCreateButton as showCreateButtonAction } from '../../../../actions/ui/crud/createButton';
 import { hideCreateForm as hideCreateButtonAction } from '../../../../actions/ui/crud/createForm';
 
 class New extends Component {
   onSubmit(formObject, dispatch, props) {
-    props.mutate({
-      variables: {
-        label: formObject.label,
-        dt: formObject.dt,
-        amount: parseFloat(formObject.amount),
-        periodId: props.id
-      }
-    }).then(() => {
-      props.cancelCreation();
-    });
+    props
+      .mutate({
+        variables: {
+          label: formObject.label,
+          dt: formObject.dt,
+          amount: parseFloat(formObject.amount),
+          periodId: props.id,
+        },
+      })
+      .then(() => {
+        props.cancelCreation();
+      });
   }
 
   render() {
@@ -41,8 +43,12 @@ class New extends Component {
         </div>
         <div className="actions">
           <div style={{ flex: 1 }} />
-          <IconButton type="submit" style={{ width: '40px' }}><DoneIcon /></IconButton>
-          <IconButton onClick={cancelCreation} style={{ width: '40px', marginRight: '15px' }}><CancelIcon /></IconButton>
+          <IconButton type="submit" style={{ width: '40px' }}>
+            <DoneIcon />
+          </IconButton>
+          <IconButton onClick={cancelCreation} style={{ width: '40px', marginRight: '15px' }}>
+            <CancelIcon />
+          </IconButton>
         </div>
       </form>
     );
@@ -63,7 +69,7 @@ function mapStateToProps() {
     initialValues: {
       dt: new Date(),
     },
-    form: 'newOperation'
+    form: 'newOperation',
   };
 }
 
