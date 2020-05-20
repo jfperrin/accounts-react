@@ -101,21 +101,21 @@ class ShowComponent extends Component {
             {!operation.pointedAt && (
               <div style={{ display: 'flex' }}>
                 <IconButton size={'small'} onClick={() => this.pointOperation(operation.id, idPeriod)}>
-                  {operation.pointedAt && <Cancelcon />}
-                  {operation.pointedAt === null && <CheckIcon />}
+                  {operation.pointedAt && <Cancelcon fontSize="small" />}
+                  {operation.pointedAt === null && <CheckIcon fontSize="small" />}
                 </IconButton>
                 <IconButton size={'small'} onClick={() => toggleEdit(operation.id)}>
-                  <EditIcon />
+                  <EditIcon fontSize="small" />
                 </IconButton>
                 <IconButton size={'small'} onClick={() => this.deleteOperation(operation.id, idPeriod)}>
-                  <DeleteIcon />
+                  <DeleteIcon fontSize="small" />
                 </IconButton>
                 <div style={{ flex: 1, textAlign: 'left', paddingTop: '13px', paddingLeft: '13px' }}>{operation.isRecurrent && <RecurrentIcon />}</div>
               </div>
             )}
             {operation.pointedAt && (
-              <IconButton style={{ marginLeft: '18px', padding: '0px' }} onClick={() => this.pointOperation(operation.id, idPeriod)} size={'small'}>
-                <Cancelcon />
+              <IconButton fontSize="small" style={{ marginLeft: '18px', padding: '0px' }} onClick={() => this.pointOperation(operation.id, idPeriod)} size={'small'}>
+                <Cancelcon fontSize="small" />
               </IconButton>
             )}
           </div>

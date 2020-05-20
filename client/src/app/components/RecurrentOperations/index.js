@@ -9,7 +9,7 @@ import RecurrentOperation from './RecurrentOperation/index';
 import { hideCreateButton } from '../../actions/ui/crud/createButton';
 import { showCreateForm } from '../../actions/ui/crud/createForm';
 import { getCrudCreateButtonState as getCrudCreateButtonStateSelector, getCrudCreateFormState as getCrudCreateFormStateSelector } from '../../selectors/ui';
-import Button from '../common/Button';
+import Index from '../common/Button';
 
 class RecurrentOperations extends Component {
   renderRecurrentOperations() {
@@ -41,9 +41,9 @@ class RecurrentOperations extends Component {
         {displayCreateForm && <NewRecurrentOperation />}
 
         {displayCreateButton && (
-          <Button className="floating-right" size="small" onClick={showCreateForm}>
+          <Index className="floating-right" size="small" onClick={showCreateForm}>
             <PlusOneIcon fontSize={'small'} />
-          </Button>
+          </Index>
         )}
       </div>
     );

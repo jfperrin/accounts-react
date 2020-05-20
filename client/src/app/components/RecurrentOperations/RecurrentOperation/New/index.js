@@ -41,12 +41,10 @@ class New extends Component {
             <Field name="amount" component={TextField} label="Montant" />
           </div>
         </div>
-        <div style={{ float: 'right' }}>
-          <Button type="submit" color="primary">
-            Ok
-          </Button>
-          <Button onClick={cancelCreation}>Cancel</Button>
-        </div>
+        <Button type="submit" color="primary">
+          Ok
+        </Button>
+        <Button onClick={cancelCreation}>Cancel</Button>
       </form>
     );
   }

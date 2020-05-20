@@ -9,7 +9,7 @@ import { updateLayoutTitle as updateLayoutTitleAction } from '../../actions/ui/l
 import { hideCreateButton } from '../../actions/ui/crud/createButton';
 import { showCreateForm } from '../../actions/ui/crud/createForm';
 import { getCrudCreateButtonState as getCrudCreateButtonStateSelector, getCrudCreateFormState as getCrudCreateFormStateSelector } from '../../selectors/ui';
-import Button from '../common/Button';
+import Index from '../common/Button';
 
 class Periods extends Component {
   keyForSorting(period) {
@@ -64,9 +64,9 @@ class Periods extends Component {
         {this.renderPeriods()}
         {displayCreateForm && <NewPeriod />}
         {displayCreateButton && (
-          <Button className="floating-right" size="small" onClick={showCreateForm}>
+          <Index className="floating-right" size="small" onClick={showCreateForm}>
             <PlusOneIcon fontSize={'small'} />
-          </Button>
+          </Index>
         )}
       </div>
     );

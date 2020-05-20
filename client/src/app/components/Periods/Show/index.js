@@ -8,7 +8,7 @@ import Balances from '../../Balances';
 import query from '../gqlQueries/get';
 import addRecurrentOperations from '../gqlQueries/addRecurrentOperations';
 import { updateLayoutTitle as updateLayoutTitleAction } from '../../../actions/ui/layout/title';
-import Button from '../../common/Button';
+import Index from '../../common/Button';
 
 class Period extends Component {
   addRecurrentOperations(id) {
@@ -60,9 +60,9 @@ class Period extends Component {
                 <h3 style={{ marginTop: '13px' }}>Solde</h3>
               </div>
               <div style={{ width: 45, paddingTop: '5px' }}>
-                <Button size={'small'} onClick={() => this.addRecurrentOperations(data.period.id)}>
+                <Index size={'small'} onClick={() => this.addRecurrentOperations(data.period.id)}>
                   <ImportIcon />
-                </Button>
+                </Index>
               </div>
             </div>
             <div style={{ display: 'flex', padding: '15px' }}>

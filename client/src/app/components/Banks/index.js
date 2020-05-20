@@ -9,7 +9,7 @@ import { hideCreateButton } from '../../actions/ui/crud/createButton';
 import { showCreateForm } from '../../actions/ui/crud/createForm';
 import { updateLayoutTitle as updateLayoutTitleAction } from '../../actions/ui/layout/title';
 import { getCrudCreateButtonState as getCrudCreateButtonStateSelector, getCrudCreateFormState as getCrudCreateFormStateSelector } from '../../selectors/ui';
-import Button from '../common/Button';
+import Index from '../common/Button';
 
 class Banks extends Component {
   componentWillUnmount() {
@@ -58,9 +58,9 @@ class Banks extends Component {
         {this.renderBanks()}
         {displayCreateForm && <NewBank />}
         {displayCreateButton && (
-          <Button className="floating-right" size="small" onClick={showCreateForm}>
+          <Index className="floating-right" size="small" onClick={showCreateForm}>
             <PlusOneIcon fontSize={'small'} />
-          </Button>
+          </Index>
         )}
       </div>
     );

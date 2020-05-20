@@ -5,24 +5,24 @@ import mutation from '../gqlQueries/delete';
 import EditIcon from '@material-ui/icons/Edit';
 import DeleteIcon from '@material-ui/icons/DeleteForever';
 import { toggleEditForm } from '../../../actions/ui/crud/updateForm';
-import { getCrudEditState as getCrudEditStateSelector } from '../../../selectors/ui'
+import { getCrudEditState as getCrudEditStateSelector } from '../../../selectors/ui';
 import Show from './Show/index';
 import Edit from './Edit/index';
 import './stylesheet.css';
 
-
 class RecurrentOperationComponent extends Component {
-
   constructor() {
     super();
 
-    this.iconStyle = { cursor: 'pointer'};
+    this.iconStyle = { cursor: 'pointer' };
   }
 
   deleteRecurrentOperation(recurrentOperation) {
-    this.props.mutate({
-      variables: { id: recurrentOperation.id }
-    }).then(() => this.props.refetch());
+    this.props
+      .mutate({
+        variables: { id: recurrentOperation.id },
+      })
+      .then(() => this.props.refetch());
   }
 
   render() {
@@ -31,22 +31,21 @@ class RecurrentOperationComponent extends Component {
 
     return (
       <div className="recurrentOperation">
-        <div className="label">
-        {recurrentOperationView}
-        </div>
-        {!edit && <div className={'actions'}>
-        <EditIcon onClick={() => toggleEdit(recurrentOperation.id)} style={this.iconStyle}  />
-        <DeleteIcon onClick={() => this.deleteRecurrentOperation(recurrentOperation)} style={this.iconStyle}/>
-        </div>
-        }
+        <div className="label">{recurrentOperationView}</div>
+        {!edit && (
+          <div className={'actions'}>
+            <EditIcon fontSize="small" onClick={() => toggleEdit(recurrentOperation.id)} style={this.iconStyle} />
+            <DeleteIcon fontSize="small" onClick={() => this.deleteRecurrentOperation(recurrentOperation)} style={this.iconStyle} />
+          </div>
+        )}
       </div>
-    )
-  };
+    );
+  }
 }
 
 function mapDispatchToProps(dispatch) {
   return {
-    toggleEdit: (id) => {
+    toggleEdit: id => {
       dispatch(toggleEditForm('recurrentOperation', id));
     },
   };

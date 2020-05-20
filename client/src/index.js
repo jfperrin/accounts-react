@@ -1,8 +1,8 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import {Provider} from 'react-redux';
-import {BrowserRouter as Router} from "react-router-dom";
-import {createBrowserHistory} from 'history';
+import { Provider } from 'react-redux';
+import { BrowserRouter as Router } from 'react-router-dom';
+import { createBrowserHistory } from 'history';
 import registerServiceWorker from './registerServiceWorker';
 import createStore from './app/store/store';
 import App from './app/components/App';
@@ -14,8 +14,10 @@ const store = createStore(history);
 ReactDOM.render(
   <Provider store={store}>
     <Router>
-      <App/>
+      <App />
     </Router>
-  </Provider>, document.getElementById('root'));
+  </Provider>,
+  document.getElementById('root'),
+);
 
 registerServiceWorker();

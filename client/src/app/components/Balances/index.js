@@ -5,7 +5,7 @@ import BalanceIcon from '@material-ui/icons/AccountBalance';
 import initializeBankBalances from '../Periods/gqlQueries/initializeBankBalances';
 import query from '../Periods/gqlQueries/get';
 import Balance from './Balance/index';
-import Button from '../common/Button';
+import Index from '../common/Button';
 
 class Balances extends Component {
   initializeBankBalances(id) {
@@ -39,9 +39,9 @@ class Balances extends Component {
             <h3 style={{ marginTop: '13px' }}>Balances</h3>
           </div>
           <div style={{ width: '45px', paddingTop: '5px' }}>
-            <Button size={'small'} onClick={() => this.initializeBankBalances(period.id)}>
+            <Index size={'small'} onClick={() => this.initializeBankBalances(period.id)}>
               <BalanceIcon />
-            </Button>
+            </Index>
           </div>
         </div>
         {this.renderBalances()}

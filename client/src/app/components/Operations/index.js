@@ -11,7 +11,7 @@ import { hideCreateButton } from '../../actions/ui/crud/createButton';
 import { showCreateForm } from '../../actions/ui/crud/createForm';
 import { getCrudCreateButtonState as getCrudCreateButtonStateSelector, getCrudCreateFormState as getCrudCreateFormStateSelector } from '../../selectors/ui';
 import mutation from '../Periods/gqlQueries/addRecurrentOperations';
-import Button from '../common/Button';
+import Index from '../common/Button';
 import './stylesheet.css';
 
 class Operations extends Component {
@@ -47,9 +47,9 @@ class Operations extends Component {
         {period.operations.length > 0 && <div className="operations-items">{this.renderOperations()}</div>}
         {displayCreateForm && <NewOperation id={idPeriod} />}
         {displayCreateButton && (
-          <Button className="add" color="secondary" onClick={showCreateForm}>
+          <Index className="add" color="secondary" onClick={showCreateForm}>
             <PlusOneIcon fontSize={'small'} />
-          </Button>
+          </Index>
         )}
       </div>
     );

@@ -4,7 +4,7 @@ import FloatingActionButton from '@material-ui/core/Fab';
 
 const color = deepPurple;
 
-const Button = withStyles(theme => ({
+const Index = withStyles(theme => ({
   root: {
     color: theme.palette.getContrastText(color[500]),
     backgroundColor: color[500],
@@ -14,4 +14,4 @@ const Button = withStyles(theme => ({
   },
 }))(FloatingActionButton);
 
-export default Button;
+export default Index;

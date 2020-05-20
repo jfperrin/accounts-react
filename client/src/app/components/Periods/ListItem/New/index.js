@@ -29,7 +29,6 @@ class New extends Component {
 
     return (
       <form onSubmit={handleSubmit(this.onSubmit)}>
-        sdfsdf
         <Field name="month" component={TextField} label="Mois" />
         <Field name="year" component={TextField} label="Année" />
         <Button type="submit" color="primary">

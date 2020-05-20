@@ -7,17 +7,18 @@ import DeleteIcon from '@material-ui/icons/DeleteForever';
 import { toggleEditForm } from '../../../../actions/ui/crud/updateForm';
 
 class BalanceShowComponent extends Component {
-
   constructor() {
     super();
 
-    this.iconStyle = { cursor: 'pointer'};
+    this.iconStyle = { cursor: 'pointer' };
   }
 
   deleteBalance(balance) {
-    this.props.mutate({
-      variables: { id: balance.id }
-    }).then(() => this.props.refetch());
+    this.props
+      .mutate({
+        variables: { id: balance.id },
+      })
+      .then(() => this.props.refetch());
   }
 
   render() {
@@ -25,15 +26,11 @@ class BalanceShowComponent extends Component {
 
     return (
       <div className="balance">
-        <div className="label">
-          {balance.bank.label}
-        </div>
-        <div className="amount">
-          {balance.amount.toFixed(2)} €
-        </div>
+        <div className="label">{balance.bank.label}</div>
+        <div className="amount">{balance.amount.toFixed(2)} €</div>
         <div className={'actions'}>
-          <EditIcon onClick={() => toggleEdit(balance.id)} style={this.iconStyle} />
-          <DeleteIcon onClick={() => this.deleteBalance(balance)} style={this.iconStyle} />
+          <EditIcon fontSize="small" onClick={() => toggleEdit(balance.id)} style={this.iconStyle} />
+          <DeleteIcon fontSize="small" onClick={() => this.deleteBalance(balance)} style={this.iconStyle} />
         </div>
       </div>
     );
@@ -42,7 +39,7 @@ class BalanceShowComponent extends Component {
 
 function mapDispatchToProps(dispatch) {
   return {
-    toggleEdit: (id) => {
+    toggleEdit: id => {
       dispatch(toggleEditForm('balance', id));
     },
   };

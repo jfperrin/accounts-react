@@ -33,13 +33,13 @@ class Edit extends Component {
         <div
           style={{
             display: 'flex',
-            marginBottom: '25px',
+            marginBottom: 25,
           }}
         >
           <div
             style={{
               margin: 'auto 10px',
-              paddingTop: '5px',
+              paddingTop: 5,
             }}
           >
             <Field name="day" component={TextField} label="Jours" />
@@ -62,12 +62,10 @@ class Edit extends Component {
             <Field name="amount" component={TextField} label="Montant" />
           </div>
         </div>
-        <div style={{ float: 'right' }}>
-          <Button type="submit" color="primary">
-            Ok
-          </Button>
-          <Button onClick={cancel}>Cancel</Button>
-        </div>
+        <Button type="submit" color="primary">
+          Ok
+        </Button>
+        <Button onClick={cancel}>Cancel</Button>
       </form>
     );
   }
