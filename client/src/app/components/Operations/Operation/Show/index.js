@@ -3,14 +3,13 @@ import React, { Component } from 'react';
 import { graphql } from 'react-apollo';
 import * as compose from 'lodash.flowright';
 import { connect } from 'react-redux';
-
-import query from '../../../Periods/gqlQueries/get';
 import IconButton from '@material-ui/core/IconButton';
 import EditIcon from '@material-ui/icons/Edit';
 import DeleteIcon from '@material-ui/icons/DeleteForever';
-import RecurrentIcon from '@material-ui/icons/Bookmark';
+import StarRounded from '@material-ui/icons/StarRounded';
 import CheckIcon from '@material-ui/icons/Check';
 import Cancelcon from '@material-ui/icons/Cancel';
+import query from '../../../Periods/gqlQueries/get';
 import deleteOperation from '../../../Periods/gqlQueries/deleteOperation';
 import pointOperation from '../../gqlQueries/point';
 import { toggleEditForm } from '../../../../actions/ui/crud/updateForm';
@@ -110,11 +109,11 @@ class ShowComponent extends Component {
                 <IconButton size={'small'} onClick={() => this.deleteOperation(operation.id, idPeriod)}>
                   <DeleteIcon fontSize="small" />
                 </IconButton>
-                <div style={{ flex: 1, textAlign: 'left', paddingTop: '13px', paddingLeft: '13px' }}>{operation.isRecurrent && <RecurrentIcon />}</div>
+                {operation.isRecurrent && <StarRounded style={{ paddingTop: 18, paddingLeft: 5, color: 'rgba(0, 0, 0, 0.54)' }} fontSize="small" />}
               </div>
             )}
             {operation.pointedAt && (
-              <IconButton fontSize="small" style={{ marginLeft: '18px', padding: '0px' }} onClick={() => this.pointOperation(operation.id, idPeriod)} size={'small'}>
+              <IconButton size={'small'} onClick={() => this.pointOperation(operation.id, idPeriod)}>
                 <Cancelcon fontSize="small" />
               </IconButton>
             )}

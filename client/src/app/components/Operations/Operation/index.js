@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { getCrudEditState as getCrudEditStateSelector } from '../../../selectors/ui'
+import { getCrudEditState as getCrudEditStateSelector } from '../../../selectors/ui';
 import Show from './Show/index';
 import Edit from './Edit/index';
 
@@ -9,10 +9,11 @@ class OperationComponent extends Component {
     const { operation, edit, idPeriod, hideAction } = this.props;
 
     if (edit) {
-      return (<Edit idPeriod={idPeriod} operation={operation} />);
+      return <Edit idPeriod={idPeriod} operation={operation} />;
     }
-    return (<Show hideAction={hideAction} idPeriod={idPeriod} operation={operation} />);
-  };
+
+    return <Show hideAction={hideAction} idPeriod={idPeriod} operation={operation} />;
+  }
 }
 
 function mapStateToProps(state, ownProps) {
