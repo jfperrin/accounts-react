@@ -5,7 +5,10 @@ export const HIDE_EDIT_CRUD_FORM = '@ui/user/updateForm/HIDE_EDIT_CRUD_FORM';
 
 export function toggleEditForm(entity, id) {
   return (dispatch, getState) => {
-    const value = !getCrudEditStateSelector(getState(), { entity, id });
+    const value = !getCrudEditStateSelector(getState(), {
+      entity,
+      id,
+    });
     if (value) {
       dispatch({
         type: SHOW_EDIT_CRUD_FORM,
@@ -20,4 +23,4 @@ export function toggleEditForm(entity, id) {
       });
     }
   };
-};
+}
