@@ -32,18 +32,20 @@ class New extends Component {
       <form onSubmit={handleSubmit(this.onSubmit)}>
         <div style={{ display: 'flex', marginBottom: '25px' }}>
           <div style={{ margin: 'auto 10px', paddingTop: '5px' }}>
-            <Field name="day" component={TextField} floatingLabelText="Jours" />
+            <Field name="day" component={TextField} label="Jours" />
           </div>
           <div style={{ flex: 1, fontWeight: 'bold', paddingTop: '5px' }}>
-            <Field name="label" component={TextField} floatingLabelText="Label" />
+            <Field name="label" component={TextField} label="Label" />
           </div>
           <div style={{ margin: 'auto 10px', paddingTop: '5px' }}>
-            <Field name="amount" component={TextField} floatingLabelText="Montant" />
+            <Field name="amount" component={TextField} label="Montant" />
           </div>
         </div>
         <div style={{ float: 'right' }}>
-          <Button type="submit" primary label={'Ok'} />
-          <Button primary={false} label={'Cancel'} onClick={cancelCreation} />
+          <Button type="submit" color="primary">
+            Ok
+          </Button>
+          <Button onClick={cancelCreation}>Cancel</Button>
         </div>
       </form>
     );

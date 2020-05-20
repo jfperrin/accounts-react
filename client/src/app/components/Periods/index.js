@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { graphql } from 'react-apollo';
 import PlusOneIcon from '@material-ui/icons/PlusOne';
-import FloatingActionButton from '@material-ui/core/Fab';
 import query from './gqlQueries/list';
 import NewPeriod from './ListItem/New';
 import Period from './ListItem/index';
@@ -10,6 +9,7 @@ import { updateLayoutTitle as updateLayoutTitleAction } from '../../actions/ui/l
 import { hideCreateButton } from '../../actions/ui/crud/createButton';
 import { showCreateForm } from '../../actions/ui/crud/createForm';
 import { getCrudCreateButtonState as getCrudCreateButtonStateSelector, getCrudCreateFormState as getCrudCreateFormStateSelector } from '../../selectors/ui';
+import Button from '../common/Button';
 
 class Periods extends Component {
   keyForSorting(period) {
@@ -23,39 +23,50 @@ class Periods extends Component {
   }
 
   renderPeriods() {
-    if (this.props.data.loading) {
+    const { data } = this.props;
+
+    if (data.loading) {
       return <div>Loading...</div>;
     }
 
-    if (this.props.data.periods) {
-      const periods = Object.assign([], this.props.data.periods);
+    if (data.periods) {
+      const periods = Object.assign([], data.periods);
       return periods
-        .sort((a, b) => this.keyForSorting(a) < this.keyForSorting(b))
+        .sort((a, b) => this.keyForSorting(b) - this.keyForSorting(a))
         .map(period => {
-          return <Period refetch={this.props.data.refetch} key={period.id} period={period} />;
+          return <Period refetch={data.refetch} key={period.id} period={period} />;
         });
-    } else {
-      return <div>Error</div>;
     }
+
+    return <div>Error</div>;
   }
 
   componentDidMount() {
-    this.props.updateLayoutTitle('Périodes');
+    const { updateLayoutTitle } = this.props;
+
+    updateLayoutTitle('Périodes');
   }
 
   render() {
-    if (this.props.data.loading) {
+    const {
+      data: { loading },
+      showCreateForm,
+      displayCreateButton,
+      displayCreateForm,
+    } = this.props;
+
+    if (loading) {
       return <div>Loading...</div>;
     }
 
     return (
       <div>
         {this.renderPeriods()}
-        {this.props.displayCreateForm && <NewPeriod />}
-        {this.props.displayCreateButton && (
-          <FloatingActionButton className="floating-right" color="secondary" onClick={this.props.showCreateForm}>
-            <PlusOneIcon />
-          </FloatingActionButton>
+        {displayCreateForm && <NewPeriod />}
+        {displayCreateButton && (
+          <Button className="floating-right" size="small" onClick={showCreateForm}>
+            <PlusOneIcon fontSize={'small'} />
+          </Button>
         )}
       </div>
     );

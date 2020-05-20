@@ -3,38 +3,42 @@ import { connect } from 'react-redux';
 import { graphql } from 'react-apollo';
 import * as compose from 'lodash.flowright';
 import ImportIcon from '@material-ui/icons/ImportExport';
-import FloatingActionButton from '@material-ui/core/Fab';
 import Operations from '../../Operations';
 import Balances from '../../Balances';
 import query from '../gqlQueries/get';
 import addRecurrentOperations from '../gqlQueries/addRecurrentOperations';
-import { updateLayoutTitle as updateLayoutTitleAction } from '../../../actions/ui/layout/title'
+import { updateLayoutTitle as updateLayoutTitleAction } from '../../../actions/ui/layout/title';
+import Button from '../../common/Button';
 
 class Period extends Component {
   addRecurrentOperations(id) {
-    this.props.addRecurrentOperations({
+    const { addRecurrentOperations, data } = this.props;
+
+    addRecurrentOperations({
       variables: {
         id,
       },
-    }).then(() => this.props.data.refetch());
+    }).then(() => data.refetch());
   }
 
-
   componentDidUpdate() {
-    if (!this.props.data.loading) {
-      this.props.updateLayoutTitle(`Operations#${this.props.data.period.display}`);
+    const { data, updateLayoutTitle } = this.props;
+
+    if (!data.loading) {
+      updateLayoutTitle(`Operations#${data.period.display}`);
     }
   }
 
   render() {
+    const { data, match } = this.props;
 
-    if (this.props.data.loading) {
+    if (data.loading) {
       return <div>Loading...</div>;
     }
 
     const line = {
       display: 'flex',
-      marginBottom: '15px'
+      marginBottom: '15px',
     };
 
     const block = {
@@ -48,35 +52,27 @@ class Period extends Component {
       <div className="operations">
         <div style={line}>
           <div style={block}>
-            <Balances idPeriod={this.props.match.params.id} />
+            <Balances idPeriod={match.params.id} />
           </div>
           <div style={block}>
             <div style={{ display: 'flex' }}>
               <div style={{ flex: 1 }}>
-                <h3 style={{ marginTop: '13px' }}>
-                  Solde
-                </h3>
+                <h3 style={{ marginTop: '13px' }}>Solde</h3>
               </div>
               <div style={{ width: 45, paddingTop: '5px' }}>
-                <FloatingActionButton size={"small"} onClick={() => this.addRecurrentOperations(this.props.data.period.id)}>
+                <Button size={'small'} onClick={() => this.addRecurrentOperations(data.period.id)}>
                   <ImportIcon />
-                </FloatingActionButton>
+                </Button>
               </div>
             </div>
             <div style={{ display: 'flex', padding: '15px' }}>
-              <div style={{ width: '33%', whiteSpace: 'nowrap' }}>
-                Opérations: {this.props.data.period.balance.operations.toFixed(2)} €
-              </div>
-              <div style={{ width: '33%', textAlign: 'center', whiteSpace: 'nowrap' }}>
-                Banque: {this.props.data.period.balance.banks.toFixed(2)} €
-              </div>
-              <div style={{ width: '34%', textAlign: 'right', whiteSpace: 'nowrap' }}>
-                Solde: {(this.props.data.period.balance.operations + this.props.data.period.balance.banks).toFixed(2)} €
-              </div>
+              <div style={{ width: '33%', whiteSpace: 'nowrap' }}>Opérations: {data.period.balance.operations.toFixed(2)} €</div>
+              <div style={{ width: '33%', textAlign: 'center', whiteSpace: 'nowrap' }}>Banque: {data.period.balance.banks.toFixed(2)} €</div>
+              <div style={{ width: '34%', textAlign: 'right', whiteSpace: 'nowrap' }}>Solde: {(data.period.balance.operations + data.period.balance.banks).toFixed(2)} €</div>
             </div>
           </div>
         </div>
-        <Operations idPeriod={this.props.match.params.id} />
+        <Operations idPeriod={match.params.id} />
       </div>
     );
   }
@@ -84,7 +80,7 @@ class Period extends Component {
 
 function mapDispatchToProps(dispatch) {
   return {
-    updateLayoutTitle: (title) => {
+    updateLayoutTitle: title => {
       dispatch(updateLayoutTitleAction(title));
     },
   };
@@ -96,8 +92,10 @@ const mutations = compose(
   }),
 );
 
-export default mutations(graphql(query, {
-  options: (props) => {
-    return { variables: { id: props.match.params.id } };
-  },
-})(connect(null, mapDispatchToProps)(Period)));
+export default mutations(
+  graphql(query, {
+    options: props => {
+      return { variables: { id: props.match.params.id } };
+    },
+  })(connect(null, mapDispatchToProps)(Period)),
+);

@@ -1,37 +1,36 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { graphql } from 'react-apollo';
-import query from './gqlQueries/list'
 import PlusOneIcon from '@material-ui/icons/PlusOne';
-import { updateLayoutTitle as updateLayoutTitleAction } from '../../actions/ui/layout/title'
+import query from './gqlQueries/list';
 import NewRecurrentOperation from './RecurrentOperation/New';
-import FloatingActionButton from '@material-ui/core/Fab';
+import { updateLayoutTitle as updateLayoutTitleAction } from '../../actions/ui/layout/title';
 import RecurrentOperation from './RecurrentOperation/index';
 import { hideCreateButton } from '../../actions/ui/crud/createButton';
-import { showCreateForm } from "../../actions/ui/crud/createForm";
-import {
-  getCrudCreateButtonState as getCrudCreateButtonStateSelector,
-  getCrudCreateFormState as getCrudCreateFormStateSelector
-} from '../../selectors/ui'
+import { showCreateForm } from '../../actions/ui/crud/createForm';
+import { getCrudCreateButtonState as getCrudCreateButtonStateSelector, getCrudCreateFormState as getCrudCreateFormStateSelector } from '../../selectors/ui';
+import Button from '../common/Button';
 
 class RecurrentOperations extends Component {
-
   renderRecurrentOperations() {
-    const recurrentOperations = Object.assign([], this.props.data.recurrentOperations);
-    return recurrentOperations.sort((a, b) => a.day > b.day).map((recurrentOperation) => {
-      return (
-        <RecurrentOperation refetch={this.props.data.refetch} key={recurrentOperation.id}
-                            recurrentOperation={recurrentOperation} />
-      );
-    });
+    const { data } = this.props;
+    const recurrentOperations = Object.assign([], data.recurrentOperations);
+    return recurrentOperations
+      .sort((a, b) => a.day - b.day)
+      .map(recurrentOperation => {
+        return <RecurrentOperation refetch={data.refetch} key={recurrentOperation.id} recurrentOperation={recurrentOperation} />;
+      });
   }
 
   componentDidMount() {
-    this.props.updateLayoutTitle('Opérations#Mensuelles');
+    const { updateLayoutTitle } = this.props;
+
+    updateLayoutTitle('Opérations#Mensuelles');
   }
 
   render() {
-    if (this.props.data.loading) {
+    const { data, displayCreateForm, showCreateForm, displayCreateButton } = this.props;
+    if (data.loading) {
       return <div>Loading...</div>;
     }
 
@@ -39,12 +38,13 @@ class RecurrentOperations extends Component {
       <div>
         {this.renderRecurrentOperations()}
 
-        {this.props.displayCreateForm && <NewRecurrentOperation />}
+        {displayCreateForm && <NewRecurrentOperation />}
 
-        {this.props.displayCreateButton &&
-        <FloatingActionButton className="floating-right" color="secondary" onClick={this.props.showCreateForm}>
-          <PlusOneIcon />
-        </FloatingActionButton>}
+        {displayCreateButton && (
+          <Button className="floating-right" size="small" onClick={showCreateForm}>
+            <PlusOneIcon fontSize={'small'} />
+          </Button>
+        )}
       </div>
     );
   }
@@ -52,7 +52,7 @@ class RecurrentOperations extends Component {
 
 function mapDispatchToProps(dispatch) {
   return {
-    updateLayoutTitle: (title) => {
+    updateLayoutTitle: title => {
       dispatch(updateLayoutTitleAction(title));
     },
     showCreateForm: () => {

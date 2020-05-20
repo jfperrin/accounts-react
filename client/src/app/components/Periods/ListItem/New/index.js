@@ -11,15 +11,17 @@ import { hideCreateForm as hideCreateButtonAction } from '../../../../actions/ui
 
 class New extends Component {
   onSubmit(formObject, dispatch, props) {
-    props.mutate({
-      variables: {
-        year: parseInt(formObject.year),
-        month: parseInt(formObject.month),
-      },
-      refetchQueries: [ { query } ]
-    }).then(() => {
-      props.cancelCreation();
-    });
+    props
+      .mutate({
+        variables: {
+          year: parseInt(formObject.year, 10),
+          month: parseInt(formObject.month, 10),
+        },
+        refetchQueries: [{ query }],
+      })
+      .then(() => {
+        props.cancelCreation();
+      });
   }
 
   render() {
@@ -27,10 +29,13 @@ class New extends Component {
 
     return (
       <form onSubmit={handleSubmit(this.onSubmit)}>
-        <Field name="month" component={TextField} floatingLabelText="Mois" />
-        <Field name="year" component={TextField} floatingLabelText="Année" />
-        <Button type="submit" primary={true} label={'Ok'} />
-        <Button primary={false} label={'Cancel'} onClick={cancelCreation} />
+        sdfsdf
+        <Field name="month" component={TextField} label="Mois" />
+        <Field name="year" component={TextField} label="Année" />
+        <Button type="submit" color="primary">
+          Ok
+        </Button>
+        <Button onClick={cancelCreation}>Cancel</Button>
       </form>
     );
   }
@@ -47,7 +52,7 @@ function mapDispatchToProps(dispatch) {
 
 function mapStateToProps() {
   return {
-    form: 'newPeriod'
+    form: 'newPeriod',
   };
 }
 

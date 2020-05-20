@@ -1,26 +1,27 @@
 import React, { Component } from 'react';
+import { Field, reduxForm } from 'redux-form';
+import Button from '@material-ui/core/Button';
 import { connect } from 'react-redux';
 import { graphql } from 'react-apollo';
 import mutation from '../../gqlQueries/update';
-import { Field, reduxForm } from 'redux-form';
-import Button from '@material-ui/core/Button';
 import TextField from '../../../common/TextField';
 import query from '../../gqlQueries/list';
 import { toggleEditForm as toggleEditFormAction } from '../../../../actions/ui/crud/updateForm';
 
-
 class Edit extends Component {
-
   onSubmit(formObject, dispatch, props) {
-    props.mutate({
-      variables:  {
-        year: parseInt(formObject.year),
-        month: parseInt(formObject.month),
-        id: props.period.id },
-      refetchQueries: [ { query } ]
-    }).then(() => {
-      props.cancel();
-    });
+    props
+      .mutate({
+        variables: {
+          year: parseInt(formObject.year, 10),
+          month: parseInt(formObject.month, 10),
+          id: props.period.id,
+        },
+        refetchQueries: [{ query }],
+      })
+      .then(() => {
+        props.cancel();
+      });
   }
 
   render() {
@@ -28,10 +29,12 @@ class Edit extends Component {
 
     return (
       <form onSubmit={handleSubmit(this.onSubmit)}>
-        <Field name="month" component={TextField} floatingLabelText="Mois" />
-        <Field name="year" component={TextField} floatingLabelText="Année" />
-        <Button type="submit" primary={true} label={'Ok'} />
-        <Button primary={false} label={'Cancel'} onClick={cancel} />
+        <Field name="month" component={TextField} label="Mois" />
+        <Field name="year" component={TextField} label="Année" />
+        <Button type="submit" color="primary">
+          Ok
+        </Button>
+        <Button onClick={cancel}>Cancel</Button>
       </form>
     );
   }

@@ -37,7 +37,6 @@ class Edit extends Component {
 
   render() {
     const { handleSubmit, cancel } = this.props;
-
     return (
       <form className="operation operation-form" onSubmit={handleSubmit(this.onSubmit)}>
         <div className="dt">
@@ -75,7 +74,7 @@ function mapStateToProps(state, ownProps) {
     initialValues: {
       label: ownProps.operation.label,
       amount: ownProps.operation.amount,
-      dt: new Date(ownProps.operation.dt),
+      dt: ownProps.operation.dt,
     },
     form: `operation${ownProps.operation.id}`,
   };

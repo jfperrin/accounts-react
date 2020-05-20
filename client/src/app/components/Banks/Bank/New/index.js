@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
-import { graphql } from 'react-apollo';
-import mutation from '../../gqlQueries/create';
-import { Field, reduxForm } from 'redux-form';
-import Button from '@material-ui/core/Button';
 import { connect } from 'react-redux';
+import { graphql } from 'react-apollo';
+import Button from '@material-ui/core/Button';
+import { Field, reduxForm } from 'redux-form';
+import mutation from '../../gqlQueries/create';
 import TextField from '../../../common/TextField';
 import query from '../../gqlQueries/list';
 import { showCreateButton as showCreateButtonAction } from '../../../../actions/ui/crud/createButton';
@@ -11,12 +11,14 @@ import { hideCreateForm as hideCreateButtonAction } from '../../../../actions/ui
 
 class New extends Component {
   onSubmit(formObject, dispatch, props) {
-    props.mutate({
-      variables: { label: formObject.label },
-      refetchQueries: [ { query } ]
-    }).then(() => {
-      props.cancelCreation();
-    });
+    props
+      .mutate({
+        variables: { label: formObject.label },
+        refetchQueries: [{ query }],
+      })
+      .then(() => {
+        props.cancelCreation();
+      });
   }
 
   render() {
@@ -24,9 +26,11 @@ class New extends Component {
 
     return (
       <form onSubmit={handleSubmit(this.onSubmit)}>
-        <Field name="label" component={TextField} floatingLabelText="Label" />
-        <Button type="submit" primary={true} label={'Ok'} />
-        <Button primary={false} label={'Cancel'} onClick={cancelCreation} />
+        <Field name="label" component={TextField} label="Label" />
+        <Button type="submit" color="primary">
+          Ok
+        </Button>
+        <Button onClick={cancelCreation}>Cancel</Button>
       </form>
     );
   }
@@ -43,7 +47,7 @@ function mapDispatchToProps(dispatch) {
 
 function mapStateToProps() {
   return {
-    form: 'newBank'
+    form: 'newBank',
   };
 }
 

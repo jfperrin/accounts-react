@@ -2,31 +2,33 @@ import React, { Component } from 'react';
 import { graphql } from 'react-apollo';
 import * as compose from 'lodash.flowright';
 import BalanceIcon from '@material-ui/icons/AccountBalance';
-import FloatingActionButton from '@material-ui/core/Fab';
 import initializeBankBalances from '../Periods/gqlQueries/initializeBankBalances';
 import query from '../Periods/gqlQueries/get';
 import Balance from './Balance/index';
+import Button from '../common/Button';
 
 class Balances extends Component {
-
   initializeBankBalances(id) {
-    this.props.initializeBankBalances({
-      variables: {
-        id,
-      },
-    }).then(() => this.props.data.refetch());
+    const { initializeBankBalances, data } = this.props;
+    initializeBankBalances({ variables: { id } }).then(() => data.refetch());
   }
 
   renderBalances() {
-    return this.props.data.period.balances.map((balance) => {
-      return (
-        <Balance refetch={this.props.data.refetch} key={balance.id} balance={balance} />
-      );
+    const {
+      data: { refetch, period },
+    } = this.props;
+
+    return period.balances.map(balance => {
+      return <Balance refetch={refetch} key={balance.id} balance={balance} />;
     });
   }
 
   render() {
-    if (this.props.data.loading) {
+    const {
+      data: { loading, period },
+    } = this.props;
+
+    if (loading) {
       return <div>Loading...</div>;
     }
 
@@ -34,14 +36,12 @@ class Balances extends Component {
       <div>
         <div style={{ display: 'flex' }}>
           <div style={{ flex: 1 }}>
-            <h3 style={{ marginTop: '13px' }}>
-              Balances
-            </h3>
+            <h3 style={{ marginTop: '13px' }}>Balances</h3>
           </div>
           <div style={{ width: '45px', paddingTop: '5px' }}>
-            <FloatingActionButton size={"small"} onClick={() => this.initializeBankBalances(this.props.data.period.id)} >
+            <Button size={'small'} onClick={() => this.initializeBankBalances(period.id)}>
               <BalanceIcon />
-            </FloatingActionButton>
+            </Button>
           </div>
         </div>
         {this.renderBalances()}
@@ -56,9 +56,10 @@ const mutations = compose(
   }),
 );
 
-
-export default mutations(graphql(query, {
-  options: (props) => {
-    return { variables: { id: props.idPeriod } };
-  },
-})(Balances));
+export default mutations(
+  graphql(query, {
+    options: props => {
+      return { variables: { id: props.idPeriod } };
+    },
+  })(Balances),
+);

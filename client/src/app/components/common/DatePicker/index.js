@@ -1,32 +1,28 @@
-import React from 'react';
+import React, { useState } from 'react';
 import DateFnsUtils from '@date-io/date-fns';
-import { MuiPickersUtilsProvider, KeyboardDatePicker } from '@material-ui/pickers';
+// eslint-disable-next-line import/no-extraneous-dependencies
+import frLocale from 'date-fns/locale/fr';
+import { TextField } from '@material-ui/core';
+import { DatePicker, LocalizationProvider } from '@material-ui/pickers';
 
-const DatePicker = props => {
-  const {
-    meta: { submitting, error, touched },
-    input: { onBlur, value, ...inputProps },
-    ...others
-  } = props;
+const CustomDatePicker = props => {
+  const { input } = props;
+  const [selectedDate, setSelectedDate] = useState(input.value);
 
-  const onChange = date => {
-    Date.parse(date) ? inputProps.onChange(date.toISOString()) : inputProps.onChange(null);
+  const handleDateChange = date => {
+    setSelectedDate(date);
+    if (Date.parse(date)) {
+      input.onChange(date.toISOString());
+    } else {
+      input.onChange(null);
+    }
   };
 
   return (
-    <MuiPickersUtilsProvider utils={DateFnsUtils}>
-      <KeyboardDatePicker
-        {...inputProps}
-        {...others}
-        format="dd/MM/yyyy"
-        value={value ? new Date(value) : null}
-        disabled={submitting}
-        onBlur={() => onBlur(value ? new Date(value).toISOString() : null)}
-        error={error && touched}
-        onChange={onChange}
-      />
-    </MuiPickersUtilsProvider>
+    <LocalizationProvider dateAdapter={DateFnsUtils} locale={frLocale}>
+      <DatePicker value={selectedDate} onChange={handleDateChange} renderInput={props => <TextField {...props} />} />
+    </LocalizationProvider>
   );
 };
 
-export default DatePicker;
+export default CustomDatePicker;
