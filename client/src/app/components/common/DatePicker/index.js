@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import DateFnsUtils from '@date-io/date-fns';
-// eslint-disable-next-line import/no-extraneous-dependencies
-import frLocale from 'date-fns/locale/fr';
+import { fr } from 'date-fns/locale';
 import { TextField } from '@material-ui/core';
 import { DatePicker, LocalizationProvider } from '@material-ui/pickers';
 
@@ -19,7 +18,7 @@ const CustomDatePicker = props => {
   };
 
   return (
-    <LocalizationProvider dateAdapter={DateFnsUtils} locale={frLocale}>
+    <LocalizationProvider dateAdapter={DateFnsUtils} locale={fr}>
       <DatePicker value={selectedDate} onChange={handleDateChange} renderInput={props => <TextField {...props} />} />
     </LocalizationProvider>
   );
