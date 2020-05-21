@@ -15,7 +15,6 @@
     }],
     "no-console": ["error", { "allow": ["warn", "error"] }],
     "prettier/prettier": "error",
-    "array-bracket-spacing": [2, "always"],
     "max-len": ["error", { "code": 200, "ignoreTrailingComments": true }],
     "no-use-before-define": [2, "nofunc"],
     "no-shadow": 0,
