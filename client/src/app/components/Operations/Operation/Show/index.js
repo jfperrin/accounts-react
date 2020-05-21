@@ -109,7 +109,7 @@ class ShowComponent extends Component {
                 <IconButton size={'small'} onClick={() => this.deleteOperation(operation.id, idPeriod)}>
                   <DeleteIcon fontSize="small" />
                 </IconButton>
-                {operation.isRecurrent && <StarRounded style={{ paddingTop: 18, paddingLeft: 5, color: 'rgba(0, 0, 0, 0.54)' }} fontSize="small" />}
+                {operation.isRecurrent && <StarRounded style={{ paddingTop: 16, paddingLeft: 5, color: 'rgba(0, 0, 0, 0.54)' }} fontSize="small" />}
               </div>
             )}
             {operation.pointedAt && (
