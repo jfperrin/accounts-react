@@ -1,6 +1,6 @@
 import React from 'react';
-import {Route} from "react-router-dom";
-import {ApolloProvider} from 'react-apollo';
+import { Route } from 'react-router-dom';
+import { ApolloProvider } from 'react-apollo';
 import Header from './Header/Header';
 import './stylesheet.css';
 import Banks from './Banks';
@@ -14,19 +14,18 @@ import AuthRequired from './Auth/Required';
 import client from '../../apolloClient';
 
 export default function () {
-
   return (
     <ApolloProvider client={client}>
       <div className="app">
-        <Header/>
+        <Header />
         <div className="body">
-          <Route exact path="/" component={AuthRequired(Home)}/>
-          <Route path="/banks" component={AuthRequired(Banks)}/>
-          <Route path="/periods" component={AuthRequired(Periods)}/>
-          <Route path="/period/:id" component={AuthRequired(Period)}/>
-          <Route path="/recurrent-operations" component={AuthRequired(RecurrentOperations)}/>
-          <Route path="/login" component={Login}/>
-          <Route path="/signup" component={Signup}/>
+          <Route exact path="/" component={AuthRequired(Home)} />
+          <Route path="/banks" component={AuthRequired(Banks)} />
+          <Route path="/periods" component={AuthRequired(Periods)} />
+          <Route path="/period/:id" component={AuthRequired(Period)} />
+          <Route path="/recurrent-operations" component={AuthRequired(RecurrentOperations)} />
+          <Route path="/login" component={Login} />
+          <Route path="/signup" component={Signup} />
         </div>
       </div>
     </ApolloProvider>
