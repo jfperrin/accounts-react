@@ -1,30 +1,27 @@
 import moment from 'moment';
-import React, { Component } from 'react';
-import { graphql, compose } from 'react-apollo';
-import { connect } from 'react-redux';
-
+import React from 'react';
+import { useDispatch } from 'react-redux';
+import { useMutation } from 'react-apollo';
+import IconButton from '@material-ui/core/IconButton';
+import EditIcon from '@material-ui/icons/Edit';
+import DeleteIcon from '@material-ui/icons/DeleteForever';
+import StarRounded from '@material-ui/icons/StarRounded';
+import CheckIcon from '@material-ui/icons/Check';
+import Cancelcon from '@material-ui/icons/Cancel';
 import query from '../../../Periods/gqlQueries/get';
-import IconButton from 'material-ui/IconButton';
-import EditIcon from 'material-ui/svg-icons/image/edit';
-import DeleteIcon from 'material-ui/svg-icons/action/delete-forever';
-import RecurrentIcon from 'material-ui/svg-icons/action/bookmark';
-import CheckIcon from 'material-ui/svg-icons/navigation/check';
-import Cancelcon from 'material-ui/svg-icons/navigation/cancel';
-import deleteOperation from '../../../Periods/gqlQueries/deleteOperation'
-import pointOperation from '../../gqlQueries/point';
+import deleteOperationMutation from '../../../Periods/gqlQueries/deleteOperation';
+import pointOperationMutation from '../../gqlQueries/point';
 import { toggleEditForm } from '../../../../actions/ui/crud/updateForm';
+import { stylePointed, stylePointedactions, stylePointedTexts } from './styles';
 import '../stylesheet.css';
 
-class ShowComponent extends Component {
+const Show = ({ operation, idPeriod, hideAction }) => {
+  const dispatch = useDispatch();
+  const [mutatePointOperation] = useMutation(deleteOperationMutation);
+  const [mutateDeleteOperation] = useMutation(pointOperationMutation);
 
-  constructor() {
-    super();
-
-    this.iconStyle = { cursor: 'pointer' };
-  }
-
-  pointOperation(id, idPeriod) {
-    this.props.pointOperation({
+  const pointOperation = (id, idPeriod) => {
+    mutatePointOperation({
       variables: {
         id,
       },
@@ -32,109 +29,68 @@ class ShowComponent extends Component {
         {
           query,
           variables: {
-            id: idPeriod
+            id: idPeriod,
           },
         },
-      ]
+      ],
     });
-  }
+  };
 
-  deleteOperation(idOperation, idPeriod) {
-    this.props.deleteOperation({
+  const deleteOperation = (idOperation, idPeriod) => {
+    mutateDeleteOperation({
       variables: {
         id: idPeriod,
         idOperation,
       },
     });
-  }
-
-  stylePointed(operation) {
-    if (operation.pointedAt) {
-      return {
-        backgroundColor: '#666',
-        color: '#AAA',
-        fontSize: '10px',
-        fontStyle: 'italic',
-        cursor: 'pointer',
-      };
-    }
-    return {};
   };
 
-  stylePointedTexts(operation) {
-    if (operation.pointedAt) {
-      return {
-        padding: '7px',
-      };
-    }
-    return {};
-  }
-
-  stylePointedactions(operation) {
-    if (operation.pointedAt) {
-      return {
-        padding: '5px',
-      };
-    }
-    return {};
-  }
-
-  render() {
-    const { operation, toggleEdit, idPeriod, hideAction } = this.props;
-
-    return (
-      <div className='operation' style={this.stylePointed(operation)}>
-        <div className='dt' style={this.stylePointedTexts(operation)}>
-          {moment(operation.dt).format('D-M-Y')}
-        </div>
-        <div className='label' style={this.stylePointedTexts(operation)}>
-          {operation.label}
-        </div>
-        <div className='amount' style={this.stylePointedTexts(operation)}>
-          {operation.amount && operation.amount.toFixed(2)} €
-        </div>
-        {!hideAction && <div className='actions' style={this.stylePointedactions(operation)}>
-          {!operation.pointedAt && <div style={{ display: 'flex' }}>
-            <IconButton style={{ width: '40px' }} onClick={() => this.pointOperation(operation.id, idPeriod)}>
-              {operation.pointedAt && <Cancelcon />}
-              {operation.pointedAt === null && <CheckIcon />}
-            </IconButton>
-            <IconButton style={{ width: '40px' }} onClick={() => toggleEdit(operation.id)}>
-              <EditIcon />
-            </IconButton>
-            <IconButton style={{ width: '40px' }} onClick={() => this.deleteOperation(operation.id, idPeriod)}>
-              <DeleteIcon />
-            </IconButton>
-            <div style={{ flex: 1, textAlign: 'left', paddingTop: '13px', paddingLeft: '13px' }}>
-              {operation.isRecurrent && <RecurrentIcon />}
-            </div>
-          </div>}
-          { operation.pointedAt &&
-            <IconButton style={{ marginLeft: '18px', width: '15px', height: '15px', padding: '0px' }} onClick={() => this.pointOperation(operation.id, idPeriod)} iconStyle={{ width: '15px', height: '15px' }}>
-              <Cancelcon />
-            </IconButton>
-          }
-        </div>}
+  return (
+    <div className="operation" style={stylePointed(operation)}>
+      <div className="dt" style={stylePointedTexts(operation)}>
+        {moment(operation.dt).format('DD-MM-YYYY')}
       </div>
-    );
-  }
-}
+      <div className="label" style={stylePointedTexts(operation)}>
+        {operation.label}
+      </div>
+      <div className="amount" style={stylePointedTexts(operation)}>
+        {operation.amount && operation.amount.toFixed(2)} €
+      </div>
+      {!hideAction && (
+        <div className="actions" style={stylePointedactions(operation)}>
+          {!operation.pointedAt && (
+            <div style={{ display: 'flex' }}>
+              <IconButton size={'small'} onClick={() => pointOperation(operation.id, idPeriod)}>
+                {operation.pointedAt && <Cancelcon fontSize="small" />}
+                {operation.pointedAt === null && <CheckIcon fontSize="small" />}
+              </IconButton>
+              <IconButton size={'small'} onClick={() => dispatch(toggleEditForm('operation', operation.id))}>
+                <EditIcon fontSize="small" />
+              </IconButton>
+              <IconButton size={'small'} onClick={() => deleteOperation(operation.id, idPeriod)}>
+                <DeleteIcon fontSize="small" />
+              </IconButton>
+              {operation.isRecurrent && (
+                <StarRounded
+                  style={{
+                    paddingTop: 16,
+                    paddingLeft: 5,
+                    color: 'rgba(0, 0, 0, 0.54)',
+                  }}
+                  fontSize="small"
+                />
+              )}
+            </div>
+          )}
+          {operation.pointedAt && (
+            <IconButton size={'small'} onClick={() => pointOperation(operation.id, idPeriod)}>
+              <Cancelcon fontSize="small" />
+            </IconButton>
+          )}
+        </div>
+      )}
+    </div>
+  );
+};
 
-function mapDispatchToProps(dispatch) {
-  return {
-    toggleEdit: (id) => {
-      dispatch(toggleEditForm('operation', id));
-    },
-  };
-}
-
-const mutations = compose(
-  graphql(deleteOperation, {
-    name: 'deleteOperation',
-  }),
-  graphql(pointOperation, {
-    name: 'pointOperation',
-  }),
-);
-
-export default mutations(connect(null, mapDispatchToProps)(ShowComponent));
+export default Show;

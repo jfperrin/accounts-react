@@ -4,5 +4,5 @@ export function updateLoginErrors(errors) {
   return {
     type: UPDATE_LOGIN_ERRORS,
     errors,
-  }
+  };
 }

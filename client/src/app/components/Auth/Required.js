@@ -1,20 +1,20 @@
-import React, { Component } from 'react';
-import { graphql } from 'react-apollo';
+import React, { useLayoutEffect } from 'react';
+import { useQuery } from 'react-apollo';
+import { withRouter } from 'react-router-dom';
 import currentUserQuery from '../Users/gqlQueries/currentUser';
-import { withRouter } from "react-router-dom";
 
-export default (WrappedComponent) => {
-  class AuthRequired extends Component {
-    componentWillUpdate(nextProps) {
-      if (!nextProps.data.loading && !nextProps.data.user) {
-        this.props.history.push('/login');
+export default WrappedComponent => {
+  const AuthRequired = props => {
+    const { loading, data } = useQuery(currentUserQuery);
+
+    useLayoutEffect(() => {
+      if (!loading && !data.user) {
+        props.history.push('/login');
       }
-    }
+    });
 
-    render() {
-      return <WrappedComponent {...this.props} />;
-    }
-  }
+    return <WrappedComponent {...props} />;
+  };
 
-  return graphql(currentUserQuery)(withRouter(AuthRequired));
+  return withRouter(AuthRequired);
 };

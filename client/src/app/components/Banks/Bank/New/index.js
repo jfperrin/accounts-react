@@ -1,50 +1,43 @@
-import React, { Component } from 'react';
-import { graphql } from 'react-apollo';
+import React from 'react';
+import { useForm } from 'react-hook-form';
+import { useMutation } from '@apollo/react-hooks';
+import { useDispatch } from 'react-redux';
+import { TextField, Button } from '@material-ui/core';
 import mutation from '../../gqlQueries/create';
-import { Field, reduxForm } from 'redux-form';
-import Button from 'material-ui/FlatButton';
-import { connect } from 'react-redux';
-import { TextField } from 'redux-form-material-ui';
 import query from '../../gqlQueries/list';
-import { showCreateButton as showCreateButtonAction } from '../../../../actions/ui/crud/createButton';
-import { hideCreateForm as hideCreateButtonAction } from '../../../../actions/ui/crud/createForm';
+import { showCreateButton } from '../../../../actions/ui/crud/createButton';
+import { hideCreateForm } from '../../../../actions/ui/crud/createForm';
 
-class New extends Component {
-  onSubmit(formObject, dispatch, props) {
-    props.mutate({
+const New = () => {
+  const dispatch = useDispatch();
+  const { handleSubmit, register, errors } = useForm();
+  const [mutate] = useMutation(mutation);
+
+  const cancelCreation = () => {
+    dispatch(showCreateButton('bank'));
+    dispatch(hideCreateForm('bank'));
+  };
+
+  const onSubmit = formObject => {
+    mutate({
       variables: { label: formObject.label },
-      refetchQueries: [ { query } ]
+      refetchQueries: [{ query }],
     }).then(() => {
-      props.cancelCreation();
+      cancelCreation();
     });
-  }
-
-  render() {
-    const { handleSubmit, cancelCreation } = this.props;
-
-    return (
-      <form onSubmit={handleSubmit(this.onSubmit)}>
-        <Field name="label" component={TextField} floatingLabelText="Label" />
-        <Button type="submit" primary={true} label={'Ok'} />
-        <Button primary={false} label={'Cancel'} onClick={cancelCreation} />
-      </form>
-    );
-  }
-}
-
-function mapDispatchToProps(dispatch) {
-  return {
-    cancelCreation: () => {
-      dispatch(showCreateButtonAction('bank'));
-      dispatch(hideCreateButtonAction('bank'));
-    },
   };
-}
 
-function mapStateToProps() {
-  return {
-    form: 'newBank'
-  };
-}
+  return (
+    <form onSubmit={handleSubmit(onSubmit)} style={{ marginBottom: 15 }}>
+      <TextField name="label" type="text" style={{ marginBottom: 15 }} error={!!errors.label} label="Label" inputRef={register} helperText={errors.label ? errors.label.message : ''} fullWidth />
+      <div style={{ textAlign: 'right' }}>
+        <Button onClick={cancelCreation}>Cancel</Button>
+        <Button type="submit" color="primary">
+          Ok
+        </Button>
+      </div>
+    </form>
+  );
+};
 
-export default graphql(mutation)(connect(mapStateToProps, mapDispatchToProps)(reduxForm()(New)));
+export default New;

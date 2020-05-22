@@ -1,31 +1,15 @@
-import React, { Component } from 'react';
-import { connect } from 'react-redux';
-import { getCrudEditState as getCrudEditStateSelector } from '../../../selectors/ui'
+import React from 'react';
+import { useSelector } from 'react-redux';
+import { getCrudEditState } from '../../../selectors/ui';
 import Show from './Show/index';
 import Edit from './Edit/index';
 
-class OperationComponent extends Component {
+const Operation = ({ operation, idPeriod, hideAction }) => {
+  const edit = useSelector(state => getCrudEditState(state, { entity: 'operation', id: operation.id }));
 
-  constructor() {
-    super();
+  if (edit) return <Edit idPeriod={idPeriod} operation={operation} />;
 
-    this.iconStyle = { cursor: 'pointer' };
-  }
+  return <Show hideAction={hideAction} idPeriod={idPeriod} operation={operation} />;
+};
 
-  render() {
-    const { operation, edit, idPeriod, hideAction } = this.props;
-
-    if (edit) {
-      return (<Edit idPeriod={idPeriod} operation={operation} />);
-    }
-    return (<Show hideAction={hideAction} idPeriod={idPeriod} operation={operation} />);
-  };
-}
-
-function mapStateToProps(state, ownProps) {
-  return {
-    edit: getCrudEditStateSelector(state, { entity: 'operation', id: ownProps.operation.id }),
-  };
-}
-
-export default connect(mapStateToProps, null)(OperationComponent);
+export default Operation;

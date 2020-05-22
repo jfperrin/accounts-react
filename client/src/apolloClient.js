@@ -47,7 +47,7 @@ const link = split(
 );
 
 const cache = new InMemoryCache({
-  cacheResolvers: {
+  cacheRedirects: {
     Query: {
       bank: (_, args) => toIdValue(cache.config.dataIdFromObject({ __typename: 'BanksType', id: args.id })),
       period: (_, args) => toIdValue(cache.config.dataIdFromObject({ __typename: 'PeriodsType', id: args.id })),
