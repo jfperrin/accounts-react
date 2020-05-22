@@ -1,13 +1,15 @@
 import mongoose from 'mongoose';
 
-const Schema = mongoose.Schema;
+const { Schema } = mongoose;
 
 const banksSchema = new Schema({
   label: { type: String },
-  balances: [{
-    type: Schema.Types.ObjectId,
-    ref: 'balances',
-  }],
+  balances: [
+    {
+      type: Schema.Types.ObjectId,
+      ref: 'balances',
+    },
+  ],
   user: {
     type: Schema.Types.ObjectId,
     ref: 'users',

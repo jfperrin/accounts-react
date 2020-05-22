@@ -1,72 +1,91 @@
-import React, { Component } from 'react';
-import { connect } from 'react-redux';
-import { graphql } from 'react-apollo';
+import React from 'react';
+import { useDispatch } from 'react-redux';
+import { useMutation } from 'react-apollo';
+import { TextField, Button } from '@material-ui/core';
+import { useForm } from 'react-hook-form';
 import mutation from '../../gqlQueries/update';
-import { Field, reduxForm } from 'redux-form';
-import Button from 'material-ui/FlatButton';
-import { TextField } from 'redux-form-material-ui';
 import query from '../../gqlQueries/list';
 import { toggleEditForm as toggleEditFormAction } from '../../../../actions/ui/crud/updateForm';
 
+const Edit = ({ recurrentOperation }) => {
+  const dispatch = useDispatch();
+  const [mutate] = useMutation(mutation);
+  const { handleSubmit, register, errors } = useForm();
 
-class Edit extends Component {
-
-  onSubmit(formObject, dispatch, props) {
-    props.mutate({
-      variables:  {
+  const onSubmit = formObject => {
+    mutate({
+      variables: {
         label: formObject.label,
-        amount: formObject.amount,
-        day: formObject.day,
-        id: props.recurrentOperation.id,
+        amount: parseFloat(formObject.amount),
+        day: parseInt(formObject.day, 10),
+        id: recurrentOperation.id,
       },
-      refetchQueries: [ { query } ]
+      refetchQueries: [{ query }],
     }).then(() => {
-      props.cancel();
+      dispatch(toggleEditFormAction('recurrentOperation', recurrentOperation.id));
     });
-  }
+  };
 
-  render() {
-    const { handleSubmit, cancel } = this.props;
-
-    return (
-      <form onSubmit={handleSubmit(this.onSubmit)}>
-        <div style={{ display: 'flex', marginBottom: '25px' }}>
-          <div style={{ margin: 'auto 10px', paddingTop: '5px' }}>
-            <Field name="day" component={TextField} floatingLabelText="Jours" fullWidth={true} />
-          </div>
-          <div style={{ flex: 1, fontWeight: 'bold', paddingTop: '5px' }}>
-            <Field name="label" component={TextField} floatingLabelText="Label" fullWidth={true} />
-          </div>
-          <div style={{ margin: 'auto 10px', paddingTop: '5px' }}>
-            <Field name="amount" component={TextField} floatingLabelText="Montant" fullWidth={true} />
-          </div>
+  return (
+    <form onSubmit={handleSubmit(onSubmit)} style={{ marginBottom: 15 }}>
+      <div
+        style={{
+          display: 'flex',
+          marginBottom: 15,
+        }}
+      >
+        <div
+          style={{
+            margin: 'auto 10px',
+            paddingTop: 5,
+          }}
+        >
+          <TextField
+            name="day"
+            type="number"
+            defaultValue={recurrentOperation.day}
+            error={!!errors.day}
+            label="Jours"
+            inputRef={register}
+            helperText={errors.day ? errors.day.message : ''}
+            fullWidth
+          />
         </div>
-        <div style={{ float: 'right' }}>
-          <Button type="submit" primary={true} label={'Ok'} />
-          <Button primary={false} label={'Cancel'} onClick={cancel} />
+        <div
+          style={{
+            flex: 1,
+            fontWeight: 'bold',
+            paddingTop: '5px',
+          }}
+        >
+          <TextField name="label" defaultValue={recurrentOperation.label} error={!!errors.label} label="Label" inputRef={register} helperText={errors.label ? errors.label.message : ''} fullWidth />
         </div>
-      </form>
-    );
-  }
+        <div
+          style={{
+            margin: 'auto 10px',
+            paddingTop: '5px',
+          }}
+        >
+          <TextField
+            name="amount"
+            type="number"
+            defaultValue={recurrentOperation.amount}
+            error={!!errors.label}
+            label="Montant"
+            inputRef={register}
+            helperText={errors.amount ? errors.amount.message : ''}
+            fullWidth
+          />
+        </div>
+      </div>
+      <div style={{ textAlign: 'right' }}>
+        <Button onClick={() => dispatch(toggleEditFormAction('recurrentOperation', recurrentOperation.id))}>Cancel</Button>
+        <Button type="submit" color="primary">
+          Ok
+        </Button>
+      </div>
+    </form>
+  );
 };
 
-function mapDispatchToProps(dispatch, ownProps) {
-  return {
-    cancel: () => {
-      dispatch(toggleEditFormAction('recurrentOperation', ownProps.recurrentOperation.id));
-    },
-  };
-}
-
-function mapStateToProps(state, ownProps) {
-  return {
-    initialValues: {
-      day: ownProps.recurrentOperation.day,
-      label: ownProps.recurrentOperation.label,
-      amount: ownProps.recurrentOperation.amount,
-    },
-    form: `recurrentOperation${ownProps.recurrentOperation.id}`,
-  };
-}
-
-export default graphql(mutation)(connect(mapStateToProps, mapDispatchToProps)(reduxForm()(Edit)));
+export default Edit;

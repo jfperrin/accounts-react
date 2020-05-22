@@ -1,54 +1,48 @@
-import React, { Component } from 'react';
-import { graphql } from 'react-apollo';
-import { Field, reduxForm } from 'redux-form';
-import Button from 'material-ui/FlatButton';
-import { connect } from 'react-redux';
-import { TextField } from 'redux-form-material-ui';
+import React from 'react';
+import { useForm } from 'react-hook-form';
+import { useMutation } from 'react-apollo';
+import { Button, TextField } from '@material-ui/core';
+import { useDispatch } from 'react-redux';
 import query from '../../gqlQueries/list';
 import mutation from '../../gqlQueries/create';
-import { showCreateButton as showCreateButtonAction } from '../../../../actions/ui/crud/createButton';
-import { hideCreateForm as hideCreateButtonAction } from '../../../../actions/ui/crud/createForm';
+import { showCreateButton } from '../../../../actions/ui/crud/createButton';
+import { hideCreateForm } from '../../../../actions/ui/crud/createForm';
 
-class New extends Component {
-  onSubmit(formObject, dispatch, props) {
-    props.mutate({
+const New = () => {
+  const { handleSubmit, register, errors } = useForm();
+  const dispatch = useDispatch();
+  const [mutate] = useMutation(mutation);
+
+  const cancelCreation = () => {
+    dispatch(showCreateButton('period'));
+    dispatch(hideCreateForm('period'));
+  };
+
+  const onSubmit = formObject => {
+    mutate({
       variables: {
-        year: formObject.year,
-        month: formObject.month
+        year: parseInt(formObject.year, 10),
+        month: parseInt(formObject.month, 10),
       },
-      refetchQueries: [ { query } ]
+      refetchQueries: [{ query }],
     }).then(() => {
-      props.cancelCreation();
+      cancelCreation();
     });
-  }
-
-  render() {
-    const { handleSubmit, cancelCreation } = this.props;
-
-    return (
-      <form onSubmit={handleSubmit(this.onSubmit)}>
-        <Field name="month" component={TextField} floatingLabelText="Mois" />
-        <Field name="year" component={TextField} floatingLabelText="Année" />
-        <Button type="submit" primary={true} label={'Ok'} />
-        <Button primary={false} label={'Cancel'} onClick={cancelCreation} />
-      </form>
-    );
-  }
-}
-
-function mapDispatchToProps(dispatch) {
-  return {
-    cancelCreation: () => {
-      dispatch(showCreateButtonAction('period'));
-      dispatch(hideCreateButtonAction('period'));
-    },
   };
-}
 
-function mapStateToProps() {
-  return {
-    form: 'newPeriod'
-  };
-}
+  return (
+    <form onSubmit={handleSubmit(onSubmit)} style={{ marginBottom: 15 }}>
+      <TextField name="month" style={{ marginBottom: 15 }} type="number" error={!!errors.month} label="Mois" inputRef={register} helperText={errors.month ? errors.month.message : ''} fullWidth />
+      <TextField name="year" style={{ marginBottom: 15 }} type="number" error={!!errors.year} label="Année" inputRef={register} helperText={errors.year ? errors.year.message : ''} fullWidth />
 
-export default graphql(mutation)(connect(mapStateToProps, mapDispatchToProps)(reduxForm()(New)));
+      <div style={{ textAlign: 'right' }}>
+        <Button onClick={cancelCreation}>Cancel</Button>
+        <Button type="submit" color="primary">
+          Ok
+        </Button>
+      </div>
+    </form>
+  );
+};
+
+export default New;

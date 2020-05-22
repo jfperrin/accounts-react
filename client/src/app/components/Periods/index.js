@@ -1,86 +1,59 @@
-import React, { Component } from 'react';
-import { connect } from 'react-redux';
-import { graphql } from 'react-apollo';
-import PlusOneIcon from 'material-ui/svg-icons/social/plus-one';
-import FloatingActionButton from 'material-ui/FloatingActionButton';
+import React, { useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { useQuery } from 'react-apollo';
+import PlusOneIcon from '@material-ui/icons/PlusOne';
 import query from './gqlQueries/list';
 import NewPeriod from './ListItem/New';
 import Period from './ListItem/index';
-import { updateLayoutTitle as updateLayoutTitleAction } from '../../actions/ui/layout/title'
+import { updateLayoutTitle } from '../../actions/ui/layout/title';
 import { hideCreateButton } from '../../actions/ui/crud/createButton';
 import { showCreateForm } from '../../actions/ui/crud/createForm';
-import {
-  getCrudCreateButtonState as getCrudCreateButtonStateSelector,
-  getCrudCreateFormState as getCrudCreateFormStateSelector,
-} from '../../selectors/ui';
+import { getCrudCreateButtonState, getCrudCreateFormState } from '../../selectors/ui';
+import Index from '../common/Button';
 
-class Periods extends Component {
-
-  keyForSorting(period) {
-    return parseInt(`${period.year}${period.month.toLocaleString('en-US', {
+const keyForSorting = (year, month) =>
+  parseInt(
+    `${year}${month.toLocaleString('en-US', {
       minimumIntegerDigits: 2,
-      useGrouping: false
-    })}`, 10)
-  }
+      useGrouping: false,
+    })}`,
+    10,
+  );
 
-  renderPeriods() {
+const Periods = () => {
+  const dispatch = useDispatch();
+  const { data, loading, refetch } = useQuery(query);
+  const displayCreateForm = useSelector(state => getCrudCreateFormState(state, { entity: 'period' }));
+  const displayCreateButton = useSelector(state => getCrudCreateButtonState(state, { entity: 'period' })) !== false;
 
-    if (this.props.data.loading) {
-      return <div>Loading...</div>;
-    }
+  useEffect(() => {
+    dispatch(updateLayoutTitle('Périodes'));
+  }, [dispatch]);
 
-    if (this.props.data.periods) {
-      const periods = Object.assign([], this.props.data.periods);
-      return periods.sort((a, b) => this.keyForSorting(a) < this.keyForSorting(b)).map((period) => {
-        return (
-          <Period refetch={this.props.data.refetch} key={period.id} period={period} />
-        );
-      });
-    } else {
-      return <div>Error</div>
-    }
-  }
-
-  componentWillMount() {
-    this.props.updateLayoutTitle('Périodes');
-  }
-
-  render() {
-
-    if (this.props.data.loading) {
-      return <div>Loading...</div>;
-    }
-
-    return (
-      <div>
-        {this.renderPeriods()}
-        {this.props.displayCreateForm && <NewPeriod />}
-        {this.props.displayCreateButton &&
-        <FloatingActionButton className="floating-right" backgroundColor="red" onClick={this.props.showCreateForm}>
-          <PlusOneIcon />
-        </FloatingActionButton>}
-      </div>
-    );
-  }
-}
-
-function mapDispatchToProps(dispatch) {
-  return {
-    updateLayoutTitle: (title) => {
-      dispatch(updateLayoutTitleAction(title));
-    },
-    showCreateForm: () => {
-      dispatch(showCreateForm('period'));
-      dispatch(hideCreateButton('period'));
-    },
+  const toggleCreateForm = () => {
+    dispatch(showCreateForm('period'));
+    dispatch(hideCreateButton('period'));
   };
-}
 
-function mapStateToProps(state) {
-  return {
-    displayCreateForm: getCrudCreateFormStateSelector(state, { entity: 'period' }),
-    displayCreateButton: getCrudCreateButtonStateSelector(state, { entity: 'period' }) !== false,
-  };
-}
+  if (loading) {
+    return <div>Loading...</div>;
+  }
 
-export default connect(mapStateToProps, mapDispatchToProps)(graphql(query)(Periods));
+  return (
+    <div>
+      {data.periods
+        .sort((a, b) => keyForSorting(b.year, b.month) - keyForSorting(a.year, a.month))
+        .map(period => {
+          return <Period refetch={refetch} key={period.id} period={period} />;
+        })}
+      {displayCreateForm && <NewPeriod />}
+      {displayCreateButton && (
+        <Index className="floating-right" size="small" onClick={toggleCreateForm}>
+          <PlusOneIcon fontSize={'small'} />
+        </Index>
+      )}
+    </div>
+  );
+};
+
+export default Periods;

@@ -1,19 +1,52 @@
 {
-  "extends": "airbnb",
+  "extends": ["airbnb", "prettier", "prettier/react"],
+  "plugins": ["prettier"],
   "parser": "babel-eslint",
+  "env": {
+    "browser": true,
+    "es6": true
+  },
   "rules": {
-    "array-bracket-spacing": [2, "always"],
-    "jsx-quotes": [1, "prefer-single"],
-    "jsx-a11y/no-static-element-interactions": 0,
+    "prefer-destructuring": ["error", {
+      "array": false,
+      "object": true
+    }, {
+      "enforceForRenamedProperties": false
+    }],
+    "no-console": ["error", { "allow": ["warn", "error"] }],
+    "prettier/prettier": "error",
     "max-len": ["error", { "code": 200, "ignoreTrailingComments": true }],
     "no-use-before-define": [2, "nofunc"],
     "no-shadow": 0,
     "prefer-const": 1,
     "quote-props": [1, "consistent-as-needed"],
     "react/no-multi-comp": 0,
-    "react/prop-types": 0,
-    "react/jsx-filename-extension": [1, { "extensions": [".js", ".jsx"] }],
     "react/no-array-index-key": 0,
-    "space-before-function-paren": [2, {"anonymous": "always", "named": "never"}]
+    "space-before-function-paren": [2, {"anonymous": "always", "named": "never"}],
+    "react/jsx-filename-extension": [1, { "extensions": [".js", ".jsx"] }],
+    "react/prefer-stateless-function": [1, { "ignorePureComponents": true }],
+    "jsx-a11y/no-static-element-interactions": "off",
+    "jsx-a11y/click-events-have-key-events": "off",
+    "jsx-a11y/media-has-caption": "off",
+    "jsx-a11y/control-has-associated-label": "off",
+    "jsx-a11y/label-has-associated-control": "off",
+    "arrow-parens": [2, "as-needed"],
+    "implicit-arrow-linebreak": "off",
+    "import/prefer-default-export": "off",
+    "lodash/import-scope": "off",
+    "no-param-reassign": ["error", { "props": true, "ignorePropertyModificationsFor": ["draft"] }],
+    "no-prototype-builtins": "off",
+    "consistent-return": "off",
+    "react/require-default-props": "off",
+    "react/prop-types": "off",
+    "react/forbid-prop-types": "off",
+    "react/jsx-props-no-spreading": "off",
+    "react/jsx-curly-brace-presence": "off",
+    "react/sort-comp": "off",
+    "no-unused-vars": ["error", { "varsIgnorePattern": "[Rr]eact", "argsIgnorePattern": "^_" }],
+    "lodash/prefer-lodash-method": 0,
+    "object-curly-spacing": ["error", "always"],
+    "object-curly-newline": 0,
+    "jsx-a11y/anchor-is-valid": "off"
   }
 }

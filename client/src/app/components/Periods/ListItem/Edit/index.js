@@ -1,55 +1,63 @@
-import React, { Component } from 'react';
-import { connect } from 'react-redux';
-import { graphql } from 'react-apollo';
+import React from 'react';
+import { useDispatch } from 'react-redux';
+import { useMutation } from 'react-apollo';
+import { useForm } from 'react-hook-form';
+import Button from '@material-ui/core/Button';
+import TextField from '@material-ui/core/TextField';
 import mutation from '../../gqlQueries/update';
-import { Field, reduxForm } from 'redux-form';
-import Button from 'material-ui/FlatButton';
-import { TextField } from 'redux-form-material-ui';
 import query from '../../gqlQueries/list';
-import { toggleEditForm as toggleEditFormAction } from '../../../../actions/ui/crud/updateForm';
+import { toggleEditForm } from '../../../../actions/ui/crud/updateForm';
 
+const Edit = ({ period }) => {
+  const { handleSubmit, register, errors } = useForm();
+  const dispatch = useDispatch();
+  const [mutate] = useMutation(mutation);
 
-class Edit extends Component {
-
-  onSubmit(formObject, dispatch, props) {
-    props.mutate({
-      variables:  { year: formObject.year, month: formObject.month, id: props.period.id },
-      refetchQueries: [ { query } ]
+  const onSubmit = formObject => {
+    mutate({
+      variables: {
+        year: parseInt(formObject.year, 10),
+        month: parseInt(formObject.month, 10),
+        id: period.id,
+      },
+      refetchQueries: [{ query }],
     }).then(() => {
-      props.cancel();
+      dispatch(toggleEditForm('period', period.id));
     });
-  }
-
-  render() {
-    const { handleSubmit, cancel } = this.props;
-
-    return (
-      <form onSubmit={handleSubmit(this.onSubmit)}>
-        <Field name="month" component={TextField} floatingLabelText="Mois" />
-        <Field name="year" component={TextField} floatingLabelText="Année" />
-        <Button type="submit" primary={true} label={'Ok'} />
-        <Button primary={false} label={'Cancel'} onClick={cancel} />
-      </form>
-    );
-  }
-}
-
-function mapDispatchToProps(dispatch, ownProps) {
-  return {
-    cancel: () => {
-      dispatch(toggleEditFormAction('period', ownProps.period.id));
-    },
   };
-}
 
-function mapStateToProps(state, ownProps) {
-  return {
-    initialValues: {
-      year: ownProps.period.year,
-      month: ownProps.period.month,
-    },
-    form: `period${ownProps.period.id}`,
-  };
-}
+  return (
+    <form onSubmit={handleSubmit(onSubmit)} style={{ marginBottom: 15 }}>
+      <TextField
+        name="month"
+        style={{ marginBottom: 15 }}
+        type="number"
+        defaultValue={period.month}
+        error={!!errors.month}
+        label="Mois"
+        inputRef={register}
+        helperText={errors.month ? errors.month.message : ''}
+        fullWidth
+      />
+      <TextField
+        name="year"
+        type="number"
+        style={{ marginBottom: 15 }}
+        defaultValue={period.year}
+        error={!!errors.year}
+        label="Année"
+        inputRef={register}
+        helperText={errors.year ? errors.year.message : ''}
+        fullWidth
+      />
+      <div style={{ textAlign: 'right' }}>
+        <Button onClick={() => dispatch(toggleEditForm('period', period.id))}>Cancel</Button>
+        <Button type="submit" color="primary">
+          Ok
+        </Button>
+      </div>
+    </form>
+  );
+};
 
-export default graphql(mutation)(connect(mapStateToProps, mapDispatchToProps)(reduxForm()(Edit)));
+export default Edit;

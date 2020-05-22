@@ -3,14 +3,7 @@ import OperationType from './operationsType';
 import BalanceType from './balancesType';
 import GraphQLDate from 'graphql-date';
 
-const {
-  GraphQLString,
-  GraphQLList,
-  GraphQLObjectType,
-  GraphQLInt,
-  GraphQLID,
-  GraphQLFloat,
-} = require('graphql');
+const { GraphQLString, GraphQLList, GraphQLObjectType, GraphQLInt, GraphQLID, GraphQLFloat } = require('graphql');
 
 const GraphQLBalance = new GraphQLObjectType({
   name: 'GraphQLBalance',
@@ -36,22 +29,22 @@ const GraphQLObject = new GraphQLObjectType({
     display: {
       type: GraphQLString,
       resolve(parentValue) {
-        return `${parentValue.month}-${parentValue.year}`;
+        return `${`0${parentValue.month}`.slice(-2)}-${parentValue.year}`;
       },
     },
     operations: {
       type: new GraphQLList(OperationType),
       resolve(parentValue, args, req) {
         return PeriodModel.findOperations(parentValue.id, req.user);
-      }
+      },
     },
     balances: {
       type: new GraphQLList(BalanceType),
       resolve(parentValue, args, req) {
         return PeriodModel.findBalances(parentValue.id, req.user);
-      }
-    }
-  })
+      },
+    },
+  }),
 });
 
 export default GraphQLObject;
