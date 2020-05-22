@@ -1,27 +1,15 @@
-import React, { useState } from 'react';
+import { DatePicker, LocalizationProvider } from '@material-ui/pickers';
 import DateFnsUtils from '@date-io/date-fns';
+import React, { memo } from 'react';
 import { fr } from 'date-fns/locale';
 import { TextField } from '@material-ui/core';
-import { DatePicker, LocalizationProvider } from '@material-ui/pickers';
 
-const CustomDatePicker = props => {
-  const { input } = props;
-  const [selectedDate, setSelectedDate] = useState(input.value);
-
-  const handleDateChange = date => {
-    setSelectedDate(date);
-    if (Date.parse(date)) {
-      input.onChange(date.toISOString());
-    } else {
-      input.onChange(null);
-    }
-  };
-
+const CustomDatePicker = ({ id, name, label, onChange, value }) => {
   return (
     <LocalizationProvider dateAdapter={DateFnsUtils} locale={fr}>
-      <DatePicker value={selectedDate} onChange={handleDateChange} renderInput={props => <TextField {...props} />} />
+      <DatePicker autoOk id={id} name={name} label={label} format="DD/MM/YYYY" value={value} onChange={onChange} renderInput={p => <TextField {...p} />} />
     </LocalizationProvider>
   );
 };
 
-export default CustomDatePicker;
+export default memo(CustomDatePicker);

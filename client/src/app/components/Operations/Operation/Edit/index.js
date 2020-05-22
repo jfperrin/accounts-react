@@ -1,83 +1,71 @@
-import React, { Component } from 'react';
-import { connect } from 'react-redux';
-import { graphql } from 'react-apollo';
-import { Field, reduxForm } from 'redux-form';
+import React, { useState } from 'react';
+import { useDispatch } from 'react-redux';
+import { useMutation } from 'react-apollo';
 import DoneIcon from '@material-ui/icons/Done';
 import CancelIcon from '@material-ui/icons/Cancel';
 import IconButton from '@material-ui/core/IconButton';
+import { useForm } from 'react-hook-form';
+import TextField from '@material-ui/core/TextField';
 import query from '../../../Periods/gqlQueries/get';
 import mutation from '../../gqlQueries/update';
-import TextField from '../../../common/TextField';
-import DatePicker from '../../../common/DatePicker';
+import CustomDatePicker from '../../../common/DatePicker';
 import { toggleEditForm as toggleEditFormAction } from '../../../../actions/ui/crud/updateForm';
 
-class Edit extends Component {
-  onSubmit(formObject, dispatch, props) {
-    props
-      .mutate({
-        variables: {
-          label: formObject.label,
-          dt: formObject.dt,
-          amount: parseFloat(formObject.amount),
-          id: props.operation.id,
+const Edit = ({ idPeriod, operation }) => {
+  const { handleSubmit, register, errors } = useForm();
+  const [selectedDate, setSelectedDate] = useState(operation.dt);
+  const dispatch = useDispatch();
+  const [mutate] = useMutation(mutation);
+
+  const onSubmit = formObject => {
+    mutate({
+      variables: {
+        label: formObject.label,
+        dt: selectedDate,
+        amount: parseFloat(formObject.amount),
+        id: operation.id,
+      },
+      refetchQueries: [
+        {
+          query,
+          variables: { id: idPeriod },
         },
-        refetchQueries: [
-          {
-            query,
-            variables: {
-              id: props.idPeriod,
-            },
-          },
-        ],
-      })
-      .then(() => {
-        props.cancel();
-      });
-  }
-
-  render() {
-    const { handleSubmit, cancel } = this.props;
-    return (
-      <form className="operation operation-form" onSubmit={handleSubmit(this.onSubmit)}>
-        <div className="dt">
-          <Field name="dt" component={DatePicker} />
-        </div>
-        <div className="label">
-          <Field name="label" component={TextField} />
-        </div>
-        <div className="amount">
-          <Field name="amount" component={TextField} />
-        </div>
-        <div className="actions">
-          <IconButton type="submit">
-            <DoneIcon />
-          </IconButton>
-          <IconButton onClick={cancel}>
-            <CancelIcon />
-          </IconButton>
-        </div>
-      </form>
-    );
-  }
-}
-
-function mapDispatchToProps(dispatch, ownProps) {
-  return {
-    cancel: () => {
-      dispatch(toggleEditFormAction('operation', ownProps.operation.id));
-    },
+      ],
+    }).then(() => {
+      dispatch(toggleEditFormAction('operation', operation.id));
+    });
   };
-}
 
-function mapStateToProps(state, ownProps) {
-  return {
-    initialValues: {
-      label: ownProps.operation.label,
-      amount: ownProps.operation.amount,
-      dt: ownProps.operation.dt,
-    },
-    form: `operation${ownProps.operation.id}`,
-  };
-}
+  return (
+    <form className="operation operation-form" onSubmit={handleSubmit(onSubmit)}>
+      <div className="dt">
+        <CustomDatePicker label="Date" name="dt" id="dt" value={selectedDate} onChange={setSelectedDate} />
+      </div>
+      <div className="label">
+        <TextField name="label" type="text" defaultValue={operation.label} error={!!errors.label} label="Label" inputRef={register} helperText={errors.label ? errors.label.message : ''} fullWidth />
+      </div>
+      <div className="amount">
+        <TextField
+          name="amount"
+          type="text"
+          defaultValue={operation.amount}
+          error={!!errors.amount}
+          label="Montant"
+          inputRef={register}
+          helperText={errors.label ? errors.label.amount : ''}
+          fullWidth
+        />
+      </div>
+      <div className="actions">
+        <IconButton type="submit">
+          <DoneIcon />
+        </IconButton>
+        <IconButton onClick={() => dispatch(toggleEditFormAction('operation', operation.id))}>
+          <CancelIcon />
+        </IconButton>
+      </div>
+    </form>
+  );
+};
 
-export default graphql(mutation)(connect(mapStateToProps, mapDispatchToProps)(reduxForm()(Edit)));
+export default Edit;

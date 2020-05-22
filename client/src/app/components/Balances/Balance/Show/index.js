@@ -1,48 +1,33 @@
-import React, { Component } from 'react';
-import { connect } from 'react-redux';
-import { graphql } from 'react-apollo';
-import mutation from '../../gqlQueries/delete';
+import React from 'react';
+import { useDispatch } from 'react-redux';
+import { useMutation } from 'react-apollo';
 import EditIcon from '@material-ui/icons/Edit';
 import DeleteIcon from '@material-ui/icons/DeleteForever';
+import mutation from '../../gqlQueries/delete';
 import { toggleEditForm } from '../../../../actions/ui/crud/updateForm';
 
-class BalanceShowComponent extends Component {
-  constructor() {
-    super();
+const iconStyle = { cursor: 'pointer' };
 
-    this.iconStyle = { cursor: 'pointer' };
-  }
+const BalanceShowComponent = ({ balance, refetch }) => {
+  const dispatch = useDispatch();
+  const [mutate] = useMutation(mutation);
 
-  deleteBalance(balance) {
-    this.props
-      .mutate({
-        variables: { id: balance.id },
-      })
-      .then(() => this.props.refetch());
-  }
-
-  render() {
-    const { balance, toggleEdit } = this.props;
-
-    return (
-      <div className="balance">
-        <div className="label">{balance.bank.label}</div>
-        <div className="amount">{balance.amount.toFixed(2)} €</div>
-        <div className={'actions'}>
-          <EditIcon fontSize="small" onClick={() => toggleEdit(balance.id)} style={this.iconStyle} />
-          <DeleteIcon fontSize="small" onClick={() => this.deleteBalance(balance)} style={this.iconStyle} />
-        </div>
-      </div>
-    );
-  }
-}
-
-function mapDispatchToProps(dispatch) {
-  return {
-    toggleEdit: id => {
-      dispatch(toggleEditForm('balance', id));
-    },
+  const deleteBalance = () => {
+    mutate({
+      variables: { id: balance.id },
+    }).then(() => refetch());
   };
-}
 
-export default graphql(mutation)(connect(null, mapDispatchToProps)(BalanceShowComponent));
+  return (
+    <div className="balance">
+      <div className="label">{balance.bank.label}</div>
+      <div className="amount">{balance.amount.toFixed(2)} €</div>
+      <div className={'actions'}>
+        <EditIcon fontSize="small" onClick={() => dispatch(toggleEditForm('balance', balance.id))} style={iconStyle} />
+        <DeleteIcon fontSize="small" onClick={() => deleteBalance(balance)} style={iconStyle} />
+      </div>
+    </div>
+  );
+};
+
+export default BalanceShowComponent;

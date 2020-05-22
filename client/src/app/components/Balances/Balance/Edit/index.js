@@ -1,63 +1,52 @@
-import React, { Component } from 'react';
-import { connect } from 'react-redux';
-import { graphql } from 'react-apollo';
-import { Field, reduxForm } from 'redux-form';
-import IconButton from '@material-ui/core/IconButton';
+import React from 'react';
+import { useDispatch } from 'react-redux';
+import { useMutation } from 'react-apollo';
+import { useForm } from 'react-hook-form';
+import { TextField, IconButton } from '@material-ui/core';
 import DoneIcon from '@material-ui/icons/Done';
 import CancelIcon from '@material-ui/icons/Cancel';
-import TextField from '../../../common/TextField';
 import mutation from '../../gqlQueries/update';
-import { toggleEditForm as toggleEditFormAction } from '../../../../actions/ui/crud/updateForm';
+import { toggleEditForm } from '../../../../actions/ui/crud/updateForm';
 
-class Edit extends Component {
-  onSubmit(formObject, dispatch, props) {
-    props
-      .mutate({
-        variables: { amount: formObject.amount, id: props.balance.id },
-      })
-      .then(() => {
-        props.refetch();
-        props.cancel();
-      });
-  }
+const Edit = ({ balance, refetch }) => {
+  const { handleSubmit, register, errors } = useForm();
+  const dispatch = useDispatch();
+  const [mutate] = useMutation(mutation);
 
-  render() {
-    const { handleSubmit, cancel, balance } = this.props;
-
-    return (
-      <form className="balance balance-form" onSubmit={handleSubmit(this.onSubmit)}>
-        <div className="label">{balance.bank.label}</div>
-        <div className="amount">
-          <Field name="amount" component={TextField} />
-        </div>
-        <div className="actions">
-          <IconButton type="submit">
-            <DoneIcon />
-          </IconButton>
-          <IconButton onClick={cancel}>
-            <CancelIcon />
-          </IconButton>
-        </div>
-      </form>
-    );
-  }
-}
-
-function mapDispatchToProps(dispatch, ownProps) {
-  return {
-    cancel: () => {
-      dispatch(toggleEditFormAction('balance', ownProps.balance.id));
-    },
+  const onSubmit = formObject => {
+    mutate({
+      variables: { amount: formObject.amount, id: balance.id },
+    }).then(() => {
+      refetch();
+      dispatch(toggleEditForm('balance', balance.id));
+    });
   };
-}
 
-function mapStateToProps(state, ownProps) {
-  return {
-    initialValues: {
-      amount: ownProps.balance.amount,
-    },
-    form: `balance${ownProps.balance.id}`,
-  };
-}
+  return (
+    <form className="balance balance-form" onSubmit={handleSubmit(onSubmit)}>
+      <div className="label">{balance.bank.label}</div>
+      <div className="amount">
+        <TextField
+          name="amount"
+          type="number"
+          defaultValue={balance.amount}
+          error={!!errors.amount}
+          label="Montant"
+          inputRef={register}
+          helperText={errors.amount ? errors.amount.message : ''}
+          fullWidth
+        />
+      </div>
+      <div className="actions">
+        <IconButton type="submit">
+          <DoneIcon />
+        </IconButton>
+        <IconButton onClick={() => dispatch(toggleEditForm('balance', balance.id))}>
+          <CancelIcon />
+        </IconButton>
+      </div>
+    </form>
+  );
+};
 
-export default graphql(mutation)(connect(mapStateToProps, mapDispatchToProps)(reduxForm()(Edit)));
+export default Edit;

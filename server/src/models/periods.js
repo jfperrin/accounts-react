@@ -4,7 +4,7 @@ import RecurrentOperationModel from './recurrentOperations';
 import BalanceModel from './balances';
 import BankModel from './banks';
 
-const Schema = mongoose.Schema;
+const { Schema } = mongoose;
 const PeriodsSchema = new Schema({
   month: { type: Number },
   year: { type: Number },

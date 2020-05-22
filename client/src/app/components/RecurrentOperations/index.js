@@ -1,6 +1,6 @@
-import React, { Component } from 'react';
-import { connect } from 'react-redux';
-import { graphql } from 'react-apollo';
+import React, { useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { useQuery } from 'react-apollo';
 import PlusOneIcon from '@material-ui/icons/PlusOne';
 import query from './gqlQueries/list';
 import NewRecurrentOperation from './RecurrentOperation/New';
@@ -11,62 +11,42 @@ import { showCreateForm } from '../../actions/ui/crud/createForm';
 import { getCrudCreateButtonState as getCrudCreateButtonStateSelector, getCrudCreateFormState as getCrudCreateFormStateSelector } from '../../selectors/ui';
 import Index from '../common/Button';
 
-class RecurrentOperations extends Component {
-  renderRecurrentOperations() {
-    const { data } = this.props;
-    const recurrentOperations = Object.assign([], data.recurrentOperations);
-    return recurrentOperations
-      .sort((a, b) => a.day - b.day)
-      .map(recurrentOperation => {
-        return <RecurrentOperation refetch={data.refetch} key={recurrentOperation.id} recurrentOperation={recurrentOperation} />;
-      });
-  }
+const RecurrentOperations = () => {
+  const dispatch = useDispatch();
+  const { data, refetch, loading } = useQuery(query);
+  const displayCreateForm = useSelector(state => getCrudCreateFormStateSelector(state, { entity: 'recurrentOperation' }));
+  const displayCreateButton = useSelector(state => getCrudCreateButtonStateSelector(state, { entity: 'recurrentOperation' })) !== false;
 
-  componentDidMount() {
-    const { updateLayoutTitle } = this.props;
+  useEffect(() => {
+    dispatch(updateLayoutTitleAction('Opérations#Mensuelles'));
+  }, []);
 
-    updateLayoutTitle('Opérations#Mensuelles');
-  }
-
-  render() {
-    const { data, displayCreateForm, showCreateForm, displayCreateButton } = this.props;
-    if (data.loading) {
-      return <div>Loading...</div>;
-    }
-
-    return (
-      <div>
-        {this.renderRecurrentOperations()}
-
-        {displayCreateForm && <NewRecurrentOperation />}
-
-        {displayCreateButton && (
-          <Index className="floating-right" size="small" onClick={showCreateForm}>
-            <PlusOneIcon fontSize={'small'} />
-          </Index>
-        )}
-      </div>
-    );
-  }
-}
-
-function mapDispatchToProps(dispatch) {
-  return {
-    updateLayoutTitle: title => {
-      dispatch(updateLayoutTitleAction(title));
-    },
-    showCreateForm: () => {
-      dispatch(showCreateForm('recurrentOperation'));
-      dispatch(hideCreateButton('recurrentOperation'));
-    },
+  const toggleCreateForm = () => {
+    dispatch(showCreateForm('recurrentOperation'));
+    dispatch(hideCreateButton('recurrentOperation'));
   };
-}
 
-function mapStateToProps(state) {
-  return {
-    displayCreateForm: getCrudCreateFormStateSelector(state, { entity: 'recurrentOperation' }),
-    displayCreateButton: getCrudCreateButtonStateSelector(state, { entity: 'recurrentOperation' }) !== false,
-  };
-}
+  if (loading) {
+    return <div>Loading...</div>;
+  }
 
-export default connect(mapStateToProps, mapDispatchToProps)(graphql(query)(RecurrentOperations));
+  return (
+    <div>
+      {data.recurrentOperations
+        .sort((a, b) => a.day - b.day)
+        .map(recurrentOperation => {
+          return <RecurrentOperation refetch={refetch} key={recurrentOperation.id} recurrentOperation={recurrentOperation} />;
+        })}
+
+      {displayCreateForm && <NewRecurrentOperation />}
+
+      {displayCreateButton && (
+        <Index className="floating-right" size="small" onClick={toggleCreateForm}>
+          <PlusOneIcon fontSize={'small'} />
+        </Index>
+      )}
+    </div>
+  );
+};
+
+export default RecurrentOperations;

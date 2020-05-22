@@ -1,58 +1,41 @@
-import React, { Component } from 'react';
-import { Field, reduxForm } from 'redux-form';
-import Button from '@material-ui/core/Button';
-import { connect } from 'react-redux';
-import { graphql } from 'react-apollo';
+import React from 'react';
+import { useDispatch } from 'react-redux';
+import { useMutation } from 'react-apollo';
+import { useForm } from 'react-hook-form';
+import { TextField, IconButton } from '@material-ui/core';
+import DoneIcon from '@material-ui/icons/Done';
+import CancelIcon from '@material-ui/icons/Cancel';
 import mutation from '../../gqlQueries/update';
-import TextField from '../../../common/TextField';
+import { toggleEditForm } from '../../../../actions/ui/crud/updateForm';
 import query from '../../gqlQueries/list';
-import { toggleEditForm as toggleEditFormAction } from '../../../../actions/ui/crud/updateForm';
 
-class Edit extends Component {
-  onSubmit(formObject, dispatch, props) {
-    props
-      .mutate({
-        variables: {
-          label: formObject.label,
-          id: props.bank.id,
-        },
-        refetchQueries: [{ query }],
-      })
-      .then(() => {
-        props.cancel();
-      });
-  }
+const Edit = ({ bank }) => {
+  const { handleSubmit, register, errors } = useForm();
+  const dispatch = useDispatch();
+  const [mutate] = useMutation(mutation);
 
-  render() {
-    const { handleSubmit, cancel } = this.props;
-
-    return (
-      <form onSubmit={handleSubmit(this.onSubmit)}>
-        <Field name="label" component={TextField} label="Label" />
-        <Button type="submit" color="primary">
-          Ok
-        </Button>
-        <Button onClick={cancel}>Cancel</Button>
-      </form>
-    );
-  }
-}
-
-function mapDispatchToProps(dispatch, ownProps) {
-  return {
-    cancel: () => {
-      dispatch(toggleEditFormAction('bank', ownProps.bank.id));
-    },
+  const onSubmit = formObject => {
+    mutate({
+      variables: { label: formObject.label, id: bank.id },
+      refetchQueries: [{ query }],
+    }).then(() => {
+      dispatch(toggleEditForm('bank', bank.id));
+    });
   };
-}
 
-function mapStateToProps(state, ownProps) {
-  return {
-    initialValues: {
-      label: ownProps.bank.label,
-    },
-    form: `bank${ownProps.bank.id}`,
-  };
-}
+  return (
+    <form className="bank bank-form" onSubmit={handleSubmit(onSubmit)}>
+      <TextField name="label" type="text" defaultValue={bank.label} error={!!errors.label} label="Label" inputRef={register} helperText={errors.label ? errors.label.message : ''} fullWidth />
+      <div className="actions">
+        <IconButton type="submit">
+          <DoneIcon />
+        </IconButton>
+        <IconButton onClick={() => dispatch(toggleEditForm('bank', bank.id))}>
+          <CancelIcon />
+        </IconButton>
+      </div>
+    </form>
+  );
+};
 
-export default graphql(mutation)(connect(mapStateToProps, mapDispatchToProps)(reduxForm()(Edit)));
+export default Edit;

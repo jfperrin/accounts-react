@@ -1,89 +1,52 @@
-import React, { Component } from 'react';
-import { graphql } from 'react-apollo';
-import { connect } from 'react-redux';
+import React, { useEffect } from 'react';
+import { useQuery } from 'react-apollo';
+import { useSelector, useDispatch } from 'react-redux';
 import PlusOneIcon from '@material-ui/icons/PlusOne';
 import NewBank from './Bank/New';
 import Bank from './Bank/index';
-import query, { CREATE_BANK_SUBSCRIPTION } from './gqlQueries/list';
+import query from './gqlQueries/list';
 import { hideCreateButton } from '../../actions/ui/crud/createButton';
 import { showCreateForm } from '../../actions/ui/crud/createForm';
-import { updateLayoutTitle as updateLayoutTitleAction } from '../../actions/ui/layout/title';
-import { getCrudCreateButtonState as getCrudCreateButtonStateSelector, getCrudCreateFormState as getCrudCreateFormStateSelector } from '../../selectors/ui';
+import { updateLayoutTitle } from '../../actions/ui/layout/title';
+import { getCrudCreateButtonState, getCrudCreateFormState } from '../../selectors/ui';
 import Index from '../common/Button';
 
-class Banks extends Component {
-  componentWillUnmount() {
-    this.unsubscribe();
-  }
+const Banks = () => {
+  const dispatch = useDispatch();
+  const { data, refetch, loading } = useQuery(query);
+  const displayCreateForm = useSelector(state => getCrudCreateButtonState(state, { entity: 'bank' }));
+  const displayCreateButton = useSelector(state => getCrudCreateFormState(state, { entity: 'bank' })) !== false;
 
-  renderBanks() {
-    const {
-      data: { banks },
-    } = this.props;
+  useEffect(() => {
+    dispatch(updateLayoutTitle('Banques'));
+  }, []);
 
-    return banks.map(bank => {
-      return <Bank key={bank.id} id={bank.id} />;
-    });
-  }
-
-  componentDidMount() {
-    const {
-      updateLayoutTitle,
-      data: { subscribeToMore, refetch },
-    } = this.props;
-
-    updateLayoutTitle('Banques');
-    this.unsubscribe = subscribeToMore({
-      document: CREATE_BANK_SUBSCRIPTION,
-      updateQuery: () => {
-        refetch();
-      },
-    });
-  }
-
-  render() {
-    const {
-      data: { loading },
-      showCreateForm,
-      displayCreateButton,
-      displayCreateForm,
-    } = this.props;
-
-    if (loading) {
-      return <div>Loading...</div>;
-    }
-
-    return (
-      <div>
-        {this.renderBanks()}
-        {displayCreateForm && <NewBank />}
-        {displayCreateButton && (
-          <Index className="floating-right" size="small" onClick={showCreateForm}>
-            <PlusOneIcon fontSize={'small'} />
-          </Index>
-        )}
-      </div>
-    );
-  }
-}
-
-function mapDispatchToProps(dispatch) {
-  return {
-    updateLayoutTitle: title => {
-      dispatch(updateLayoutTitleAction(title));
-    },
-    showCreateForm: () => {
-      dispatch(showCreateForm('bank'));
-      dispatch(hideCreateButton('bank'));
-    },
+  const toggleCreateForm = () => {
+    dispatch(showCreateForm('bank'));
+    dispatch(hideCreateButton('bank'));
   };
-}
 
-function mapStateToProps(state) {
-  return {
-    displayCreateForm: getCrudCreateFormStateSelector(state, { entity: 'bank' }),
-    displayCreateButton: getCrudCreateButtonStateSelector(state, { entity: 'bank' }) !== false,
-  };
-}
+  if (loading) {
+    return <div>Loading...</div>;
+  }
 
-export default connect(mapStateToProps, mapDispatchToProps)(graphql(query)(Banks));
+  return (
+    <div>
+      {data.banks
+        .sort((a, b) => a.label.localeCompare(b.label))
+        .map(bank => {
+          return <Bank key={bank.id} bank={bank} refetch={refetch} />;
+        })}
+
+      {displayCreateForm && <NewBank />}
+
+      {displayCreateButton && (
+        <Index className="floating-right" size="small" onClick={toggleCreateForm}>
+          <PlusOneIcon fontSize={'small'} />
+        </Index>
+      )}
+    </div>
+  );
+};
+
+export default Banks;

@@ -1,5 +1,6 @@
 import mongoose from 'mongoose';
-const Schema = mongoose.Schema;
+
+const { Schema } = mongoose;
 
 const recurrentOperationsSchema = new Schema({
   label: { type: String },

@@ -1,65 +1,40 @@
-import React, { Component } from 'react';
-import { graphql } from 'react-apollo';
-import * as compose from 'lodash.flowright';
+import React from 'react';
+import { useMutation, useQuery } from 'react-apollo';
 import BalanceIcon from '@material-ui/icons/AccountBalance';
-import initializeBankBalances from '../Periods/gqlQueries/initializeBankBalances';
+import mutation from '../Periods/gqlQueries/initializeBankBalances';
 import query from '../Periods/gqlQueries/get';
 import Balance from './Balance/index';
 import Index from '../common/Button';
 
-class Balances extends Component {
-  initializeBankBalances(id) {
-    const { initializeBankBalances, data } = this.props;
-    initializeBankBalances({ variables: { id } }).then(() => data.refetch());
-  }
+const Balances = ({ idPeriod }) => {
+  const [initializeBankBalances] = useMutation(mutation);
+  const { refetch, data, loading } = useQuery(query, { variables: { id: idPeriod } });
 
-  renderBalances() {
-    const {
-      data: { refetch, period },
-    } = this.props;
+  const handleInitializeBankBalances = async id => {
+    await initializeBankBalances({ variables: { id } });
+    await refetch();
+  };
 
-    return period.balances.map(balance => {
-      return <Balance refetch={refetch} key={balance.id} balance={balance} />;
-    });
-  }
+  if (!data) return null;
+  if (loading) return <div>Loading...</div>;
 
-  render() {
-    const {
-      data: { loading, period },
-    } = this.props;
-
-    if (loading) {
-      return <div>Loading...</div>;
-    }
-
-    return (
-      <div>
-        <div style={{ display: 'flex' }}>
-          <div style={{ flex: 1 }}>
-            <h3 style={{ marginTop: '13px' }}>Balances</h3>
-          </div>
-          <div style={{ width: '45px', paddingTop: '5px' }}>
-            <Index size={'small'} onClick={() => this.initializeBankBalances(period.id)}>
-              <BalanceIcon />
-            </Index>
-          </div>
+  return (
+    <div>
+      <div style={{ display: 'flex' }}>
+        <div style={{ flex: 1 }}>
+          <h3 style={{ marginTop: '13px' }}>Balances</h3>
         </div>
-        {this.renderBalances()}
+        <div style={{ width: '45px', paddingTop: '5px' }}>
+          <Index size={'small'} onClick={() => handleInitializeBankBalances(idPeriod)}>
+            <BalanceIcon />
+          </Index>
+        </div>
       </div>
-    );
-  }
-}
+      {data.period.balances.map(balance => (
+        <Balance refetch={refetch} key={balance.id} balance={balance} />
+      ))}
+    </div>
+  );
+};
 
-const mutations = compose(
-  graphql(initializeBankBalances, {
-    name: 'initializeBankBalances',
-  }),
-);
-
-export default mutations(
-  graphql(query, {
-    options: props => {
-      return { variables: { id: props.idPeriod } };
-    },
-  })(Balances),
-);
+export default Balances;
