@@ -32,8 +32,8 @@ const New = () => {
   };
 
   return (
-    <form onSubmit={handleSubmit(onSubmit)}>
-      <div style={{ display: 'flex', marginBottom: '25px' }}>
+    <form onSubmit={handleSubmit(onSubmit)} style={{ marginBottom: 15 }}>
+      <div style={{ display: 'flex', marginBottom: 15 }}>
         <div style={{ margin: 'auto 10px', paddingTop: '5px' }}>
           <TextField type="number" name="day" error={!!errors.day} label="Jours" inputRef={register} helperText={errors.day ? errors.day.message : ''} fullWidth />
         </div>
@@ -44,10 +44,12 @@ const New = () => {
           <TextField type="number" name="amount" error={!!errors.amount} label="Montant" inputRef={register} helperText={errors.amount ? errors.amount.message : ''} fullWidth />
         </div>
       </div>
-      <Button type="submit" color="primary">
-        Ok
-      </Button>
-      <Button onClick={cancelCreation}>Cancel</Button>
+      <div style={{ textAlign: 'right' }}>
+        <Button onClick={cancelCreation}>Cancel</Button>
+        <Button type="submit" color="primary">
+          Ok
+        </Button>
+      </div>
     </form>
   );
 };

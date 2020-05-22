@@ -33,7 +33,7 @@ const Banks = () => {
   return (
     <div>
       {data.banks
-        .sort((a, b) => a.label.localeCompare(b.label))
+        .sort((a, b) => a?.label?.localeCompare(b?.label))
         .map(bank => {
           return <Bank key={bank.id} bank={bank} refetch={refetch} />;
         })}

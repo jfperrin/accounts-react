@@ -35,7 +35,7 @@ const Edit = ({ bank }) => {
         fullWidth
       />
       <div style={{ textAlign: 'right' }}>
-        <Button onClick={() => dispatch(toggleEditForm('period', bank.id))}>Cancel</Button>
+        <Button onClick={() => dispatch(toggleEditForm('bank', bank.id))}>Cancel</Button>
         <Button type="submit" color="primary">
           Ok
         </Button>

@@ -28,12 +28,14 @@ const New = () => {
   };
 
   return (
-    <form onSubmit={handleSubmit(onSubmit)}>
-      <TextField name="label" type="text" error={!!errors.label} label="Label" inputRef={register} helperText={errors.label ? errors.label.message : ''} fullWidth />
-      <Button type="submit" color="primary">
-        Ok
-      </Button>
-      <Button onClick={cancelCreation}>Cancel</Button>
+    <form onSubmit={handleSubmit(onSubmit)} style={{ marginBottom: 15 }}>
+      <TextField name="label" type="text" style={{ marginBottom: 15 }} error={!!errors.label} label="Label" inputRef={register} helperText={errors.label ? errors.label.message : ''} fullWidth />
+      <div style={{ textAlign: 'right' }}>
+        <Button onClick={cancelCreation}>Cancel</Button>
+        <Button type="submit" color="primary">
+          Ok
+        </Button>
+      </div>
     </form>
   );
 };

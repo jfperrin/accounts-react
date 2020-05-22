@@ -1,7 +1,7 @@
 import React from 'react';
 import { useForm } from 'react-hook-form';
 import { useMutation } from 'react-apollo';
-import { FormControl, Button, TextField } from '@material-ui/core';
+import { Button, TextField } from '@material-ui/core';
 import { useDispatch } from 'react-redux';
 import query from '../../gqlQueries/list';
 import mutation from '../../gqlQueries/create';
@@ -31,16 +31,15 @@ const New = () => {
   };
 
   return (
-    <form onSubmit={handleSubmit(onSubmit)}>
-      <FormControl>
-        <TextField name="month" type="number" error={!!errors.month} label="Mois" inputRef={register} helperText={errors.month ? errors.month.message : ''} />
-        <TextField name="year" type="number" error={!!errors.year} label="Année" inputRef={register} helperText={errors.year ? errors.year.message : ''} />
-      </FormControl>
-      <div style={{ marginTop: 15 }}>
+    <form onSubmit={handleSubmit(onSubmit)} style={{ marginBottom: 15 }}>
+      <TextField name="month" style={{ marginBottom: 15 }} type="number" error={!!errors.month} label="Mois" inputRef={register} helperText={errors.month ? errors.month.message : ''} fullWidth />
+      <TextField name="year" style={{ marginBottom: 15 }} type="number" error={!!errors.year} label="Année" inputRef={register} helperText={errors.year ? errors.year.message : ''} fullWidth />
+
+      <div style={{ textAlign: 'right' }}>
+        <Button onClick={cancelCreation}>Cancel</Button>
         <Button type="submit" color="primary">
           Ok
         </Button>
-        <Button onClick={cancelCreation}>Cancel</Button>
       </div>
     </form>
   );

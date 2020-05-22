@@ -27,11 +27,11 @@ const Edit = ({ recurrentOperation }) => {
   };
 
   return (
-    <form onSubmit={handleSubmit(onSubmit)}>
+    <form onSubmit={handleSubmit(onSubmit)} style={{ marginBottom: 15 }}>
       <div
         style={{
           display: 'flex',
-          marginBottom: 25,
+          marginBottom: 15,
         }}
       >
         <div
@@ -78,10 +78,12 @@ const Edit = ({ recurrentOperation }) => {
           />
         </div>
       </div>
-      <Button type="submit" color="primary">
-        Ok
-      </Button>
-      <Button onClick={() => dispatch(toggleEditFormAction('recurrentOperation', recurrentOperation.id))}>Cancel</Button>
+      <div style={{ textAlign: 'right' }}>
+        <Button onClick={() => dispatch(toggleEditFormAction('recurrentOperation', recurrentOperation.id))}>Cancel</Button>
+        <Button type="submit" color="primary">
+          Ok
+        </Button>
+      </div>
     </form>
   );
 };
