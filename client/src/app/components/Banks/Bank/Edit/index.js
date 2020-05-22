@@ -2,9 +2,7 @@ import React from 'react';
 import { useDispatch } from 'react-redux';
 import { useMutation } from 'react-apollo';
 import { useForm } from 'react-hook-form';
-import { TextField, IconButton } from '@material-ui/core';
-import DoneIcon from '@material-ui/icons/Done';
-import CancelIcon from '@material-ui/icons/Cancel';
+import { TextField, Button } from '@material-ui/core';
 import mutation from '../../gqlQueries/update';
 import { toggleEditForm } from '../../../../actions/ui/crud/updateForm';
 import query from '../../gqlQueries/list';
@@ -24,15 +22,23 @@ const Edit = ({ bank }) => {
   };
 
   return (
-    <form className="bank bank-form" onSubmit={handleSubmit(onSubmit)}>
-      <TextField name="label" type="text" defaultValue={bank.label} error={!!errors.label} label="Label" inputRef={register} helperText={errors.label ? errors.label.message : ''} fullWidth />
-      <div className="actions">
-        <IconButton type="submit">
-          <DoneIcon />
-        </IconButton>
-        <IconButton onClick={() => dispatch(toggleEditForm('bank', bank.id))}>
-          <CancelIcon />
-        </IconButton>
+    <form onSubmit={handleSubmit(onSubmit)} style={{ marginBottom: 15 }}>
+      <TextField
+        name="label"
+        style={{ marginBottom: 15 }}
+        type="text"
+        defaultValue={bank.label}
+        error={!!errors.label}
+        label="Label"
+        inputRef={register}
+        helperText={errors.label ? errors.label.message : ''}
+        fullWidth
+      />
+      <div style={{ textAlign: 'right' }}>
+        <Button onClick={() => dispatch(toggleEditForm('period', bank.id))}>Cancel</Button>
+        <Button type="submit" color="primary">
+          Ok
+        </Button>
       </div>
     </form>
   );

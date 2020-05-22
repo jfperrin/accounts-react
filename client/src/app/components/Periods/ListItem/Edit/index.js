@@ -27,13 +27,35 @@ const Edit = ({ period }) => {
   };
 
   return (
-    <form onSubmit={handleSubmit(onSubmit)}>
-      <TextField name="month" type="number" defaultValue={period.month} error={!!errors.month} label="Mois" inputRef={register} helperText={errors.month ? errors.month.message : ''} fullWidth />
-      <TextField name="year" type="number" defaultValue={period.year} error={!!errors.year} label="Année" inputRef={register} helperText={errors.year ? errors.year.message : ''} fullWidth />
-      <Button type="submit" color="primary">
-        Ok
-      </Button>
-      <Button onClick={() => dispatch(toggleEditForm('period', period.id))}>Cancel</Button>
+    <form onSubmit={handleSubmit(onSubmit)} style={{ marginBottom: 15 }}>
+      <TextField
+        name="month"
+        style={{ marginBottom: 15 }}
+        type="number"
+        defaultValue={period.month}
+        error={!!errors.month}
+        label="Mois"
+        inputRef={register}
+        helperText={errors.month ? errors.month.message : ''}
+        fullWidth
+      />
+      <TextField
+        name="year"
+        type="number"
+        style={{ marginBottom: 15 }}
+        defaultValue={period.year}
+        error={!!errors.year}
+        label="Année"
+        inputRef={register}
+        helperText={errors.year ? errors.year.message : ''}
+        fullWidth
+      />
+      <div style={{ textAlign: 'right' }}>
+        <Button onClick={() => dispatch(toggleEditForm('period', period.id))}>Cancel</Button>
+        <Button type="submit" color="primary">
+          Ok
+        </Button>
+      </div>
     </form>
   );
 };

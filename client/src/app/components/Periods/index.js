@@ -5,7 +5,7 @@ import PlusOneIcon from '@material-ui/icons/PlusOne';
 import query from './gqlQueries/list';
 import NewPeriod from './ListItem/New';
 import Period from './ListItem/index';
-import { updateLayoutTitle as updateLayoutTitleAction } from '../../actions/ui/layout/title';
+import { updateLayoutTitle } from '../../actions/ui/layout/title';
 import { hideCreateButton } from '../../actions/ui/crud/createButton';
 import { showCreateForm } from '../../actions/ui/crud/createForm';
 import { getCrudCreateButtonState, getCrudCreateFormState } from '../../selectors/ui';
@@ -27,7 +27,7 @@ const Periods = () => {
   const displayCreateButton = useSelector(state => getCrudCreateButtonState(state, { entity: 'period' })) !== false;
 
   useEffect(() => {
-    dispatch(updateLayoutTitleAction('Périodes'));
+    dispatch(updateLayoutTitle('Périodes'));
   }, [dispatch]);
 
   const toggleCreateForm = () => {

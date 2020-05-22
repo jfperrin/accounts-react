@@ -14,8 +14,8 @@ import Index from '../common/Button';
 const Banks = () => {
   const dispatch = useDispatch();
   const { data, refetch, loading } = useQuery(query);
-  const displayCreateForm = useSelector(state => getCrudCreateButtonState(state, { entity: 'bank' }));
-  const displayCreateButton = useSelector(state => getCrudCreateFormState(state, { entity: 'bank' })) !== false;
+  const displayCreateForm = useSelector(state => getCrudCreateFormState(state, { entity: 'bank' }));
+  const displayCreateButton = useSelector(state => getCrudCreateButtonState(state, { entity: 'bank' })) !== false;
 
   useEffect(() => {
     dispatch(updateLayoutTitle('Banques'));
