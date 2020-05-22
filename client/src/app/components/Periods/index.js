@@ -28,7 +28,7 @@ const Periods = () => {
 
   useEffect(() => {
     dispatch(updateLayoutTitleAction('Périodes'));
-  }, []);
+  }, [dispatch]);
 
   const toggleCreateForm = () => {
     dispatch(showCreateForm('period'));

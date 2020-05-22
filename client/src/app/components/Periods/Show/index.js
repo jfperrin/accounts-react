@@ -30,7 +30,7 @@ const Period = ({ match }) => {
     if (data && !loading) {
       dispatch(updateLayoutTitle(`Operations#${data.period.display}`));
     }
-  }, [loading]);
+  }, [loading, data, dispatch]);
 
   if (!data) return null;
 

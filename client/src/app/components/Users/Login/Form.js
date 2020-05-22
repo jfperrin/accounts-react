@@ -23,7 +23,7 @@ const Login = ({ history }) => {
     if (data && data.user) {
       history.push('/');
     }
-  }, []);
+  }, [data, history]);
 
   if (!data) return null;
 

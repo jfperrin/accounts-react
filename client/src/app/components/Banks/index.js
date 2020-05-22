@@ -19,7 +19,7 @@ const Banks = () => {
 
   useEffect(() => {
     dispatch(updateLayoutTitle('Banques'));
-  }, []);
+  }, [dispatch]);
 
   const toggleCreateForm = () => {
     dispatch(showCreateForm('bank'));

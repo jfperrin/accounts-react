@@ -19,7 +19,7 @@ const RecurrentOperations = () => {
 
   useEffect(() => {
     dispatch(updateLayoutTitleAction('Opérations#Mensuelles'));
-  }, []);
+  }, [dispatch]);
 
   const toggleCreateForm = () => {
     dispatch(showCreateForm('recurrentOperation'));

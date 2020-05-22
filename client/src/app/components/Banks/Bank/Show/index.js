@@ -1,5 +1,1 @@
-import React from 'react';
-
-export default ({ bank }) => {
-  return bank.label;
-};
+export default ({ bank }) => bank.label;

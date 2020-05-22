@@ -21,7 +21,7 @@ const SignupForm = ({ history }) => {
     if (!loading && data.user) {
       history.push('/');
     }
-  }, []);
+  }, [loading, data.user, history]);
 
   const onSubmit = formObject => {
     mutate({
