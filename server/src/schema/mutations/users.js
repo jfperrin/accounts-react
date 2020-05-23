@@ -1,6 +1,4 @@
-import {
-  GraphQLString,
-} from 'graphql';
+import { GraphQLString } from 'graphql';
 import UserType from '../types/usersType';
 import { signup, logout, login } from '../../services/auth';
 
@@ -21,7 +19,7 @@ export default {
   logout: {
     type: UserType,
     resolve(parentValue, args, req) {
-      return logout(req)
+      return logout(req);
     },
   },
   login: {
@@ -33,5 +31,5 @@ export default {
     resolve(parentValue, { email, password }, req) {
       return login({ email, password, req });
     },
-  }
+  },
 };

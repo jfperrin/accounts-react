@@ -1,11 +1,6 @@
-import {
-  GraphQLID,
-  GraphQLNonNull,
-  GraphQLList,
-} from 'graphql';
+import { GraphQLID, GraphQLNonNull, GraphQLList } from 'graphql';
 import RecurrentOperationsModel from '../../models/recurrentOperations';
 import RecurrentOperationsType from '../types/recurrentOperationsType';
-
 
 export default {
   recurrentOperations: {

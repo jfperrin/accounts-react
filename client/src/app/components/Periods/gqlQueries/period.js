@@ -1,4 +1,4 @@
-import gql from 'graphql-tag';
+import { gql } from 'apollo-boost';
 
 export default gql`
   fragment periodFragment on PeriodsType {
@@ -26,5 +26,4 @@ export default gql`
       operations
     }
   }
-  
 `;

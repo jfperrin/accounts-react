@@ -1,9 +1,4 @@
-import {
-  GraphQLObjectType,
-  GraphQLString,
-  GraphQLID,
-  GraphQLBoolean,
-} from 'graphql';
+import { GraphQLObjectType, GraphQLString, GraphQLID, GraphQLBoolean } from 'graphql';
 
 const GraphQLObject = new GraphQLObjectType({
   name: 'BanksType',
@@ -11,7 +6,7 @@ const GraphQLObject = new GraphQLObjectType({
     id: { type: GraphQLID },
     label: { type: GraphQLString },
     isDeleted: { type: GraphQLBoolean },
-  })
+  }),
 });
 
 export default GraphQLObject;

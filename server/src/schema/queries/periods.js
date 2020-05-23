@@ -1,8 +1,4 @@
-import {
-  GraphQLID,
-  GraphQLList,
-  GraphQLNonNull,
-} from 'graphql';
+import { GraphQLID, GraphQLList, GraphQLNonNull } from 'graphql';
 import PeriodsModel from '../../models/periods';
 import PeriodsType from '../types/periodsType';
 
@@ -25,5 +21,5 @@ export default {
     resolve(parentValue, args, req) {
       return PeriodsModel.findOne({ user: req.user, month: new Date().getMonth() + 1, year: new Date().getFullYear() });
     },
-  }
+  },
 };

@@ -1,4 +1,4 @@
-import gql from 'graphql-tag';
+import { gql } from 'apollo-boost';
 
 export default gql`
   mutation updateOperation($id: ID, $amount: Float, $dt: Date, $label: String) {
@@ -11,5 +11,4 @@ export default gql`
       isRecurrent
     }
   }
-
 `;

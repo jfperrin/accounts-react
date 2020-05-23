@@ -2,7 +2,6 @@ import User from '../models/users';
 import passport from 'passport';
 import { Strategy as LocalStrategy } from 'passport-local';
 
-
 // SerializeUser is used to provide some identifying token that can be saved
 // in the users session.  We traditionally use the 'ID' for this.
 passport.serializeUser((user, done) => {
@@ -25,25 +24,27 @@ passport.deserializeUser((id, done) => {
 // the password might not match the saved one.  In either case, we call the 'done'
 // callback, including a string that messages why the authentication process failed.
 // This string is provided back to the GraphQL client.
-passport.use(new LocalStrategy({ usernameField: 'email' }, (email, password, done) => {
-  User.findOne({ email: email.toLowerCase() }, (err, user) => {
-    if (err) {
-      return done(err);
-    }
-    if (!user) {
-      return done(null, false, 'Invalid Credentials');
-    }
-    user.comparePassword(password, (err, isMatch) => {
+passport.use(
+  new LocalStrategy({ usernameField: 'email' }, (email, password, done) => {
+    User.findOne({ email: email.toLowerCase() }, (err, user) => {
       if (err) {
         return done(err);
       }
-      if (isMatch) {
-        return done(null, user);
+      if (!user) {
+        return done(null, false, 'Invalid Credentials');
       }
-      return done(null, false, 'Invalid credentials.');
+      user.comparePassword(password, (err, isMatch) => {
+        if (err) {
+          return done(err);
+        }
+        if (isMatch) {
+          return done(null, user);
+        }
+        return done(null, false, 'Invalid credentials.');
+      });
     });
-  });
-}));
+  }),
+);
 
 // Creates a new user account.  We first check to see if a user already exists
 // with this email address to avoid making multiple accounts with identical addresses
@@ -67,7 +68,7 @@ function signup({ email, password, firstname, lastname, nickname, req }) {
     })
     .then(user => {
       return new Promise((resolve, reject) => {
-        req.logIn(user, (err) => {
+        req.logIn(user, err => {
           if (err) {
             reject(err);
           }
@@ -86,14 +87,13 @@ function login({ email, password, req }) {
   return new Promise((resolve, reject) => {
     passport.authenticate('local', (err, user) => {
       if (!user) {
-        reject('Invalid credentials.')
+        reject('Invalid credentials.');
       }
 
       req.login(user, () => resolve(user));
     })({ body: { email, password } });
   });
 }
-
 
 function logout(req) {
   const { user } = req;

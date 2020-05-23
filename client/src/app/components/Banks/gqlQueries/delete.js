@@ -1,8 +1,8 @@
-import gql from 'graphql-tag';
+import { gql } from 'apollo-boost';
 import fragment from './bank';
 
 export default gql`
-  mutation DeleteBank($id: ID){
+  mutation DeleteBank($id: ID) {
     deleteBank(id: $id) {
       ...bankFragment
     }

@@ -1,7 +1,7 @@
-import gql from 'graphql-tag';
+import { gql } from 'apollo-boost';
 
 export default gql`
-  mutation DeleteRecurrentOperation($id: ID){
+  mutation DeleteRecurrentOperation($id: ID) {
     deleteRecurrentOperation(id: $id) {
       id
     }

@@ -1,6 +1,4 @@
-import {
-  GraphQLObjectType,
-} from 'graphql';
+import { GraphQLObjectType } from 'graphql';
 import BankQueries from './banks';
 import BankPeriodBalanceQueries from './balances';
 import PeriodQueries from './periods';
@@ -17,5 +15,5 @@ export default new GraphQLObjectType({
     ...OperationsQueries,
     ...RecurrentOperationsQueries,
     ...UserQueries,
-  }
+  },
 });
