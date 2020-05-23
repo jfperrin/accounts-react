@@ -1,8 +1,4 @@
-import {
-  GraphQLID,
-  GraphQLNonNull,
-  GraphQLList,
-} from 'graphql';
+import { GraphQLID, GraphQLNonNull, GraphQLList } from 'graphql';
 import BalancesModel from '../../models/balances';
 import BalancesType from '../types/balancesType';
 

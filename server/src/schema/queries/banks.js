@@ -1,10 +1,6 @@
 import BanksModel from '../../models/banks';
 import BanksType from '../types/banksType';
-import {
-  GraphQLID,
-  GraphQLList,
-  GraphQLNonNull
-} from 'graphql';
+import { GraphQLID, GraphQLList, GraphQLNonNull } from 'graphql';
 
 export default {
   banks: {

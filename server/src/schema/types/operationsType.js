@@ -1,13 +1,7 @@
 import OperationModel from '../../models/operations';
 import PeriodType from './periodsType';
 import GraphQLDate from 'graphql-date';
-import {
-  GraphQLObjectType,
-  GraphQLString,
-  GraphQLFloat,
-  GraphQLBoolean,
-  GraphQLID
-} from 'graphql';
+import { GraphQLObjectType, GraphQLString, GraphQLFloat, GraphQLBoolean, GraphQLID } from 'graphql';
 
 const GraphQLObject = new GraphQLObjectType({
   name: 'OperationsType',
@@ -21,13 +15,14 @@ const GraphQLObject = new GraphQLObjectType({
     period: {
       type: PeriodType,
       resolve(parentValue, args, req) {
-        return OperationModel.findOne({ _id: parentValue, user: req.user}).populate('period')
+        return OperationModel.findOne({ _id: parentValue, user: req.user })
+          .populate('period')
           .then(operation => {
             return operation.period;
           });
-      }
-    }
-  })
+      },
+    },
+  }),
 });
 
 export default GraphQLObject;
