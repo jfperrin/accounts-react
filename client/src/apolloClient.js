@@ -1,12 +1,13 @@
-import ApolloClient from 'apollo-boost';
+import { ApolloClient } from 'apollo-client';
 import { InMemoryCache } from 'apollo-cache-inmemory';
 import { toIdValue } from 'apollo-utilities';
+import { HttpLink } from 'apollo-link-http';
 import { onError } from 'apollo-link-error';
+import { ApolloLink } from 'apollo-link';
 
-const link = onError(({ graphQLErrors, networkError }) => {
-  if (graphQLErrors) graphQLErrors.map(({ message, locations, path }) => console.log(`[GraphQL error]: Message: ${message}, Location: ${locations}, Path: ${path}`));
-
-  if (networkError) console.log(`[Network error]: ${networkError}`);
+const onErrorLink = onError(({ graphQLErrors, networkError }) => {
+  if (graphQLErrors) graphQLErrors.map(({ message, locations, path }) => console.error(`[GraphQL error]: Message: ${message}, Location: ${locations}, Path: ${path}`));
+  if (networkError) console.error(`[Network error]: ${networkError}`);
 });
 
 const cache = new InMemoryCache({
@@ -29,12 +30,14 @@ const cache = new InMemoryCache({
 
 const GRAPHQL_URI = `://${window.location.host}/graphql`;
 const GRAPHQL_URI_PREFIX = process.env.NODE_ENV !== 'production' ? 'http' : 'https';
-const uri = GRAPHQL_URI_PREFIX + GRAPHQL_URI;
+const httpLink = new HttpLink({
+  uri: GRAPHQL_URI_PREFIX + GRAPHQL_URI,
+  credentials: 'same-origin',
+});
 
 const client = new ApolloClient({
-  uri,
+  link: ApolloLink.from([onErrorLink, httpLink]),
   cache,
-  onError: link,
 });
 
 export default client;

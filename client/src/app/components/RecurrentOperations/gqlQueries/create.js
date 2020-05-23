@@ -1,4 +1,4 @@
-import { gql } from 'apollo-boost';
+import gql from 'graphql-tag';
 
 export default gql`
   mutation addRecurrentOperation($day: Int, $label: String, $amount: Float) {
