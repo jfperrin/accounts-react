@@ -1,21 +1,5 @@
 #!/bin/bash
 
-docker login -u $HEROKU_USER -p "$HEROKU_TOKEN"  registry.heroku.com
-
-if [ "$1" = "tag" ]; then
-  heroku_app=$HEROKU_APP_TAGGED
-else
-  heroku_app=$HEROKU_APP
-fi
-
-docker build -t "registry.heroku.com/$heroku_app/web" .
-docker push "registry.heroku.com/$heroku_app/web:latest"
-
-imageId=$(docker inspect registry.heroku.com/$heroku_app/web --format={{.Id}})
-payload='{"updates":[{"type":"web","docker_image":"'"$imageId"'"}]}'
-curl -n -X PATCH https://api.heroku.com/apps/$heroku_app/formation \
--d "$payload" \
--H "Content-Type: application/json" \
--H "Accept: application/vnd.heroku+json; version=3.docker-releases" \
--H "Authorization: Bearer $HEROKU_TOKEN"
-
+docker build -t accounts-react .
+docker rm account -f
+docker run --restart always --name account -d --init --env-file ./env.production -p 3000:80 accounts-react
