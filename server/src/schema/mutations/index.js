@@ -15,5 +15,5 @@ export default new GraphQLObjectType({
     ...operationMutations,
     ...balancesMutations,
     ...userMutations,
-  }
+  },
 });

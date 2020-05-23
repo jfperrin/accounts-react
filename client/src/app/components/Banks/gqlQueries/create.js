@@ -1,7 +1,7 @@
-import gql from 'graphql-tag';
+import { gql } from 'apollo-boost';
 
 export default gql`
-  mutation AddBank($label: String){
+  mutation AddBank($label: String) {
     addBank(label: $label) {
       label
     }

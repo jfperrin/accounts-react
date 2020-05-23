@@ -17,8 +17,8 @@ import '../stylesheet.css';
 
 const Show = ({ operation, idPeriod, hideAction }) => {
   const dispatch = useDispatch();
-  const [mutatePointOperation] = useMutation(deleteOperationMutation);
-  const [mutateDeleteOperation] = useMutation(pointOperationMutation);
+  const [mutatePointOperation] = useMutation(pointOperationMutation);
+  const [mutateDeleteOperation] = useMutation(deleteOperationMutation);
 
   const pointOperation = (id, idPeriod) => {
     mutatePointOperation({
@@ -42,6 +42,14 @@ const Show = ({ operation, idPeriod, hideAction }) => {
         id: idPeriod,
         idOperation,
       },
+      refetchQueries: [
+        {
+          query,
+          variables: {
+            id: idPeriod,
+          },
+        },
+      ],
     });
   };
 

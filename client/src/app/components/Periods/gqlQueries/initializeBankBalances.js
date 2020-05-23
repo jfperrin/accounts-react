@@ -1,9 +1,8 @@
-import gql from 'graphql-tag';
+import { gql } from 'apollo-boost';
 import periodFragment from './period';
 
 export default gql`
-  mutation initializeBankBalances($id: ID)
-  {
+  mutation initializeBankBalances($id: ID) {
     initializeBankBalances(id: $id) {
       ...periodFragment
     }

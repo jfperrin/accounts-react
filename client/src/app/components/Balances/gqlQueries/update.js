@@ -1,4 +1,4 @@
-import gql from 'graphql-tag';
+import { gql } from 'apollo-boost';
 
 export default gql`
   mutation updateBalance($id: ID, $amount: String) {
@@ -9,4 +9,5 @@ export default gql`
         label
       }
     }
-  }`;
+  }
+`;

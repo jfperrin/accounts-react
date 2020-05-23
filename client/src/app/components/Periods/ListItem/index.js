@@ -14,7 +14,7 @@ const iconStyle = { cursor: 'pointer' };
 
 const Period = ({ period, refetch, hideAction }) => {
   const dispatch = useDispatch();
-  const mutate = useMutation(mutation);
+  const [mutate] = useMutation(mutation);
   const edit = useSelector(state => getCrudEditState(state, { entity: 'period', id: period.id }));
 
   const deletePeriod = () => {

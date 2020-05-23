@@ -1,8 +1,4 @@
-import {
-  GraphQLID,
-  GraphQLString,
-  GraphQLFloat,
-} from 'graphql';
+import { GraphQLID, GraphQLString, GraphQLFloat } from 'graphql';
 import GraphQLDate from 'graphql-date';
 import OperationType from '../types/operationsType';
 import OperationModel from '../../models/operations';
@@ -17,8 +13,8 @@ export default {
       dt: { type: GraphQLDate },
     },
     resolve(parentValue, args, req) {
-      return OperationModel.findOne({ _id: args.id, user: req.user }).then((operation) => {
-        Object.assign(operation, { label: args.label, amount: args.amount, dt: args.dt, user: req.user});
+      return OperationModel.findOne({ _id: args.id, user: req.user }).then(operation => {
+        Object.assign(operation, { label: args.label, amount: args.amount, dt: args.dt, user: req.user });
         return operation.save().then(operation => operation);
       });
     },
@@ -29,7 +25,7 @@ export default {
       id: { type: GraphQLID },
     },
     resolve(parentValue, { id }, req) {
-      return OperationModel.findOne({ _id: id, user: req.user }).then((operation) => {
+      return OperationModel.findOne({ _id: id, user: req.user }).then(operation => {
         if (operation.pointedAt) {
           operation.pointedAt = null;
         } else {

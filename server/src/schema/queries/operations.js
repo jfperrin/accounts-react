@@ -1,8 +1,4 @@
-import {
-  GraphQLID,
-  GraphQLList,
-  GraphQLNonNull,
-} from 'graphql';
+import { GraphQLID, GraphQLList, GraphQLNonNull } from 'graphql';
 import OperationsModel from '../../models/operations';
 import OperationsType from '../types/operationsType';
 
