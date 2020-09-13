@@ -69,6 +69,7 @@ const Edit = ({ recurrentOperation }) => {
           <TextField
             name="amount"
             type="number"
+            step="0.01"
             defaultValue={recurrentOperation.amount}
             error={!!errors.label}
             label="Montant"
