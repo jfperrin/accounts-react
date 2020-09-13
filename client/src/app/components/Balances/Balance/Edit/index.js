@@ -29,6 +29,7 @@ const Edit = ({ balance, refetch }) => {
         <TextField
           name="amount"
           type="number"
+          step="0.01"
           defaultValue={balance.amount}
           error={!!errors.amount}
           label="Montant"

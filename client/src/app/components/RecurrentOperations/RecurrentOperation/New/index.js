@@ -41,7 +41,7 @@ const New = () => {
           <TextField name="label" error={!!errors.label} label="Label" inputRef={register} helperText={errors.label ? errors.label.message : ''} fullWidth />
         </div>
         <div style={{ margin: 'auto 10px', paddingTop: '5px' }}>
-          <TextField type="number" name="amount" error={!!errors.amount} label="Montant" inputRef={register} helperText={errors.amount ? errors.amount.message : ''} fullWidth />
+          <TextField type="number" step="0.01" name="amount" error={!!errors.amount} label="Montant" inputRef={register} helperText={errors.amount ? errors.amount.message : ''} fullWidth />
         </div>
       </div>
       <div style={{ textAlign: 'right' }}>
