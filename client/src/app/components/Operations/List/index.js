@@ -11,8 +11,10 @@ import Form from '../Form';
 import { updateModaleEntity, updateModaleOpened } from '../../../actions/ui/layout/modale';
 import pointOperationMutation from '../gqlQueries/point';
 import deleteOperationMutation from '../../Periods/gqlQueries/deleteOperation';
+import Amount from '../../common/Amount';
+import './stylesheet.scss';
 
-const List = ({ idPeriod, pageSize = 15, displayAction }) => {
+const List = ({ idPeriod, showHeader, pageSize = 15, displayAction, hidePointedOperations }) => {
   const dispatch = useDispatch();
   const { data, loading, refetch } = useQuery(query, { variables: { id: idPeriod } });
   const [mutatePointOperation] = useMutation(pointOperationMutation);
@@ -43,6 +45,7 @@ const List = ({ idPeriod, pageSize = 15, displayAction }) => {
       {
         title: 'Date',
         dataIndex: 'dt',
+        width: 120,
         key: 'dt',
         render: dt => format(new Date(dt), 'dd/MM/yyyy'),
       },
@@ -55,6 +58,9 @@ const List = ({ idPeriod, pageSize = 15, displayAction }) => {
         title: 'Amount',
         dataIndex: 'amount',
         key: 'amount',
+        width: 120,
+        align: 'right',
+        render: amount => <Amount amount={amount} />,
       },
     ];
 
@@ -78,10 +84,17 @@ const List = ({ idPeriod, pageSize = 15, displayAction }) => {
   };
 
   return (
-    <>
+    <div className={'operations'}>
       <Form idPeriod={idPeriod} refetch={refetch} />
-      <Table loading={loading} columns={getColumns()} dataSource={data?.period?.operations?.sort((a, b) => moment(a.dt) - moment(b.dt))} pagination={{ pageSize }} />
-    </>
+      <Table
+        rowClassName={record => record.pointedAt && 'pointed'}
+        showHeader={showHeader}
+        loading={loading}
+        columns={getColumns()}
+        dataSource={data?.period?.operations?.filter(data => (hidePointedOperations ? !data.pointedAt : true)).sort((a, b) => moment(a.dt) - moment(b.dt))}
+        pagination={{ pageSize }}
+      />
+    </div>
   );
 };
 
