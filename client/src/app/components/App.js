@@ -1,7 +1,9 @@
+import 'antd/dist/antd.css';
 import React from 'react';
 import { Route } from 'react-router-dom';
 import { ApolloProvider } from '@apollo/react-hooks';
-import Header from './Header/Header';
+import { Layout } from 'antd';
+import HeaderAccount from './Header/Header';
 import './stylesheet.css';
 import Banks from './Banks';
 import Periods from './Periods';
@@ -13,12 +15,16 @@ import Signup from './Users/Signup/Form';
 import AuthRequired from './Auth/Required';
 import client from '../../apolloClient';
 
+const { Header, Content } = Layout;
+
 export default function () {
   return (
     <ApolloProvider client={client}>
-      <div className="app">
-        <Header />
-        <div className="body">
+      <Layout>
+        <Header>
+          <HeaderAccount />
+        </Header>
+        <Content>
           <Route exact path="/" component={AuthRequired(Home)} />
           <Route path="/banks" component={AuthRequired(Banks)} />
           <Route path="/periods" component={AuthRequired(Periods)} />
@@ -26,8 +32,8 @@ export default function () {
           <Route path="/recurrent-operations" component={AuthRequired(RecurrentOperations)} />
           <Route path="/login" component={Login} />
           <Route path="/signup" component={Signup} />
-        </div>
-      </div>
+        </Content>
+      </Layout>
     </ApolloProvider>
   );
 }

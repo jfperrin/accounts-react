@@ -10,7 +10,8 @@ import schema from './schema/schema';
 const app = express();
 const MongoStore = require('connect-mongo')(session);
 
-const MONGO_URI = process.env.MONGO_URI || 'mongodb://atraxi-dev:Shallassan69@ds117935.mlab.com:17935/accounts';
+// const MONGO_URI = process.env.MONGO_URI || 'mongodb+srv://atraxi:aHDcfPKYWy5Tw6QG@cluster0.ewtof.mongodb.net/accounts?retryWrites=true';
+const MONGO_URI = process.env.MONGO_URI || 'mongodb+srv://atraxi-dev:og9hAiz07eUNUQbI@accounts-dev.zlpfi.mongodb.net/accounts-dev?retryWrites=true&w=majority';
 if (!MONGO_URI) {
   throw new Error('You must provide a MongoLab URI');
 }

@@ -5,9 +5,9 @@ import ImportIcon from '@material-ui/icons/ImportExport';
 import Operations from '../../Operations';
 import Balances from '../../Balances';
 import addRecurrentOperationsMutation from '../gqlQueries/addRecurrentOperations';
-import get from '../gqlQueries/get';
 import { updateLayoutTitle } from '../../../actions/ui/layout/title';
 import Index from '../../common/Button';
+import get from '../gqlQueries/get';
 
 const line = {
   display: 'flex',

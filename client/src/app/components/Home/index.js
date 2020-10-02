@@ -2,19 +2,20 @@ import React, { useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import { useQuery } from 'react-apollo';
-import list from '../Periods/gqlQueries/list';
+import { Card, Col, Row } from 'antd';
 import current from '../Periods/gqlQueries/current';
-import Period from '../Periods/ListItem';
 import Operation from '../Operations/Operation';
 import { updateLayoutTitle } from '../../actions/ui/layout/title';
+import { updateCurrentMenu } from '../../actions/ui/layout/menu';
+import PeriodsList from '../Periods/List';
 
 const Home = () => {
   const dispatch = useDispatch();
-  const { data: dataPeriods, refetch: refetchPeriods, loading: loadingPeriod } = useQuery(list);
   const { data: dataCurrentPeriod, refetch: refetchCurrentPeriod, loading: loadingCurrentPeriod } = useQuery(current);
 
   useEffect(() => {
     dispatch(updateLayoutTitle(''));
+    dispatch(updateCurrentMenu('0'));
   });
 
   const renderOperations = () => {
@@ -25,22 +26,19 @@ const Home = () => {
       });
   };
 
-  const renderPeriods = () => {
-    return dataPeriods.periods.map(period => {
-      return <Period refetch={refetchPeriods} key={period.id} period={period} />;
-    });
-  };
-
-  if (loadingPeriod || loadingCurrentPeriod) {
-    return <div>Loading...</div>;
+  if (loadingCurrentPeriod) {
+    return (
+      <Row>
+        <Col>Loading...</Col>
+      </Row>
+    );
   }
 
   return (
-    <div style={{ display: 'flex' }}>
+    <Row>
       {dataCurrentPeriod.currentPeriod && (
-        <div style={{ width: '50%' }}>
-          <div style={{ margin: '15px', border: 'solid 1px #F1F1F1' }}>
-            <div style={{ padding: '10px', fontStyle: 'italic', backgroundColor: '#333', color: '#F1F1F1' }}>Période courante {dataCurrentPeriod.currentPeriod.display}</div>
+        <Col span={12} style={{ padding: 15 }}>
+          <Card title={`Période courante ${dataCurrentPeriod.currentPeriod.display}`}>
             <div style={{ padding: '10px 5px', display: 'flex' }}>
               <div style={{ flex: 1 }}>Solde</div>
               <div style={{ fontWeight: 'bold', textAlign: 'right' }}>
@@ -51,18 +49,13 @@ const Home = () => {
               <div style={{ padding: '10px 5px', borderBottom: 'solid 5px #F1F1F1' }}>Opérations non pointées</div>
               {renderOperations()}
             </div>
-          </div>
-        </div>
+          </Card>
+        </Col>
       )}
-      {dataPeriods.periods && (
-        <div style={{ width: '50%' }}>
-          <div style={{ margin: 15, border: 'solid 1px #F1F1F1' }}>
-            <div style={{ padding: 10, fontStyle: 'italic', backgroundColor: '#333', color: '#F1F1F1' }}>Périodes</div>
-            {renderPeriods()}
-          </div>
-        </div>
-      )}
-    </div>
+      <Col span={12} style={{ padding: 15 }}>
+        <PeriodsList showHeader={false} pagination={{ pageSize: 20 }} />
+      </Col>
+    </Row>
   );
 };
 
