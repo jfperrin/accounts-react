@@ -1,8 +1,8 @@
 import React, { useEffect } from 'react';
 import { Button, Form, InputNumber, Modal, Space } from 'antd';
-import query from '../gqlQueries/list';
 import { useMutation } from 'react-apollo';
 import { useDispatch, useSelector } from 'react-redux';
+import query from '../gqlQueries/list';
 import mutateUpdate from '../gqlQueries/update';
 import mutateCreate from '../gqlQueries/create';
 import { getModaleEntity, getModaleOpened } from '../../../selectors/ui';

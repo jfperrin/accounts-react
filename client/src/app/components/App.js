@@ -4,7 +4,6 @@ import { Route } from 'react-router-dom';
 import { ApolloProvider } from '@apollo/react-hooks';
 import { Layout } from 'antd';
 import HeaderAccount from './Header/Header';
-import './stylesheet.css';
 import Banks from './Banks';
 import Periods from './Periods';
 import RecurrentOperations from './RecurrentOperations';
@@ -14,6 +13,7 @@ import Login from './Users/Login/Form';
 import Signup from './Users/Signup/Form';
 import AuthRequired from './Auth/Required';
 import client from '../../apolloClient';
+import './stylesheet.scss';
 
 const { Header, Content } = Layout;
 

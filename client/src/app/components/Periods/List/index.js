@@ -8,6 +8,7 @@ import query from '../gqlQueries/list';
 import mutation from '../gqlQueries/delete';
 import { updateModaleEntity, updateModaleOpened } from '../../../actions/ui/layout/modale';
 import { listActionsBlock } from '../../../services/utils';
+import Amount from '../../common/Amount';
 
 const keyForSorting = (year, month) =>
   parseInt(
@@ -22,6 +23,7 @@ const PeriodsTable = ({ displayAction, pageSize = 15 }) => {
   const { data, loading, refetch } = useQuery(query);
   const [mutate] = useMutation(mutation);
   const dispatch = useDispatch();
+
   const deleteEntity = id => {
     mutate({
       variables: { id },
@@ -39,7 +41,11 @@ const PeriodsTable = ({ displayAction, pageSize = 15 }) => {
         title: 'Période',
         dataIndex: 'display',
         key: 'id',
-        render: (text, entity) => <Link to={`/period/${entity.id}`}>{text}</Link>,
+        render: (text, entity) => (
+          <Link key={`link-${entity.id}`} to={`/period/${entity.id}`}>
+            {text}
+          </Link>
+        ),
       },
       {
         title: 'Solde',
@@ -47,7 +53,7 @@ const PeriodsTable = ({ displayAction, pageSize = 15 }) => {
         key: 'amount',
         width: 75,
         align: 'right',
-        render: balance => <Tag color={balance.banks + balance.operations > 0 ? 'green' : 'red'}>{(balance.banks + balance.operations).toFixed(2)} €</Tag>,
+        render: balance => <Amount key={`balance-${balance.id}`} amount={balance.banks + balance.operations} />,
       },
     ];
 

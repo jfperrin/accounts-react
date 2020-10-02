@@ -1,47 +1,33 @@
-import moment from 'moment';
-import { sortBy } from 'lodash';
-import React from 'react';
-import { useQuery } from 'react-apollo';
-import { useDispatch, useSelector } from 'react-redux';
-import PlusOneIcon from '@material-ui/icons/PlusOne';
-import query from '../Periods/gqlQueries/get';
-import NewOperation from './Operation/New/index';
-import Operation from './Operation/index';
-import { hideCreateButton } from '../../actions/ui/crud/createButton';
-import { showCreateForm } from '../../actions/ui/crud/createForm';
-import { getCrudCreateButtonState as getCrudCreateButtonStateSelector, getCrudCreateFormState as getCrudCreateFormStateSelector } from '../../selectors/ui';
-import Index from '../common/Button';
-import './stylesheet.css';
+import React, { useEffect } from 'react';
+import { useDispatch } from 'react-redux';
+import { Button, Col, Row } from 'antd';
+import { AppstoreAddOutlined } from '@ant-design/icons';
+import { updateLayoutTitle } from '../../actions/ui/layout/title';
+import { updateCurrentMenu } from '../../actions/ui/layout/menu';
+import { updateModaleEntity, updateModaleOpened } from '../../actions/ui/layout/modale';
+import List from './List';
 
 const Operations = ({ idPeriod }) => {
   const dispatch = useDispatch();
-  const { data, loading, refetch } = useQuery(query, { variables: { id: idPeriod } });
-  const displayCreateForm = useSelector(state => getCrudCreateFormStateSelector(state, { entity: 'operation' }));
-  const displayCreateButton = useSelector(state => getCrudCreateButtonStateSelector(state, { entity: 'operation' })) !== false;
 
-  const toggleCreateForm = () => {
-    dispatch(showCreateForm('operation'));
-    dispatch(hideCreateButton('operation'));
+  useEffect(() => {
+    dispatch(updateLayoutTitle('Périodes'));
+    dispatch(updateCurrentMenu('1'));
+  }, [dispatch]);
+
+  const handleClick = () => {
+    dispatch(updateModaleEntity(undefined));
+    dispatch(updateModaleOpened(true));
   };
 
-  if (loading) {
-    return <div>Loading...</div>;
-  }
-
   return (
-    <div className="operations">
-      <div className="operations-items">
-        {sortBy(data.period.operations, operation => new moment(operation.dt)).map(operation => (
-          <Operation idPeriod={idPeriod} refetch={refetch} key={operation.id} operation={operation} />
-        ))}
-      </div>
-
-      {displayCreateForm && <NewOperation id={idPeriod} />}
-      {displayCreateButton && (
-        <Index className="add" color="secondary" onClick={toggleCreateForm}>
-          <PlusOneIcon fontSize={'small'} />
-        </Index>
-      )}
+    <div style={{ padding: 15 }}>
+      <List idPeriod={idPeriod} pageSize={50} displayAction />
+      <Row>
+        <Col style={{ display: 'flex', justifyContent: 'flex-end', width: '100%' }}>
+          <Button type="primary" shape="circle" size={'large'} icon={<AppstoreAddOutlined />} onClick={handleClick} />
+        </Col>
+      </Row>
     </div>
   );
 };

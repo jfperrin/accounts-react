@@ -1,10 +1,11 @@
 import React from 'react';
+import { Button, Card } from 'antd';
+import { BankOutlined } from '@ant-design/icons';
 import { useMutation, useQuery } from 'react-apollo';
-import BalanceIcon from '@material-ui/icons/AccountBalance';
 import mutation from '../Periods/gqlQueries/initializeBankBalances';
 import query from '../Periods/gqlQueries/get';
 import Balance from './Balance/index';
-import Index from '../common/Button';
+import Edit from './Balance/Edit';
 
 const Balances = ({ idPeriod }) => {
   const [initializeBankBalances] = useMutation(mutation);
@@ -19,20 +20,21 @@ const Balances = ({ idPeriod }) => {
   if (loading) return <div>Loading...</div>;
 
   return (
-    <div>
-      <div style={{ display: 'flex' }}>
-        <div style={{ flex: 1 }}>
-          <h3 style={{ marginTop: '13px' }}>Balances</h3>
-        </div>
-        <div style={{ width: '45px', paddingTop: '5px' }}>
-          <Index size={'small'} onClick={() => handleInitializeBankBalances(idPeriod)}>
-            <BalanceIcon />
-          </Index>
-        </div>
-      </div>
-      {data.period.balances.map(balance => (
-        <Balance refetch={refetch} key={balance.id} balance={balance} />
-      ))}
+    <div style={{ padding: 15 }}>
+      <Edit refetch={refetch} />
+      <Card
+        title={
+          <>
+            <h3 style={{ float: 'left', paddingTop: 8, marginBottom: 0 }}>Balances</h3>
+            <Button style={{ float: 'right' }} size={'large'} shape={'circle'} type={'primary'} icon={<BankOutlined />} onClick={() => handleInitializeBankBalances(idPeriod)} />
+          </>
+        }
+        bordered
+      >
+        {data.period.balances.map(balance => (
+          <Balance refetch={refetch} key={`idx-${balance.id}`} balance={balance} />
+        ))}
+      </Card>
     </div>
   );
 };

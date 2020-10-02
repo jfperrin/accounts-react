@@ -1,12 +1,13 @@
 import React from 'react';
 import { useDispatch } from 'react-redux';
-import { Table, Tag } from 'antd';
+import { Table } from 'antd';
 import { useMutation, useQuery } from 'react-apollo';
 import Form from '../Form';
 import query from '../gqlQueries/list';
 import mutation from '../gqlQueries/delete';
 import { updateModaleEntity, updateModaleOpened } from '../../../actions/ui/layout/modale';
 import { listActionsBlock } from '../../../services/utils';
+import Amount from '../../common/Amount';
 
 const RecurrentOperationsTable = ({ displayAction, pageSize = 15 }) => {
   const { data, loading, refetch } = useQuery(query);
@@ -40,8 +41,9 @@ const RecurrentOperationsTable = ({ displayAction, pageSize = 15 }) => {
         title: 'Montant',
         dataIndex: 'amount',
         key: 'amount',
+        align: 'right',
         width: 75,
-        render: amount => <Tag color={amount > 0 ? 'green' : 'red'}>{amount.toFixed(2)} €</Tag>,
+        render: amount => <Amount amount={amount} />,
       },
     ];
 
