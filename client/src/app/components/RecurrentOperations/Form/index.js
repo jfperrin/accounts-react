@@ -60,7 +60,7 @@ const FormRecurrentOperations = () => {
   };
 
   return (
-    <Modal title="Basic Modal" visible={isOpened} onCancel={close} footer={null}>
+    <Modal forceRender title="Basic Modal" visible={isOpened} onCancel={close} footer={null}>
       <Form form={form} onFinish={onFinish} name="entity">
         <Item label="Jours" name="day" rules={[{ required: true, message: 'Please input day!' }]}>
           <InputNumber max={31} min={1} />

@@ -67,7 +67,13 @@ const PeriodsTable = ({ displayAction, pageSize = 15 }) => {
   return (
     <>
       <Form />
-      <Table loading={loading} columns={getColumns()} dataSource={data?.periods?.sort((a, b) => keyForSorting(b.year, b.month) - keyForSorting(a.year, a.month))} pagination={{ pageSize }} />
+      <Table
+        rowKey={'id'}
+        loading={loading}
+        columns={getColumns()}
+        dataSource={data?.periods?.sort((a, b) => keyForSorting(b.year, b.month) - keyForSorting(a.year, a.month))}
+        pagination={{ pageSize }}
+      />
     </>
   );
 };

@@ -62,7 +62,7 @@ const FormOperation = ({ refetch, idPeriod }) => {
   };
 
   return (
-    <Modal title="Basic Modal" visible={isOpened} onCancel={close} footer={null}>
+    <Modal forceRender title="Basic Modal" visible={isOpened} onCancel={close} footer={null}>
       <Form form={form} onFinish={onFinish} name="period">
         <Item label="Date" name="dt" rules={[{ required: true, message: 'Please input date!' }]}>
           <DatePicker format={dateFormat} />

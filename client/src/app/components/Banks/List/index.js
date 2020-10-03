@@ -42,7 +42,7 @@ const RecurrentOperationsTable = ({ displayAction, pageSize = 15 }) => {
   return (
     <>
       <Form />
-      <Table loading={loading} columns={getColumns()} dataSource={data?.banks?.sort((a, b) => b.day - a.day)} pagination={{ pageSize }} />
+      <Table rowKey={'id'} loading={loading} columns={getColumns()} dataSource={data?.banks?.sort((a, b) => b.day - a.day)} pagination={{ pageSize }} />
     </>
   );
 };

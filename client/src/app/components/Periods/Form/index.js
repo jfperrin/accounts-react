@@ -58,7 +58,7 @@ const FormPeriod = () => {
   };
 
   return (
-    <Modal title="Basic Modal" visible={isOpened} onCancel={close} footer={null}>
+    <Modal forceRender title="Basic Modal" visible={isOpened} onCancel={close} footer={null}>
       <Form form={form} onFinish={onFinish} name="period">
         <Item label="Année" name="year" rules={[{ required: true, message: 'Please input year!' }]}>
           <InputNumber />
