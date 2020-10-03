@@ -1,6 +1,6 @@
 /* eslint-disable prefer-template,no-path-concat,no-path-concat */
 import express from 'express';
-import expressGraphQL from 'express-graphql';
+import { graphqlHTTP } from 'express-graphql';
 import mongoose from 'mongoose';
 import bodyParser from 'body-parser';
 import session from 'express-session';
@@ -49,7 +49,7 @@ app.use(
 app.use(passport.initialize());
 app.use(passport.session());
 
-app.set('port', process.env.PORT || 3001);
+app.set('port', process.env.PORT || 4123);
 app.use(bodyParser.json()); // support json encoded bodies
 app.use(bodyParser.urlencoded({ extended: true })); // support encoded bodies
 
@@ -59,7 +59,7 @@ if (process.env.NODE_ENV === 'production') {
 
 app.use(
   '/graphql',
-  expressGraphQL({
+  graphqlHTTP({
     schema,
     graphiql: true,
   }),
