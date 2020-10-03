@@ -26,7 +26,7 @@ const FormOperation = ({ refetch, idPeriod }) => {
     } else {
       form.setFieldsValue({ dt: moment(new Date(), dateFormat), label: null, amount: 0 });
     }
-  }, [entity?.id]);
+  }, [entity, form]);
 
   const close = () => {
     dispatch(updateModaleOpened(false));

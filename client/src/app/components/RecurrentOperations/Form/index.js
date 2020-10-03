@@ -24,7 +24,7 @@ const FormRecurrentOperations = () => {
     } else {
       form.setFieldsValue({ day: null, label: null, amount: 0 });
     }
-  }, [entity?.id]);
+  }, [entity, form]);
 
   const close = () => {
     dispatch(updateModaleOpened(false));

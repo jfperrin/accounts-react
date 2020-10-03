@@ -19,7 +19,7 @@ const Edit = ({ refetch }) => {
     if (entity?.id) {
       form.setFieldsValue({ amount: entity.amount });
     }
-  }, [entity?.id]);
+  }, [entity, form]);
 
   const close = () => {
     dispatch(updateModaleOpened(false));

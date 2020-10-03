@@ -1,7 +1,7 @@
 import React from 'react';
 import { useDispatch } from 'react-redux';
 import { Link } from 'react-router-dom';
-import { Table, Tag } from 'antd';
+import { Table } from 'antd';
 import { useMutation, useQuery } from 'react-apollo';
 import Form from '../Form';
 import query from '../gqlQueries/list';
