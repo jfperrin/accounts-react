@@ -1,57 +1,35 @@
 import React, { useEffect } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { useQuery } from 'react-apollo';
-import PlusOneIcon from '@material-ui/icons/PlusOne';
-import query from './gqlQueries/list';
-import NewPeriod from './ListItem/New';
-import Period from './ListItem/index';
+import { useDispatch } from 'react-redux';
+import { Button, Col, Row } from 'antd';
+import { AppstoreAddOutlined } from '@ant-design/icons';
 import { updateLayoutTitle } from '../../actions/ui/layout/title';
-import { hideCreateButton } from '../../actions/ui/crud/createButton';
-import { showCreateForm } from '../../actions/ui/crud/createForm';
-import { getCrudCreateButtonState, getCrudCreateFormState } from '../../selectors/ui';
-import Index from '../common/Button';
-
-const keyForSorting = (year, month) =>
-  parseInt(
-    `${year}${month.toLocaleString('en-US', {
-      minimumIntegerDigits: 2,
-      useGrouping: false,
-    })}`,
-    10,
-  );
+import { updateCurrentMenu } from '../../actions/ui/layout/menu';
+import { updateModaleEntity, updateModaleOpened } from '../../actions/ui/layout/modale';
+import List from './List';
+import Form from './Form';
 
 const Periods = () => {
   const dispatch = useDispatch();
-  const { data, loading, refetch } = useQuery(query);
-  const displayCreateForm = useSelector(state => getCrudCreateFormState(state, { entity: 'period' }));
-  const displayCreateButton = useSelector(state => getCrudCreateButtonState(state, { entity: 'period' })) !== false;
 
   useEffect(() => {
     dispatch(updateLayoutTitle('Périodes'));
+    dispatch(updateCurrentMenu('1'));
   }, [dispatch]);
 
-  const toggleCreateForm = () => {
-    dispatch(showCreateForm('period'));
-    dispatch(hideCreateButton('period'));
+  const handleClick = () => {
+    dispatch(updateModaleEntity(undefined));
+    dispatch(updateModaleOpened(true));
   };
 
-  if (loading) {
-    return <div>Loading...</div>;
-  }
-
   return (
-    <div>
-      {data.periods
-        .sort((a, b) => keyForSorting(b.year, b.month) - keyForSorting(a.year, a.month))
-        .map(period => {
-          return <Period refetch={refetch} key={period.id} period={period} />;
-        })}
-      {displayCreateForm && <NewPeriod />}
-      {displayCreateButton && (
-        <Index className="floating-right" size="small" onClick={toggleCreateForm}>
-          <PlusOneIcon fontSize={'small'} />
-        </Index>
-      )}
+    <div style={{ padding: 15 }}>
+      <Form />
+      <List displayAction pageSize={30} />
+      <Row>
+        <Col style={{ display: 'flex', justifyContent: 'flex-end', width: '100%' }}>
+          <Button type="primary" shape="circle" size={'large'} icon={<AppstoreAddOutlined />} onClick={handleClick} />
+        </Col>
+      </Row>
     </div>
   );
 };

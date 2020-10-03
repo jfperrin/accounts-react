@@ -1,12 +1,11 @@
 import gql from 'graphql-tag';
+import recurrentoperationFragment from './recurrentoperation';
 
 export default gql`
   {
     recurrentOperations {
-      id
-      amount
-      day
-      label
+      ...recurrentoperationFragment
     }
   }
+  ${recurrentoperationFragment}
 `;

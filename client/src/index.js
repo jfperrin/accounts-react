@@ -6,7 +6,6 @@ import { createBrowserHistory } from 'history';
 import registerServiceWorker from './registerServiceWorker';
 import createStore from './app/store/store';
 import App from './app/components/App';
-import './index.css';
 
 const history = createBrowserHistory();
 const store = createStore(history);

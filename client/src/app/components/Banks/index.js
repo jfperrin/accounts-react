@@ -1,52 +1,37 @@
 import React, { useEffect } from 'react';
-import { useQuery } from 'react-apollo';
-import { useSelector, useDispatch } from 'react-redux';
-import PlusOneIcon from '@material-ui/icons/PlusOne';
-import NewBank from './Bank/New';
-import Bank from './Bank/index';
-import query from './gqlQueries/list';
-import { hideCreateButton } from '../../actions/ui/crud/createButton';
-import { showCreateForm } from '../../actions/ui/crud/createForm';
-import { updateLayoutTitle } from '../../actions/ui/layout/title';
-import { getCrudCreateButtonState, getCrudCreateFormState } from '../../selectors/ui';
-import Index from '../common/Button';
+import { useDispatch } from 'react-redux';
+import { Button, Col, Row } from 'antd';
+import { AppstoreAddOutlined } from '@ant-design/icons';
+import { updateLayoutTitle as updateLayoutTitleAction } from '../../actions/ui/layout/title';
+import { updateCurrentMenu } from '../../actions/ui/layout/menu';
+import Form from './Form';
+import List from './List';
+import { updateModaleEntity, updateModaleOpened } from '../../actions/ui/layout/modale';
 
-const Banks = () => {
+const RecurrentOperations = () => {
   const dispatch = useDispatch();
-  const { data, refetch, loading } = useQuery(query);
-  const displayCreateForm = useSelector(state => getCrudCreateFormState(state, { entity: 'bank' }));
-  const displayCreateButton = useSelector(state => getCrudCreateButtonState(state, { entity: 'bank' })) !== false;
 
   useEffect(() => {
-    dispatch(updateLayoutTitle('Banques'));
+    dispatch(updateCurrentMenu('2'));
+    dispatch(updateLayoutTitleAction('Banques'));
   }, [dispatch]);
 
-  const toggleCreateForm = () => {
-    dispatch(showCreateForm('bank'));
-    dispatch(hideCreateButton('bank'));
+  const handleClick = () => {
+    dispatch(updateModaleEntity(undefined));
+    dispatch(updateModaleOpened(true));
   };
 
-  if (loading) {
-    return <div>Loading...</div>;
-  }
-
   return (
-    <div>
-      {data.banks
-        .sort((a, b) => a?.label?.localeCompare(b?.label))
-        .map(bank => {
-          return <Bank key={bank.id} bank={bank} refetch={refetch} />;
-        })}
-
-      {displayCreateForm && <NewBank />}
-
-      {displayCreateButton && (
-        <Index className="floating-right" size="small" onClick={toggleCreateForm}>
-          <PlusOneIcon fontSize={'small'} />
-        </Index>
-      )}
+    <div style={{ padding: 15 }}>
+      <Form />
+      <List displayAction pageSize={30} />
+      <Row>
+        <Col style={{ display: 'flex', justifyContent: 'flex-end', width: '100%' }}>
+          <Button type="primary" shape="circle" size={'large'} icon={<AppstoreAddOutlined />} onClick={handleClick} />
+        </Col>
+      </Row>
     </div>
   );
 };
 
-export default Banks;
+export default RecurrentOperations;
