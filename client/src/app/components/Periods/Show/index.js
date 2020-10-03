@@ -1,26 +1,23 @@
+import { Button, Card, Col, Row } from 'antd';
 import React, { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import { useMutation, useQuery } from '@apollo/react-hooks';
-import ImportIcon from '@material-ui/icons/ImportExport';
+import { ImportOutlined } from '@ant-design/icons';
 import Operations from '../../Operations';
 import Balances from '../../Balances';
 import addRecurrentOperationsMutation from '../gqlQueries/addRecurrentOperations';
-import get from '../gqlQueries/get';
 import { updateLayoutTitle } from '../../../actions/ui/layout/title';
-import Index from '../../common/Button';
+import get from '../gqlQueries/get';
+import Amount from '../../common/Amount';
+import Loading from '../../common/Loading';
 
-const line = {
+const styleAmount = { width: 110, display: 'flex', justifyContent: 'flex-end' };
+const styleLabel = { flex: 1 };
+const styleSolde = {
   display: 'flex',
-  marginBottom: '15px',
+  flexFlow: 'row',
+  padding: '15px 5px',
 };
-
-const block = {
-  flex: 1,
-  padding: '5px',
-  marginRight: '5px',
-  border: 'solid 1px #F1F1F1',
-};
-
 const Period = ({ match }) => {
   const dispatch = useDispatch();
   const [addRecurrentOperations] = useMutation(addRecurrentOperationsMutation);
@@ -32,76 +29,58 @@ const Period = ({ match }) => {
     }
   }, [loading, data, dispatch]);
 
-  if (!data) return null;
-
   const handleAddRecurrentOperations = async () => {
     await addRecurrentOperations({ variables: { id: match.params.id } });
     await refetch();
   };
 
   if (loading) {
-    return <div>Loading...</div>;
+    return <Loading />;
   }
 
   return (
-    <div className="operations">
-      <div style={line}>
-        <div style={block}>
+    <>
+      <Row>
+        <Col span={12}>
           <Balances idPeriod={match.params.id} />
-        </div>
-        <div style={block}>
-          <div style={{ display: 'flex' }}>
-            <div style={{ flex: 1 }}>
-              <h3 style={{ marginTop: '13px' }}>Solde</h3>
-            </div>
-            <div
-              style={{
-                width: 45,
-                paddingTop: '5px',
-              }}
-            >
-              <Index size={'small'} onClick={handleAddRecurrentOperations}>
-                <ImportIcon />
-              </Index>
-            </div>
-          </div>
-          <div
-            style={{
-              display: 'flex',
-              padding: '15px',
-            }}
+        </Col>
+        <Col span={12} style={{ padding: 15 }}>
+          <Card
+            bordered
+            title={
+              <>
+                <h3 style={{ float: 'left', paddingTop: 8, marginBottom: 0 }}>Solde</h3>
+                <Button style={{ float: 'right' }} size={'large'} shape={'circle'} type={'primary'} icon={<ImportOutlined />} onClick={handleAddRecurrentOperations} />
+              </>
+            }
           >
-            <div
-              style={{
-                width: '33%',
-                whiteSpace: 'nowrap',
-              }}
-            >
-              Opérations: {data.period.balance.operations.toFixed(2)} €
+            <div style={styleSolde}>
+              <div style={styleLabel}>Opérations</div>
+              <div style={styleAmount}>
+                <Amount amount={data.period.balance.operations} />
+              </div>
             </div>
-            <div
-              style={{
-                width: '33%',
-                textAlign: 'center',
-                whiteSpace: 'nowrap',
-              }}
-            >
-              Banque: {data.period.balance.banks.toFixed(2)} €
+            <div style={styleSolde}>
+              <div style={styleLabel}>Banque</div>
+              <div style={styleAmount}>
+                <Amount amount={data.period.balance.banks} />
+              </div>
             </div>
-            <div
-              style={{
-                width: '34%',
-                textAlign: 'right',
-                whiteSpace: 'nowrap',
-              }}
-            >
-              Solde: {(data.period.balance.operations + data.period.balance.banks).toFixed(2)} €
+            <div style={styleSolde}>
+              <div style={styleLabel}>Solde</div>
+              <div style={styleAmount}>
+                <Amount amount={data.period.balance.operations + data.period.balance.banks} />
+              </div>
             </div>
-          </div>
-        </div>
-      </div>
-      <Operations idPeriod={match.params.id} />
-    </div>
+          </Card>
+        </Col>
+      </Row>
+      <Row>
+        <Col span={24}>
+          <Operations idPeriod={match.params.id} />
+        </Col>
+      </Row>
+    </>
   );
 };
 

@@ -1,32 +1,30 @@
 .app-header-container {
+  display: flex;
 
   .app-logo {
     animation: app-logo-spin infinite 20s linear;
-    height: 80px;
+    height: 60px;
   }
 
-  .app-header {
-    display: flex;
-    background-color: #222;
-    color: white;
+  .icon {
+    width: 100px;
+  }
 
-    .icon {
-      width: 100px;
-    }
+  .ant-menu {
+    flex: 1;
+  }
 
-    .title {
+  .title {
+    color: #61dafb;
+    font-size: 36px;
+    flex: 1;
+
+    a {
       color: #61dafb;
-      font-size: 36px;
-      padding-top: 20px;
-      flex: 1;
+      text-decoration: none;
 
-      a {
-        color: #61dafb;
-        text-decoration: none;
-
-        &:hover {
-          color: darken(#61dafb, 35%)
-        }
+      &:hover {
+        color: darken(#61dafb, 35%);
       }
     }
   }

@@ -1,50 +1,35 @@
 import React, { useEffect } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { useQuery } from 'react-apollo';
-import PlusOneIcon from '@material-ui/icons/PlusOne';
-import query from './gqlQueries/list';
-import NewRecurrentOperation from './RecurrentOperation/New';
+import { useDispatch } from 'react-redux';
+import { Button, Col, Row } from 'antd';
+import { AppstoreAddOutlined } from '@ant-design/icons';
 import { updateLayoutTitle as updateLayoutTitleAction } from '../../actions/ui/layout/title';
-import RecurrentOperation from './RecurrentOperation/index';
-import { hideCreateButton } from '../../actions/ui/crud/createButton';
-import { showCreateForm } from '../../actions/ui/crud/createForm';
-import { getCrudCreateButtonState as getCrudCreateButtonStateSelector, getCrudCreateFormState as getCrudCreateFormStateSelector } from '../../selectors/ui';
-import Index from '../common/Button';
+import { updateCurrentMenu } from '../../actions/ui/layout/menu';
+import Form from './Form';
+import List from './List';
+import { updateModaleEntity, updateModaleOpened } from '../../actions/ui/layout/modale';
 
 const RecurrentOperations = () => {
   const dispatch = useDispatch();
-  const { data, refetch, loading } = useQuery(query);
-  const displayCreateForm = useSelector(state => getCrudCreateFormStateSelector(state, { entity: 'recurrentOperation' }));
-  const displayCreateButton = useSelector(state => getCrudCreateButtonStateSelector(state, { entity: 'recurrentOperation' })) !== false;
 
   useEffect(() => {
+    dispatch(updateCurrentMenu('3'));
     dispatch(updateLayoutTitleAction('Opérations#Mensuelles'));
   }, [dispatch]);
 
-  const toggleCreateForm = () => {
-    dispatch(showCreateForm('recurrentOperation'));
-    dispatch(hideCreateButton('recurrentOperation'));
+  const handleClick = () => {
+    dispatch(updateModaleEntity(undefined));
+    dispatch(updateModaleOpened(true));
   };
 
-  if (loading) {
-    return <div>Loading...</div>;
-  }
-
   return (
-    <div>
-      {data.recurrentOperations
-        .sort((a, b) => a.day - b.day)
-        .map(recurrentOperation => {
-          return <RecurrentOperation refetch={refetch} key={recurrentOperation.id} recurrentOperation={recurrentOperation} />;
-        })}
-
-      {displayCreateForm && <NewRecurrentOperation />}
-
-      {displayCreateButton && (
-        <Index className="floating-right" size="small" onClick={toggleCreateForm}>
-          <PlusOneIcon fontSize={'small'} />
-        </Index>
-      )}
+    <div style={{ padding: 15 }}>
+      <Form />
+      <List displayAction pageSize={30} />
+      <Row>
+        <Col style={{ display: 'flex', justifyContent: 'flex-end', width: '100%' }}>
+          <Button type="primary" shape="circle" size={'large'} icon={<AppstoreAddOutlined />} onClick={handleClick} />
+        </Col>
+      </Row>
     </div>
   );
 };

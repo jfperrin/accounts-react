@@ -1,4 +1,4 @@
-import { GraphQLString, GraphQLID } from 'graphql';
+import { GraphQLID, GraphQLFloat } from 'graphql';
 import BalanceType from '../types/balancesType';
 import BalanceModel from '../../models/balances';
 
@@ -14,7 +14,7 @@ export default {
     type: BalanceType,
     args: {
       id: { type: GraphQLID },
-      amount: { type: GraphQLString },
+      amount: { type: GraphQLFloat },
     },
     resolve(parentValue, args) {
       return BalanceModel.findOne({ _id: args.id }).then(balance => {

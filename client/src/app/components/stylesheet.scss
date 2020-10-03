@@ -1,26 +1,4 @@
-.app {
-  position: relative;
-
-  .body {
-    padding: 15px 15px 80px 15px;
-
-    a {
-      text-decoration: none;
-      color: #428bca;
-
-      &:hover {
-        color: darken(#428bca, 35%)
-      }
-    }
-  }
-
-  .material-icons {
-    cursor: pointer;
-    margin-right: 5px;
-  }
-
-  .floating-right {
-    margin-top: 25px;
-    float: right;
-  }
+.ant-layout {
+  font-size: 16px;
+  min-height: 100vh;
 }

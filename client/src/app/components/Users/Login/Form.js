@@ -1,10 +1,8 @@
+import { Button, Form, Input } from 'antd';
 import React, { useLayoutEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { useForm } from 'react-hook-form';
 import { useMutation, useQuery } from '@apollo/react-hooks';
-import Button from '@material-ui/core/Button';
 import { withRouter } from 'react-router-dom';
-import { TextField } from '@material-ui/core';
 import mutation from '../gqlQueries/login';
 import query from '../gqlQueries/currentUser';
 import { getLoginErrors } from '../../../selectors/ui';
@@ -12,8 +10,17 @@ import { updateLoginErrors } from '../../../actions/ui/login/errors';
 import client from '../../../../apolloClient';
 import './stylesheet.css';
 
+const layout = {
+  style: { marginTop: 25 },
+  labelCol: { span: 10 },
+  wrapperCol: { span: 5 },
+};
+
+const tailLayout = {
+  wrapperCol: { offset: 10, span: 5 },
+};
+
 const Login = ({ history }) => {
-  const { handleSubmit, register, errors } = useForm();
   const dispatch = useDispatch();
   const [loginMutate] = useMutation(mutation);
   const { data } = useQuery(query);
@@ -27,7 +34,7 @@ const Login = ({ history }) => {
 
   if (!data) return null;
 
-  const onSubmit = data => {
+  const onFinish = data => {
     client.resetStore();
 
     loginMutate({
@@ -45,26 +52,28 @@ const Login = ({ history }) => {
       });
   };
 
+  const onFinishFailed = errorInfo => {
+    console.log('Failed:', errorInfo);
+  };
+
   return (
-    <div className={'login-container'}>
-      <div className={'login'}>
-        <div className={'title'}>Identification requise</div>
-        <form onSubmit={handleSubmit(onSubmit)} className="col s6">
-          <div className="input-field">
-            <TextField name="email" error={!!errors.email} label="Email" inputRef={register} helperText={errors.email ? errors.email.message : ''} type="text" fullWidth />
-          </div>
-          <div className="input-field">
-            <TextField name="password" error={!!errors.password} label="Password" inputRef={register} helperText={errors.password ? errors.password.message : ''} type="password" fullWidth />
-          </div>
-          <div className="errors">{loginErrors}</div>
-          <div className="actions">
-            <Button type="submit" color="primary">
-              Ok
-            </Button>
-          </div>
-        </form>
-      </div>
-    </div>
+    <Form onFinish={onFinish} onFinishFailed={onFinishFailed} {...layout} name="basic">
+      <Form.Item label="Email" name="email" rules={[{ required: true, message: 'Please input your username!' }]}>
+        <Input />
+      </Form.Item>
+
+      <Form.Item label="Password" name="password" rules={[{ required: true, message: 'Please input your password!' }]}>
+        <Input.Password />
+      </Form.Item>
+
+      <div className="errors">{loginErrors}</div>
+
+      <Form.Item {...tailLayout}>
+        <Button type="primary" htmlType="submit">
+          Valider
+        </Button>
+      </Form.Item>
+    </Form>
   );
 };
 

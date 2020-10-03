@@ -3,27 +3,6 @@
 
   display: flex;
 
-  &.balance-form {
-    $cell-padding-form: 0px 5px;
-    background-color: #F1F1F1;
-
-    .dt {
-      padding: $cell-padding-form;
-    }
-
-    .label {
-      padding: 15px 5px;
-    }
-
-    .amount {
-      padding: $cell-padding-form;
-    }
-
-    .actions {
-      padding-top: 0;
-    }
-  }
-
   .dt {
     padding: $cell-padding;
     width: 15%;
@@ -35,9 +14,10 @@
   }
 
   .amount {
+    display: flex;
+    justify-content: flex-end;
     padding: $cell-padding;
-    text-align: right;
-    width: 10%;
+    width: 100px;
     white-space: nowrap;
   }
 
