@@ -1,6 +1,5 @@
-import React, { useEffect } from 'react';
-// TODO replace moment by dayjs
 import moment from 'moment';
+import React, { useEffect } from 'react';
 import { Button, Form, InputNumber, Input, Modal, Space, DatePicker } from 'antd';
 import { useMutation } from 'react-apollo';
 import { useDispatch, useSelector } from 'react-redux';
@@ -8,9 +7,9 @@ import mutateCreate from '../../Periods/gqlQueries/createOperation';
 import mutateUpdate from '../gqlQueries/update';
 import { getModaleEntity, getModaleOpened } from '../../../selectors/ui';
 import { updateModaleEntity, updateModaleOpened } from '../../../actions/ui/layout/modale';
+import { dateFormat } from '../../../services/utils';
 
 const { Item, useForm } = Form;
-const dateFormat = 'DD/MM/yyyy';
 
 const FormOperation = ({ refetch, idPeriod }) => {
   const [form] = useForm();
@@ -22,9 +21,9 @@ const FormOperation = ({ refetch, idPeriod }) => {
 
   useEffect(() => {
     if (entity?.id) {
-      form.setFieldsValue({ dt: moment(new Date(entity.dt), dateFormat), label: entity.label, amount: entity.amount });
+      form.setFieldsValue({ dt: moment(new Date(entity.dt)), label: entity.label, amount: entity.amount });
     } else {
-      form.setFieldsValue({ dt: moment(new Date(), dateFormat), label: null, amount: 0 });
+      form.setFieldsValue({ dt: moment(new Date()), label: null, amount: 0 });
     }
   }, [entity, form]);
 

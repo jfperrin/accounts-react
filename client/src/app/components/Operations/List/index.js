@@ -1,8 +1,6 @@
-// TODO replace moment by dayjs
 import moment from 'moment';
 import { useDispatch } from 'react-redux';
 import { CheckCircleOutlined, DeleteOutlined, EditOutlined } from '@ant-design/icons';
-import { format } from 'date-fns';
 import React from 'react';
 import { Button, Popconfirm, Space, Table } from 'antd';
 import { useMutation, useQuery } from 'react-apollo';
@@ -12,6 +10,7 @@ import { updateModaleEntity, updateModaleOpened } from '../../../actions/ui/layo
 import pointOperationMutation from '../gqlQueries/point';
 import deleteOperationMutation from '../../Periods/gqlQueries/deleteOperation';
 import Amount from '../../common/Amount';
+import { formatDate } from '../../../services/utils';
 import './stylesheet.scss';
 
 const List = ({ idPeriod, showHeader, pageSize = 15, displayAction, hidePointedOperations }) => {
@@ -47,7 +46,7 @@ const List = ({ idPeriod, showHeader, pageSize = 15, displayAction, hidePointedO
         dataIndex: 'dt',
         width: 120,
         key: 'dt',
-        render: dt => format(new Date(dt), 'dd/MM/yyyy'),
+        render: dt => formatDate(dt),
       },
       {
         title: 'Label',
