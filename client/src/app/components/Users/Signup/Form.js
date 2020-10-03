@@ -8,6 +8,7 @@ import query from '../gqlQueries/currentUser';
 import { getLoginErrors } from '../../../selectors/ui';
 import { updateLoginErrors } from '../../../actions/ui/login/errors';
 import './stylesheet.css';
+import Loading from '../../common/Loading';
 
 const { Item } = Form;
 
@@ -48,7 +49,7 @@ const SignupForm = ({ history }) => {
     });
   };
 
-  if (loading) return <div>Loading ....</div>;
+  if (loading) return <Loading />;
 
   return (
     <Form onFinish={onFinish} {...layout} name="basic">

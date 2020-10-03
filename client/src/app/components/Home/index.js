@@ -9,6 +9,7 @@ import { updateLayoutTitle } from '../../actions/ui/layout/title';
 import { updateCurrentMenu } from '../../actions/ui/layout/menu';
 import PeriodsList from '../Periods/List';
 import Amount from '../common/Amount';
+import Loading from '../common/Loading';
 
 const Home = () => {
   const dispatch = useDispatch();
@@ -20,11 +21,7 @@ const Home = () => {
   });
 
   if (loadingCurrentPeriod) {
-    return (
-      <Row>
-        <Col>Loading...</Col>
-      </Row>
-    );
+    return <Loading />;
   }
 
   return (

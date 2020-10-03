@@ -9,7 +9,7 @@ import Edit from './Balance/Edit';
 
 const Balances = ({ idPeriod }) => {
   const [initializeBankBalances] = useMutation(mutation);
-  const { refetch, data, loading } = useQuery(query, { variables: { id: idPeriod } });
+  const { refetch, data } = useQuery(query, { variables: { id: idPeriod } });
 
   const handleInitializeBankBalances = async id => {
     await initializeBankBalances({ variables: { id } });
@@ -17,7 +17,6 @@ const Balances = ({ idPeriod }) => {
   };
 
   if (!data) return null;
-  if (loading) return <div>Loading...</div>;
 
   return (
     <div style={{ padding: 15 }}>

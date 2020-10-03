@@ -9,6 +9,7 @@ import addRecurrentOperationsMutation from '../gqlQueries/addRecurrentOperations
 import { updateLayoutTitle } from '../../../actions/ui/layout/title';
 import get from '../gqlQueries/get';
 import Amount from '../../common/Amount';
+import Loading from '../../common/Loading';
 
 const styleAmount = { width: 110, display: 'flex', justifyContent: 'flex-end' };
 const styleLabel = { flex: 1 };
@@ -28,15 +29,13 @@ const Period = ({ match }) => {
     }
   }, [loading, data, dispatch]);
 
-  if (!data) return null;
-
   const handleAddRecurrentOperations = async () => {
     await addRecurrentOperations({ variables: { id: match.params.id } });
     await refetch();
   };
 
   if (loading) {
-    return <div>Loading...</div>;
+    return <Loading />;
   }
 
   return (
