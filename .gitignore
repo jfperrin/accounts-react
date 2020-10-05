@@ -7,3 +7,4 @@ server/dist/
 *.log
 deploy.sh
 env.*
+.env

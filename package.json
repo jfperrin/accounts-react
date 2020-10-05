@@ -9,7 +9,7 @@
   },
   "scripts": {
     "start": "concurrently \"yarn run server\" \"yarn run client\"",
-    "server": "cd server && nodemon src/server.js --exec babel-node",
+    "server": "cd server && nodemon src/server.js --exec babel-node -r node_modules/dotenv/config",
     "client": "node client/client.js",
     "dev": "echo \"This command has been deprecated. Use 'yarn start'\" && exit 1",
     "lint": "eslint .",
