@@ -1,5 +1,5 @@
 import mongoose from 'mongoose';
-import bcrypt from 'bcrypt-nodejs';
+import bcrypt from 'bcrypt';
 // import crypto from 'crypto';
 
 // Every user has an email and password.  The password is not stored as
