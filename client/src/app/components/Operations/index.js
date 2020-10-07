@@ -17,7 +17,7 @@ const Operations = ({ idPeriod }) => {
 
   const handleClick = () => {
     dispatch(updateModaleEntity(undefined));
-    dispatch(updateModaleOpened(true));
+    dispatch(updateModaleOpened('operations'));
   };
 
   return (

@@ -36,7 +36,7 @@ const List = ({ idPeriod, showHeader, pageSize = 15, displayAction, hidePointedO
 
   const editEntity = entity => {
     dispatch(updateModaleEntity(entity));
-    dispatch(updateModaleOpened(true));
+    dispatch(updateModaleOpened('operations'));
   };
 
   const getColumns = () => {

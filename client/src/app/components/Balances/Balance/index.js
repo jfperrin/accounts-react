@@ -20,7 +20,7 @@ const BalanceComponent = ({ balance, refetch }) => {
 
   const editEntity = entity => {
     dispatch(updateModaleEntity(entity));
-    dispatch(updateModaleOpened(true));
+    dispatch(updateModaleOpened('balance'));
   };
 
   return (
