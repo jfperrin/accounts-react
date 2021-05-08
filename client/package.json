@@ -20,7 +20,7 @@
     "history": "^4.10.1",
     "http-proxy-middleware": "^1.0.5",
     "immutable": "^3.8.2",
-    "lodash": "^4.17.20",
+    "lodash": "^4.17.21",
     "lodash.flowright": "^3.5.0",
     "moment": "^2.29.0",
     "node-sass-chokidar": "1.5.0",
