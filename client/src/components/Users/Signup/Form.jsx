@@ -6,7 +6,7 @@ import mutation from '../gqlQueries/signup';
 import query from '../gqlQueries/currentUser';
 import { getLoginErrors } from '../../../redux/selectors/ui';
 import { updateLoginErrors } from '../../../redux/actions/ui/login/errors';
-import './stylesheet.css';
+import './stylesheet.scss';
 import Loading from '../../common/Loading';
 import { useNavigate } from 'react-router-dom';
 

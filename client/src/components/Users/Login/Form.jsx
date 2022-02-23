@@ -8,7 +8,7 @@ import query from '../gqlQueries/currentUser';
 import { getLoginErrors } from '../../../redux/selectors/ui';
 import { updateLoginErrors } from '../../../redux/actions/ui/login/errors';
 import client from '../../../config/apolloClient';
-import './stylesheet.css';
+import './stylesheet.scss';
 
 const layout = {
   style: { marginTop: 25 },

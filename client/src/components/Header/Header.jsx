@@ -8,10 +8,10 @@ import { useCookies } from 'react-cookie';
 import query from '../Users/gqlQueries/currentUser';
 import mutation from '../Users/gqlQueries/logout';
 import { useNavigate } from 'react-router-dom';
-import './stylesheet.css';
 import logo from './logo.svg';
 import client from '../../config/apolloClient';
 import { getLayoutTitle, getSelectedMenu } from '../../redux/selectors/ui';
+import './stylesheet.scss';
 
 const Header = () => {
   const [, , removeCookie] = useCookies(['connect.sid']);
