@@ -1,34 +1,34 @@
 {
   "name": "server",
-  "version": "0.0.1",
+  "version": "1.0.0",
   "private": true,
   "dependencies": {
-    "bcrypt": "^5.0.0",
-    "body-parser": "^1.19.0",
-    "connect-mongo": "^3.2.0",
+    "bcrypt": "^5.0.1",
+    "body-parser": "^1.19.2",
+    "connect-mongo": "^4.6.0",
     "crypto": "^1.0.1",
-    "dotenv": "^8.2.0",
-    "express": "4.17.1",
-    "express-graphql": "^0.11.0",
-    "express-session": "^1.17.1",
-    "graphql": "^15.3.0",
+    "dotenv": "^16.0.0",
+    "express": "4.17.3",
+    "express-graphql": "^0.12.0",
+    "express-session": "^1.17.2",
+    "graphql": "^16.3.0",
     "graphql-date": "^1.0.3",
-    "mongoose": "^5.10.7",
-    "nodemon": "^2.0.4",
-    "passport": "^0.4.1",
+    "mongoose": "^6.2.3",
+    "nodemon": "^2.0.15",
+    "passport": "^0.5.2",
     "passport-local": "^1.0.0",
-    "sql.js": "1.3.0",
-    "sqlite3": "^5.0.0"
+    "sql.js": "1.6.2",
+    "sqlite3": "^5.0.2"
   },
   "scripts": {
     "server": "babel-node src/server.js",
-    "lint": "eslint .",
-    "build": "babel src -d dist --presets es2015"
+    "build": "npx babel src -d dist"
   },
   "devDependencies": {
-    "babel-cli": "^6.26.0",
-    "babel-plugin-syntax-object-rest-spread": "^6.13.0",
-    "babel-preset-env": "^1.7.0",
-    "babel-preset-es2015": "^6.24.1"
+    "@babel/cli": "^7.17.6",
+    "@babel/core": "^7.17.5",
+    "@babel/node": "^7.16.8",
+    "@babel/plugin-syntax-object-rest-spread": "^7.8.3",
+    "@babel/preset-env": "^7.16.11"
   }
 }

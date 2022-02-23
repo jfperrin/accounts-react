@@ -1,42 +1,17 @@
 {
-  "name": "lookup-server",
-  "version": "1.0.0",
+  "name": "account-server",
+  "version": "2.0.0",
   "private": true,
-  "dependencies": {
-    "babel-core": "^7.0.0-bridge.0",
-    "babel-eslint": "^10.1.0",
-    "nodemon": "^2.0.4"
-  },
   "scripts": {
     "start": "concurrently \"yarn run server\" \"yarn run client\"",
-    "server": "cd server && nodemon src/server.js --exec babel-node -r node_modules/dotenv/config",
-    "client": "node client/client.js",
-    "dev": "echo \"This command has been deprecated. Use 'yarn start'\" && exit 1",
-    "lint": "eslint .",
-    "test": "jest"
-  },
-  "jest": {
-    "transform": {
-      "^.+\\.jsx?$": "babel-jest"
-    }
+    "server": "cd server && nodemon src/server.js --exec babel-node",
+    "client": "cd client && yarn dev",
+    "dev": "echo \"This command has been deprecated. Use 'yarn start'\" && exit 1"
   },
   "devDependencies": {
-    "babel-cli": "^6.26.0",
-    "babel-jest": "^24.9.0",
-    "babel-preset-env": "^1.7.0",
-    "babel-preset-es2015": "^6.24.1",
-    "babel-preset-react": "^6.24.1",
-    "chai": "^4.2.0",
-    "concurrently": "^5.3.0",
-    "eslint": "^6.6.0",
-    "eslint-config-airbnb": "^18.2.0",
-    "eslint-config-prettier": "^6.12.0",
-    "eslint-plugin-import": "^2.22.1",
-    "eslint-plugin-jsx-a11y": "^6.3.1",
-    "eslint-plugin-prettier": "^3.1.4",
-    "eslint-plugin-react": "^7.21.3",
-    "eslint-plugin-react-hooks": "^4.1.2",
-    "jest": "^24.9.0",
-    "prettier": "^2.1.2"
+    "concurrently": "^7.0.0"
+  },
+  "dependencies": {
+    "nodemon": "^2.0.4"
   }
 }

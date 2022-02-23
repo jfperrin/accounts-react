@@ -7,8 +7,7 @@ import bodyParser from 'body-parser';
 import session from 'express-session';
 import passport from 'passport';
 import schema from './schema/schema';
-
-const MongoStore = require('connect-mongo')(session);
+import MongoStore from 'connect-mongo';
 
 // eslint-disable-next-line no-unused-vars
 const result = dotenv.config();
@@ -39,8 +38,8 @@ app.use(
     resave: true,
     saveUninitialized: true,
     secret: 'aaabbbccc',
-    store: new MongoStore({
-      url: MONGO_URI,
+    store: MongoStore.create({
+      mongoUrl: MONGO_URI,
       autoReconnect: true,
     }),
   }),
@@ -57,7 +56,7 @@ app.use(bodyParser.json()); // support json encoded bodies
 app.use(bodyParser.urlencoded({ extended: true })); // support encoded bodies
 
 if (process.env.NODE_ENV === 'production') {
-  app.use(express.static(__dirname + '/../../client/build'));
+  app.use(express.static(__dirname + '/../../client/dist'));
 }
 
 app.use(

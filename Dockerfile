@@ -1,4 +1,4 @@
-FROM node:14-stretch
+FROM node:17-buster
 
 COPY client /app/client
 RUN cd /app/client && yarn install && NODE_ENV=production yarn build
