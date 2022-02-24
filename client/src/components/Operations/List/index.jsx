@@ -86,6 +86,7 @@ const List = ({ idPeriod, showHeader, pageSize = 15, displayAction, hidePointedO
     <div className={'operations'}>
       <Form idPeriod={idPeriod} refetch={refetch} />
       <Table
+        size={'small'}
         rowKey={'id'}
         rowClassName={record => record.pointedAt && 'pointed'}
         showHeader={showHeader}

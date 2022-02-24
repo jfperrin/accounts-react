@@ -8,7 +8,6 @@ import { listActionsBlock } from '../../../services/utils';
 import mutation from '../gqlQueries/delete';
 import query from '../gqlQueries/list';
 import Amount from '../../common/Amount';
-import Form from '../Form';
 
 const keyForSorting = (year, month) =>
   parseInt(
@@ -19,7 +18,7 @@ const keyForSorting = (year, month) =>
     10,
   );
 
-const PeriodsTable = ({ displayAction, pageSize = 15 }) => {
+const PeriodsTable = ({ displayAction, tableSize, pageSize = 15 }) => {
   const { data, loading, refetch } = useQuery(query);
   const [mutate] = useMutation(mutation);
   const dispatch = useDispatch();
@@ -64,12 +63,7 @@ const PeriodsTable = ({ displayAction, pageSize = 15 }) => {
     return columns;
   };
 
-  return (
-    <>
-      <Form />
-      <Table rowKey={'id'} loading={loading} columns={getColumns()} dataSource={[...(data?.periods || [])].sort((a, b) => keyForSorting(b.year, b.month) - keyForSorting(a.year, a.month))} pagination={{ pageSize }} />
-    </>
-  );
+  return <Table size={tableSize} rowKey={'id'} loading={loading} columns={getColumns()} dataSource={[...(data?.periods || [])].sort((a, b) => keyForSorting(b.year, b.month) - keyForSorting(a.year, a.month))} pagination={{ pageSize }} />;
 };
 
 export default PeriodsTable;

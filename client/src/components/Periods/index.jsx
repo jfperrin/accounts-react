@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
-import { Button, Col, Row } from 'antd';
+import { Affix, Button } from 'antd';
 import { AppstoreAddOutlined } from '@ant-design/icons';
 import { updateLayoutTitle } from '../../redux/actions/ui/layout/title';
 import { updateCurrentMenu } from '../../redux/actions/ui/layout/menu';
@@ -24,12 +24,12 @@ const Periods = () => {
   return (
     <div style={{ padding: 15 }}>
       <Form />
-      <List displayAction pageSize={30} />
-      <Row>
-        <Col style={{ display: 'flex', justifyContent: 'flex-end', width: '100%' }}>
+      <List tableSize={'small'} displayAction pageSize={30} />
+      <Affix offsetBottom={15}>
+        <div style={{ display: 'flex', paddingRight: 15, justifyContent: 'flex-end', width: '100%' }}>
           <Button type="primary" shape="circle" size={'large'} icon={<AppstoreAddOutlined />} onClick={handleClick} />
-        </Col>
-      </Row>
+        </div>
+      </Affix>
     </div>
   );
 };

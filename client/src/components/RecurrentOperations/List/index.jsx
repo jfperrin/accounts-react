@@ -2,7 +2,6 @@ import React from 'react';
 import { useDispatch } from 'react-redux';
 import { Table } from 'antd';
 import { useMutation, useQuery } from '@apollo/client';
-import Form from '../Form';
 import query from '../gqlQueries/list';
 import mutation from '../gqlQueries/delete';
 import { updateModaleEntity, updateModaleOpened } from '../../../redux/actions/ui/layout/modale';
@@ -54,12 +53,7 @@ const RecurrentOperationsTable = ({ displayAction, pageSize = 15 }) => {
     return columns;
   };
 
-  return (
-    <>
-      <Form />
-      <Table rowKey={'id'} loading={loading} columns={getColumns()} dataSource={[...(data?.recurrentOperations || [])].sort((a, b) => a.day - b.day)} pagination={{ pageSize }} />
-    </>
-  );
+  return <Table size={'small'} rowKey={'id'} loading={loading} columns={getColumns()} dataSource={[...(data?.recurrentOperations || [])].sort((a, b) => a.day - b.day)} pagination={{ pageSize }} />;
 };
 
 export default RecurrentOperationsTable;
