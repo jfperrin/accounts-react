@@ -1,12 +1,16 @@
 import React from 'react';
 import { useQuery } from '@apollo/client';
-import { Navigate, Outlet } from 'react-router-dom';
+import { Navigate } from 'react-router-dom';
 import currentUserQuery from '../../Users/gqlQueries/currentUser';
 
-const ProtectedRoute = () => {
+const ProtectedRoute = ({ children }) => {
   const { loading, data } = useQuery(currentUserQuery);
 
-  return !loading && !data.user ? <Navigate to={'/login'} /> : <Outlet />;
+  if (!loading && !data.user) {
+    return <Navigate to="/login" state={{ from: location }} replace />;
+  }
+
+  return children;
 };
 
 export default ProtectedRoute;

@@ -28,26 +28,51 @@ const App = () => (
       </Header>
       <Content>
         <Routes>
-          <Route exact path="/" element={<ProtectedRoute />}>
-            <Route exact path="/" element={<Home />} />
-          </Route>
-
-          <Route exact path="/banks" element={<ProtectedRoute />}>
-            <Route exact path="/banks" element={<Banks />} />
-          </Route>
-
-          <Route exact path="/periods" element={<ProtectedRoute />}>
-            <Route exact path="/periods" element={<Periods />} />
-          </Route>
-
-          <Route exact path="/period/:id" element={<ProtectedRoute />}>
-            <Route exact path="/period/:id" element={<Period />} />
-          </Route>
-
-          <Route exact path="/recurrent-operations" element={<ProtectedRoute />}>
-            <Route exact path="/recurrent-operations" element={<RecurrentOperations />} />
-          </Route>
-
+          <Route
+            exact
+            path="/"
+            element={
+              <ProtectedRoute>
+                <Home />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            exact
+            path="/banks"
+            element={
+              <ProtectedRoute>
+                <Banks />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            exact
+            path="/periods"
+            element={
+              <ProtectedRoute>
+                <Periods />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            exact
+            path="/period/:id"
+            element={
+              <ProtectedRoute>
+                <Period />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            exact
+            path="/recurrent-operations"
+            element={
+              <ProtectedRoute>
+                <RecurrentOperations />
+              </ProtectedRoute>
+            }
+          />
           <Route path="/login" element={<Login />} />
           <Route path="/signup" element={<Signup />} />
         </Routes>
