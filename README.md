@@ -45,7 +45,7 @@ REDIS_URI=xxxxxxxxxxx
 
 Then launch the container
 ```
-docker run --restart always --name account -d --init --env-file ./env.production -p 3000:80 accounts-react
+docker run --restart unless-stopped --name account -d --init --env-file ./env.production -p 3000:80 accounts-react
 ```
 
 Install certbot from letsencrypt
