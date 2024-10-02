@@ -10,15 +10,16 @@ import schema from './schema/schema';
 import MongoStore from 'connect-mongo';
 
 // eslint-disable-next-line no-unused-vars
-const result = dotenv.config();
+// const result = dotenv.config();
 const app = express();
 
+console.log('process.env',process.env)
 const { MONGO_URI } = process.env;
 if (!MONGO_URI) {
   throw new Error('You must provide a MongoLab URI');
 }
 
-mongoose.connect(MONGO_URI, { useNewUrlParser: true, useUnifiedTopology: true });
+mongoose.connect(MONGO_URI );
 mongoose.Promise = global.Promise;
 // eslint-disable-next-line no-console
 mongoose.connection.on('error', console.error.bind(console, 'connection error:'));

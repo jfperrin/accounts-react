@@ -1,8 +1,17 @@
-import thunk from 'redux-thunk';
-import { createStore, applyMiddleware, compose } from 'redux';
-import reducers from '../redux/reducers';
+import { configureStore } from '@reduxjs/toolkit';
+import createRootReducer from './rootReducer';
 
-export default function () {
-  const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
-  return createStore(reducers, composeEnhancers(applyMiddleware(thunk)));
-}
+const store = configureStore({
+  reducer: createRootReducer(),
+  middleware: getDefaultMiddleware => getDefaultMiddleware(),
+  enhancers: getDefaultEnhancers => {
+    return getDefaultEnhancers();
+  },
+});
+
+// module.hot.accept('./rootReducer', () => {
+//   const newRootReducer = require('./rootReducer').default;
+//   store.replaceReducer(newRootReducer);
+// });
+
+export default store;

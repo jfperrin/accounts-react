@@ -7,7 +7,7 @@ const ProtectedRoute = ({ children }) => {
   const location = useLocation();
   const { loading, data } = useQuery(currentUserQuery);
 
-  if (!loading && !data.user) {
+  if (!loading && !data?.user) {
     return <Navigate to="/login" state={{ from: location }} replace={true} />;
   }
 
