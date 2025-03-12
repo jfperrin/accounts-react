@@ -1,13 +1,12 @@
 import { useMutation, useQuery } from '@apollo/client';
 import React from 'react';
 import { useSelector } from 'react-redux';
-import { Link } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router';
 import { Button, Menu, Space } from 'antd';
 import { UserAddOutlined, LockOutlined, UnlockOutlined, HomeOutlined } from '@ant-design/icons';
 import { useCookies } from 'react-cookie';
 import query from '../Users/gqlQueries/currentUser';
 import mutation from '../Users/gqlQueries/logout';
-import { useNavigate } from 'react-router-dom';
 import logo from './logo.svg';
 import client from '../../config/apolloClient';
 import { getLayoutTitle, getSelectedMenu } from '../../redux/selectors/ui';

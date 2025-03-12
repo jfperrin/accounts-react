@@ -10,7 +10,7 @@ import { updateLayoutTitle } from '../../../redux/actions/ui/layout/title';
 import get from '../gqlQueries/get';
 import Amount from '../../common/Amount';
 import Loading from '../../common/Loading';
-import { useParams } from 'react-router-dom';
+import { useParams } from 'react-router';
 
 const styleAmount = { width: 110, display: 'flex', justifyContent: 'flex-end' };
 const styleLabel = { flex: 1 };
@@ -49,7 +49,6 @@ const Period = () => {
         </Col>
         <Col span={12} style={{ padding: 15 }}>
           <Card
-            bordered
             title={
               <>
                 <h3 style={{ float: 'left', paddingTop: 8, marginBottom: 0 }}>Solde</h3>

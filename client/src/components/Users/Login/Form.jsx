@@ -2,7 +2,7 @@ import { Button, Form, Input } from 'antd';
 import React, { useLayoutEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useMutation, useQuery } from '@apollo/client';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router';
 import mutation from '../gqlQueries/login';
 import query from '../gqlQueries/currentUser';
 import { getLoginErrors } from '../../../redux/selectors/ui';
@@ -37,7 +37,7 @@ const Login = () => {
 
   const onFinish = data => {
     client.resetStore();
-
+console.log('data',data)
     loginMutate({
       variables: {
         email: data.email,

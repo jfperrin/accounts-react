@@ -1,7 +1,7 @@
 import React from 'react';
 import { Layout } from 'antd';
 import { ApolloProvider } from '@apollo/client';
-import { Route, Routes, BrowserRouter } from 'react-router-dom';
+import { Route, Routes, BrowserRouter } from 'react-router';
 import RecurrentOperations from '../RecurrentOperations';
 import ProtectedRoute from '../common/ProtectedRoute';
 import apolloClient from '../../config/apolloClient';

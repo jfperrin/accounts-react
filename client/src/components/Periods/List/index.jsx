@@ -1,6 +1,6 @@
 import React from 'react';
 import { Table } from 'antd';
-import { Link } from 'react-router-dom';
+import { Link } from 'react-router';
 import { useDispatch } from 'react-redux';
 import { useMutation, useQuery } from '@apollo/client';
 import { updateModaleEntity, updateModaleOpened } from '../../../redux/actions/ui/layout/modale';
