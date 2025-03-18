@@ -16,7 +16,7 @@ export default {
     type: BankType,
     args: { id: { type: GraphQLID } },
     resolve(parentValue, { id }, req) {
-      return BankModel.remove({ _id: id, user: req.user }).then(() => {
+      return BankModel.deleteOne({ _id: id, user: req.user }).then(() => {
         return { _id: id, id, isDeleted: true };
       });
     },

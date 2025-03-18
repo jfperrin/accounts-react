@@ -28,6 +28,29 @@ const Header = () => {
     });
   };
 
+  const items = [
+    {
+      key: 0,
+      onClick: () => navigate('/'),
+      icon: <HomeOutlined />,
+    },
+    {
+      key: 1,
+      onClick: () => navigate('/periods'),
+      label: 'Périodes',
+    },
+    {
+      key: 2,
+      onClick: () => navigate('/banks'),
+      label: 'Banques',
+    },
+    {
+      key: 3,
+      onClick: () => navigate('/recurrent-operations'),
+      label: 'Opérations récurrentes',
+    },
+  ];
+
   if (!data) return null;
 
   return (
@@ -43,22 +66,7 @@ const Header = () => {
           {layoutTitle && `#${layoutTitle}`}
         </div>
       )}
-      {!data.loading && data.user && (
-        <Menu theme="dark" mode="horizontal" selectedKeys={[selectedMenu]}>
-          <Menu.Item key="0" onClick={() => navigate('/')}>
-            <HomeOutlined />
-          </Menu.Item>
-          <Menu.Item key="1" onClick={() => navigate('/periods')}>
-            Périodes
-          </Menu.Item>
-          <Menu.Item key="2" onClick={() => navigate('/banks')}>
-            Banques
-          </Menu.Item>
-          <Menu.Item key="3" onClick={() => navigate('/recurrent-operations')}>
-            Opérations récurrentes
-          </Menu.Item>
-        </Menu>
-      )}
+      {!data.loading && data.user && <Menu theme="dark" mode="horizontal" selectedKeys={[selectedMenu]} items={items} />}
       <div className={'login'}>
         {!data.loading && (
           <>

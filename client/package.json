@@ -10,6 +10,7 @@
   },
   "dependencies": {
     "@ant-design/icons": "^5.5.1",
+    "@ant-design/v5-patch-for-react-19": "^1.0.3",
     "@apollo/client": "^3.11.8",
     "@reduxjs/toolkit": "^2.2.7",
     "antd": "^5.21.2",

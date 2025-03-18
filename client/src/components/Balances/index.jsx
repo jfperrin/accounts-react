@@ -28,7 +28,7 @@ const Balances = ({ idPeriod }) => {
             <Button style={{ float: 'right' }} size={'large'} shape={'circle'} type={'primary'} icon={<BankOutlined />} onClick={() => handleInitializeBankBalances(idPeriod)} />
           </>
         }
-        bordered
+        variant={'outlined'}
       >
         {data.period.balances.map(balance => (
           <Balance refetch={refetch} key={`idx-${balance.id}`} balance={balance} />

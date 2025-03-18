@@ -1,4 +1,3 @@
-import { Map } from 'immutable';
 import { HIDE_CREATE_CRUD_BUTTON, SHOW_CREATE_CRUD_BUTTON } from '../actions/ui/crud/createButton';
 import { HIDE_EDIT_CRUD_FORM, SHOW_EDIT_CRUD_FORM } from '../actions/ui/crud/updateForm';
 import { HIDE_CREATE_CRUD_FORM, SHOW_CREATE_CRUD_FORM } from '../actions/ui/crud/createForm';
@@ -10,12 +9,12 @@ import { UPDATE_LOGIN_ERRORS } from '../actions/ui/login/errors';
 function getInitialState() {
   return {
     drawerOpened: false,
-    banksEditState: new Map(),
+    banksEditState: [],
     banksCreateButtonState: true,
     banksCreateFormState: false,
-    crudEditState: new Map(),
-    crudCreateButtonState: new Map(),
-    crudCreateFormState: new Map(),
+    crudEditState: [],
+    crudCreateButtonState: [],
+    crudCreateFormState: [],
     layoutTitle: '',
     loginErrors: [],
     currentMenu: '0',

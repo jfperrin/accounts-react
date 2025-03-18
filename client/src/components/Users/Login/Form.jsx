@@ -1,5 +1,5 @@
 import { Button, Form, Input } from 'antd';
-import React, { useLayoutEffect } from 'react';
+import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useMutation, useQuery } from '@apollo/client';
 import { useNavigate } from 'react-router';
@@ -27,8 +27,8 @@ const Login = () => {
   const { data } = useQuery(query);
   const loginErrors = useSelector(getLoginErrors);
 
-  useLayoutEffect(() => {
-    if (data && data.user) {
+  useEffect(() => {
+    if (data?.user) {
       navigate('/');
     }
   }, [data]);
@@ -37,7 +37,6 @@ const Login = () => {
 
   const onFinish = data => {
     client.resetStore();
-console.log('data',data)
     loginMutate({
       variables: {
         email: data.email,

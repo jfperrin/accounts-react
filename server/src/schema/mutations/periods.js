@@ -19,7 +19,7 @@ export default {
       id: { type: GraphQLID },
     },
     resolve(parentValue, { id }, req) {
-      return PeriodModel.remove({ _id: id, user: req.user });
+      return PeriodModel.deleteOne({ _id: id, user: req.user });
     },
   },
   updatePeriod: {
@@ -56,6 +56,7 @@ export default {
       idOperation: { type: GraphQLID },
     },
     resolve(parentValue, { id, idOperation }, req) {
+      console.log('deleteOperation',id, idOperation)
       return PeriodModel.deleteOperation(id, idOperation, req.user);
     },
   },

@@ -56,7 +56,7 @@ const FormRecurrentOperations = () => {
   };
 
   return (
-    <Modal forceRender title="Basic Modal" visible={isOpened} onCancel={close} footer={null}>
+    <Modal forceRender title="Basic Modal" open={isOpened} onCancel={close} footer={null}>
       <Form form={form} onFinish={onFinish} name="entity">
         <Item label="Label" name="label" rules={[{ required: true, message: 'Please input label!' }]}>
           <Input />

@@ -40,12 +40,14 @@ PeriodsSchema.statics.addOperation = function (id, label, dt, amount, user) {
       user,
     });
     period.operations = period.operations.concat([operation]);
-    return Promise.all([operation.save(), period.save()]).then(([operation, period]) => period);
+    return Promise.all([operation.save(), period.save()]).then(([_, period]) => period);
   });
 };
 
 PeriodsSchema.statics.deleteOperation = function (id, idOperation, user) {
-  return OperationModel.remove({
+  console.log('PeriodsSchema.statics.deleteOperation',id, idOperation, user, OperationModel)
+
+  return OperationModel.deleteOne({
     _id: idOperation,
     user,
   }).then(() => {
@@ -85,7 +87,7 @@ PeriodsSchema.statics.importRecurrentOperations = function (id, user) {
         promises.push(newOperation.save());
       });
       promises.push(period.save());
-      return Promise.all(promises).then(data => period);
+      return Promise.all(promises).then(() => period);
     });
   });
 };
@@ -119,7 +121,7 @@ PeriodsSchema.statics.initializeBankBalances = function (id, user) {
         promises.push(bank.save());
       });
       promises.push(period.save());
-      return Promise.all(promises).then(data => period);
+      return Promise.all(promises).then(() => period);
     });
   });
 };

@@ -7,7 +7,7 @@ export default {
     type: BalanceType,
     args: { id: { type: GraphQLID } },
     resolve(parentValue, { id }) {
-      return BalanceModel.remove({ _id: id });
+      return BalanceModel.deleteOne({ _id: id });
     },
   },
   updateBalance: {
