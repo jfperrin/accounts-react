@@ -4,6 +4,12 @@
 
 I build this application for my personnal use. The purpose was a self formation on js tech and eventualy I ended up with a complete application with express, graphQL, react/redux, passport.
 
+## Dev
+To fix the yarn registry
+```
+yarn --registry=https://registry.yarnpkg.com
+```
+
 ## Installation
 
 I used [vite](https://vitejs.dev/) to build the skeleton of the app. For the database you need mongodb and redis.
