@@ -1,4 +1,4 @@
-import { Button, Card, Col, Row } from 'antd';
+import { Button, Card, Col, Flex, Row } from 'antd';
 import React, { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import { useMutation, useQuery } from '@apollo/client';
@@ -50,10 +50,10 @@ const Period = () => {
         <Col span={12} style={{ padding: 15 }}>
           <Card
             title={
-              <>
-                <h3 style={{ float: 'left', paddingTop: 8, marginBottom: 0 }}>Solde</h3>
+              <Flex align={'center'}>
+                <h3 style={{ flex: 1 }}>Solde</h3>
                 <Button style={{ float: 'right' }} size={'large'} shape={'circle'} type={'primary'} icon={<ImportOutlined />} onClick={handleAddRecurrentOperations} />
-              </>
+              </Flex>
             }
           >
             <div style={styleSolde}>

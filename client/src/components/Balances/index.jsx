@@ -1,5 +1,5 @@
 import React from 'react';
-import { Button, Card } from 'antd';
+import { Button, Card, Flex } from 'antd';
 import { BankOutlined } from '@ant-design/icons';
 import { useMutation, useQuery } from '@apollo/client';
 import mutation from '../Periods/gqlQueries/initializeBankBalances';
@@ -23,10 +23,10 @@ const Balances = ({ idPeriod }) => {
       <Edit refetch={refetch} />
       <Card
         title={
-          <>
-            <h3 style={{ float: 'left', paddingTop: 8, marginBottom: 0 }}>Balances</h3>
+          <Flex align={'center'}>
+            <h3 style={{ flex: 1 }}>Balances</h3>
             <Button style={{ float: 'right' }} size={'large'} shape={'circle'} type={'primary'} icon={<BankOutlined />} onClick={() => handleInitializeBankBalances(idPeriod)} />
-          </>
+          </Flex>
         }
         variant={'outlined'}
       >
