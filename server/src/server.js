@@ -9,22 +9,22 @@ import passport from 'passport';
 import schema from './schema/schema';
 import MongoStore from 'connect-mongo';
 
-// eslint-disable-next-line no-unused-vars
-const result = dotenv.config();
+dotenv.config();
+
 const app = express();
 
-const { MONGO_URI } = process.env;
+const { MONGO_URI ,PORT } = process.env;
 if (!MONGO_URI) {
   throw new Error('You must provide a MongoLab URI');
 }
 
-mongoose.connect(MONGO_URI, { useNewUrlParser: true, useUnifiedTopology: true });
+mongoose.connect(MONGO_URI);
 mongoose.Promise = global.Promise;
-// eslint-disable-next-line no-console
 mongoose.connection.on('error', console.error.bind(console, 'connection error:'));
 mongoose.connection.once('open', () => {
-  app.listen(app.get('port'), () => {
-    console.log(`Find the server at: http://localhost:${app.get('port')}/`); // eslint-disable-line no-console
+  let listener = app.listen(PORT, () => {
+    // eslint-disable-next-line no-console
+    console.log('Listening backend express app on port ' + listener.address().port); //Listening on port 8888
   });
 });
 

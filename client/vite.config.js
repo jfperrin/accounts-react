@@ -11,7 +11,7 @@ export default defineConfig({
     },
     proxy: {
       '/graphql': {
-        target: 'ws://localhost:4123',
+        target: 'ws://localhost:4124',
         changeOrigin: true,
         ws: true,
       },

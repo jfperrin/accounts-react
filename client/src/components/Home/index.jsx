@@ -1,12 +1,11 @@
 import React, { useEffect } from 'react';
-import { Link } from 'react-router-dom';
+import { Link } from 'react-router';
 import { useDispatch } from 'react-redux';
 import { useQuery } from '@apollo/client';
 import { Card, Col, Row } from 'antd';
 import current from '../Periods/gqlQueries/current';
 import OperationList from '../Operations/List';
 import { updateLayoutTitle } from '../../redux/actions/ui/layout/title';
-import { updateCurrentMenu } from '../../redux/actions/ui/layout/menu';
 import PeriodsList from '../Periods/List';
 import Amount from '../common/Amount';
 import Loading from '../common/Loading';
@@ -17,7 +16,7 @@ const Home = () => {
 
   useEffect(() => {
     dispatch(updateLayoutTitle(''));
-    dispatch(updateCurrentMenu('0'));
+    // dispatch(updateCurrentMenu('0'));
   });
 
   if (loadingCurrentPeriod) {

@@ -8,7 +8,7 @@ import { getLoginErrors } from '../../../redux/selectors/ui';
 import { updateLoginErrors } from '../../../redux/actions/ui/login/errors';
 import './stylesheet.scss';
 import Loading from '../../common/Loading';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router';
 
 const { Item } = Form;
 

@@ -20,7 +20,7 @@ export default {
       id: { type: GraphQLID },
     },
     resolve(parentValue, { id }, req) {
-      return RecurrentOperationsModel.remove({ _id: id, user: req.user });
+      return RecurrentOperationsModel.deleteOne({ _id: id, user: req.user });
     },
   },
   updateRecurrentOperation: {

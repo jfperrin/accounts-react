@@ -1,6 +1,6 @@
 {
   "name": "account-server",
-  "version": "2.0.0",
+  "version": "2.0.1",
   "private": true,
   "scripts": {
     "start": "concurrently \"yarn run server\" \"yarn run client\"",
@@ -9,9 +9,9 @@
     "dev": "echo \"This command has been deprecated. Use 'yarn start'\" && exit 1"
   },
   "devDependencies": {
-    "concurrently": "^7.0.0"
+    "concurrently": "^9.0.1"
   },
   "dependencies": {
-    "nodemon": "^2.0.4"
+    "nodemon": "^3.1.7"
   }
 }

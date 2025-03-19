@@ -1,13 +1,12 @@
 import { useMutation, useQuery } from '@apollo/client';
 import React from 'react';
 import { useSelector } from 'react-redux';
-import { Link } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router';
 import { Button, Menu, Space } from 'antd';
 import { UserAddOutlined, LockOutlined, UnlockOutlined, HomeOutlined } from '@ant-design/icons';
 import { useCookies } from 'react-cookie';
 import query from '../Users/gqlQueries/currentUser';
 import mutation from '../Users/gqlQueries/logout';
-import { useNavigate } from 'react-router-dom';
 import logo from './logo.svg';
 import client from '../../config/apolloClient';
 import { getLayoutTitle, getSelectedMenu } from '../../redux/selectors/ui';
@@ -29,6 +28,29 @@ const Header = () => {
     });
   };
 
+  const items = [
+    {
+      key: 0,
+      onClick: () => navigate('/'),
+      icon: <HomeOutlined />,
+    },
+    {
+      key: 1,
+      onClick: () => navigate('/periods'),
+      label: 'Périodes',
+    },
+    {
+      key: 2,
+      onClick: () => navigate('/banks'),
+      label: 'Banques',
+    },
+    {
+      key: 3,
+      onClick: () => navigate('/recurrent-operations'),
+      label: 'Opérations récurrentes',
+    },
+  ];
+
   if (!data) return null;
 
   return (
@@ -44,22 +66,7 @@ const Header = () => {
           {layoutTitle && `#${layoutTitle}`}
         </div>
       )}
-      {!data.loading && data.user && (
-        <Menu theme="dark" mode="horizontal" selectedKeys={[selectedMenu]}>
-          <Menu.Item key="0" onClick={() => navigate('/')}>
-            <HomeOutlined />
-          </Menu.Item>
-          <Menu.Item key="1" onClick={() => navigate('/periods')}>
-            Périodes
-          </Menu.Item>
-          <Menu.Item key="2" onClick={() => navigate('/banks')}>
-            Banques
-          </Menu.Item>
-          <Menu.Item key="3" onClick={() => navigate('/recurrent-operations')}>
-            Opérations récurrentes
-          </Menu.Item>
-        </Menu>
-      )}
+      {!data.loading && data.user && <Menu theme="dark" mode="horizontal" selectedKeys={[selectedMenu]} items={items} />}
       <div className={'login'}>
         {!data.loading && (
           <>

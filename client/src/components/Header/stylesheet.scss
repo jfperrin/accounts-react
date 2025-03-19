@@ -1,3 +1,5 @@
+@use "sass:color";
+
 .app-header-container {
   display: flex;
 
@@ -12,6 +14,7 @@
 
   .ant-menu {
     flex: 1;
+    height: 100%;
   }
 
   .title {
@@ -24,7 +27,7 @@
       text-decoration: none;
 
       &:hover {
-        color: darken(#61dafb, 35%);
+        color: color.adjust(#61dafb, $lightness: -35%);
       }
     }
   }

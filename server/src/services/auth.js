@@ -11,9 +11,9 @@ passport.serializeUser((user, done) => {
 // The counterpart of 'serializeUser'.  Given only a user's ID, we must return
 // the user object.  This object is placed on 'req.user'.
 passport.deserializeUser((id, done) => {
-  User.findById(id, (err, user) => {
-    done(err, user);
-  });
+  User.findById(id).then(user => {
+    done(null, user);
+  }).catch(err => done(err, null));
 });
 
 // Instructs Passport how to authenticate a user using a locally saved email
@@ -26,10 +26,7 @@ passport.deserializeUser((id, done) => {
 // This string is provided back to the GraphQL client.
 passport.use(
   new LocalStrategy({ usernameField: 'email' }, (email, password, done) => {
-    User.findOne({ email: email.toLowerCase() }, (err, user) => {
-      if (err) {
-        return done(err);
-      }
+    User.findOne({ email: email.toLowerCase() }).then(user => {
       if (!user) {
         return done(null, false, 'Invalid Credentials');
       }
@@ -42,6 +39,8 @@ passport.use(
         }
         return done(null, false, 'Invalid credentials.');
       });
+    }).catch(err => {
+      return done(err);
     });
   }),
 );

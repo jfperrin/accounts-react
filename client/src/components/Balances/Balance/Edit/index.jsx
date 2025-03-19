@@ -35,7 +35,7 @@ const Edit = ({ refetch }) => {
   };
 
   return (
-    <Modal forceRender title={`Balance ${entity?.bank?.label}`} visible={isOpened === 'balance'} onCancel={close} footer={null}>
+    <Modal forceRender title={`Balance ${entity?.bank?.label}`} open={isOpened === 'balance'} onCancel={close} footer={null}>
       <Form form={form} onFinish={onFinish} name="period">
         <Item label="Montant" name="amount" rules={[{ required: true, message: 'Please input amount!' }]}>
           <InputNumber />
