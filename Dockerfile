@@ -9,6 +9,6 @@ RUN cd /app/server && yarn install --registry=https://registry.yarnpkg.com && NO
 ENV PORT=80
 ENV NODE_ENV=production
 
-CMD node /app/server/dist/server.js
+CMD ["node", "/app/server/dist/server.js"]
 
 EXPOSE 80
