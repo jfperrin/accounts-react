@@ -8,7 +8,7 @@ import { updateModaleEntity, updateModaleOpened } from '../../../redux/actions/u
 import { listActionsBlock } from '../../../services/utils';
 import Amount from '../../common/Amount';
 
-const RecurrentOperationsTable = ({ displayAction, pageSize = 15 }) => {
+const RecurrentOperationsTable = ({ displayAction, pageSize = 50 }) => {
   const { data, loading, refetch } = useQuery(query);
   const [mutate] = useMutation(mutation);
   const dispatch = useDispatch();

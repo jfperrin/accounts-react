@@ -24,7 +24,7 @@ const Periods = () => {
   return (
     <div style={{ padding: 15 }}>
       <Form />
-      <List tableSize={'small'} displayAction pageSize={30} />
+      <List tableSize={'small'} displayAction pageSize={50} />
       <Affix offsetBottom={15}>
         <div style={{ display: 'flex', paddingRight: 15, justifyContent: 'flex-end', width: '100%' }}>
           <Button type="primary" shape="circle" size={'large'} icon={<AppstoreAddOutlined />} onClick={handleClick} />

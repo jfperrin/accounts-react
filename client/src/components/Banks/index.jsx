@@ -24,7 +24,7 @@ const RecurrentOperations = () => {
   return (
     <div style={{ padding: 15 }}>
       <Form />
-      <List displayAction pageSize={30} />
+      <List displayAction pageSize={50} />
       <Row>
         <Col style={{ display: 'flex', justifyContent: 'flex-end', width: '100%' }}>
           <Button type="primary" shape="circle" size={'large'} icon={<AppstoreAddOutlined />} onClick={handleClick} />

@@ -38,7 +38,7 @@ const Home = () => {
             </div>
           </Card>
           <Card title={'Opérations non pointées'} style={{ marginTop: 15 }}>
-            <OperationList showHeader={false} idPeriod={dataCurrentPeriod.currentPeriod.id} displayAction={false} pageSize={30} hidePointedOperations />
+            <OperationList showHeader={false} idPeriod={dataCurrentPeriod.currentPeriod.id} displayAction={false} pageSize={50} hidePointedOperations />
           </Card>
         </Col>
       )}
