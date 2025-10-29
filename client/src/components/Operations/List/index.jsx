@@ -3,7 +3,7 @@ import { useDispatch } from 'react-redux';
 import { CheckCircleOutlined, DeleteOutlined, EditOutlined } from '@ant-design/icons';
 import React from 'react';
 import { Button, Popconfirm, Space, Table } from 'antd';
-import { useMutation, useQuery } from '@apollo/client';
+import { useMutation, useQuery } from '@apollo/client/react';
 import query from '../../Periods/gqlQueries/get';
 import Form from '../Form';
 import { updateModaleEntity, updateModaleOpened } from '../../../redux/actions/ui/layout/modale';

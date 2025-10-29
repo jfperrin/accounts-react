@@ -1,6 +1,6 @@
 import React from 'react';
 import { Layout } from 'antd';
-import { ApolloProvider } from '@apollo/client';
+import { ApolloProvider } from '@apollo/client/react';
 import { Route, Routes, BrowserRouter } from 'react-router';
 import RecurrentOperations from '../RecurrentOperations';
 import ProtectedRoute from '../common/ProtectedRoute';
@@ -79,7 +79,7 @@ const App = () => (
 
 const ProvidedApp = () => (
   <ApolloProvider client={apolloClient}>
-      <App />
+    <App />
   </ApolloProvider>
 );
 

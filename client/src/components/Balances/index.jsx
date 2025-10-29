@@ -1,7 +1,7 @@
 import React from 'react';
 import { Button, Card, Flex } from 'antd';
 import { BankOutlined } from '@ant-design/icons';
-import { useMutation, useQuery } from '@apollo/client';
+import { useMutation, useQuery } from '@apollo/client/react';
 import mutation from '../Periods/gqlQueries/initializeBankBalances';
 import query from '../Periods/gqlQueries/get';
 import Balance from './Balance';

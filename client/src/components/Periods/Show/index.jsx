@@ -1,7 +1,7 @@
 import { Button, Card, Col, Flex, Row } from 'antd';
 import React, { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
-import { useMutation, useQuery } from '@apollo/client';
+import { useMutation, useQuery } from '@apollo/client/react';
 import { ImportOutlined } from '@ant-design/icons';
 import Operations from '../../Operations';
 import Balances from '../../Balances';

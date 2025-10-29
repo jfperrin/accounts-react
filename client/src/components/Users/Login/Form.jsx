@@ -1,7 +1,7 @@
 import { Button, Form, Input } from 'antd';
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { useMutation, useQuery } from '@apollo/client';
+import { useMutation, useQuery } from '@apollo/client/react';
 import { useNavigate } from 'react-router';
 import mutation from '../gqlQueries/login';
 import query from '../gqlQueries/currentUser';

@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Button, Form, InputNumber, Modal, Space } from 'antd';
-import { useMutation } from '@apollo/client';
+import { useMutation } from '@apollo/client/react';
 import mutation from '../../gqlQueries/update';
 import { updateModaleOpened } from '../../../../redux/actions/ui/layout/modale';
 import { getModaleEntity, getModaleOpened } from '../../../../redux/selectors/ui';

@@ -2,7 +2,7 @@ import React from 'react';
 import { Table } from 'antd';
 import { Link } from 'react-router';
 import { useDispatch } from 'react-redux';
-import { useMutation, useQuery } from '@apollo/client';
+import { useMutation, useQuery } from '@apollo/client/react';
 import { updateModaleEntity, updateModaleOpened } from '../../../redux/actions/ui/layout/modale';
 import { listActionsBlock } from '../../../services/utils';
 import mutation from '../gqlQueries/delete';

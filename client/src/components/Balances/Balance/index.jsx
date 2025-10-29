@@ -1,6 +1,6 @@
 import React from 'react';
 import { Button, Popconfirm, Space } from 'antd';
-import { useMutation } from '@apollo/client';
+import { useMutation } from '@apollo/client/react';
 import { useDispatch } from 'react-redux';
 import { DeleteOutlined, EditOutlined } from '@ant-design/icons';
 import mutation from '../gqlQueries/delete';

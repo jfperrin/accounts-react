@@ -1,4 +1,4 @@
-import { useMutation, useQuery } from '@apollo/client';
+import { useMutation, useQuery } from '@apollo/client/react';
 import React from 'react';
 import { useSelector } from 'react-redux';
 import { useNavigate, Link } from 'react-router';

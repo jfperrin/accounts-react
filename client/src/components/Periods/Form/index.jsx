@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import { Button, Form, InputNumber, Modal, Space } from 'antd';
-import { useMutation } from '@apollo/client';
+import { useMutation } from '@apollo/client/react';
 import { useDispatch, useSelector } from 'react-redux';
 import query from '../gqlQueries/list';
 import mutateUpdate from '../gqlQueries/update';

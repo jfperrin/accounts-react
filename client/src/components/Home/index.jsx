@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import { Link } from 'react-router';
 import { useDispatch } from 'react-redux';
-import { useQuery } from '@apollo/client';
+import { useQuery } from '@apollo/client/react';
 import { Card, Col, Row } from 'antd';
 import current from '../Periods/gqlQueries/current';
 import OperationList from '../Operations/List';
