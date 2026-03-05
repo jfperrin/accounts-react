@@ -1,4 +1,4 @@
-import moment from 'moment';
+import dayjs from 'dayjs';
 import { useDispatch } from 'react-redux';
 import { CheckCircleOutlined, DeleteOutlined, EditOutlined } from '@ant-design/icons';
 import React from 'react';
@@ -92,7 +92,7 @@ const List = ({ idPeriod, showHeader, pageSize = 15, displayAction, hidePointedO
         showHeader={showHeader}
         loading={loading}
         columns={getColumns()}
-        dataSource={[...(data?.period?.operations || [])].filter(data => (hidePointedOperations ? !data.pointedAt : true)).sort((a, b) => moment(a.dt) - moment(b.dt))}
+        dataSource={[...(data?.period?.operations || [])].filter(data => (hidePointedOperations ? !data.pointedAt : true)).sort((a, b) => dayjs(a.dt) - dayjs(b.dt))}
         pagination={{ pageSize }}
       />
     </div>

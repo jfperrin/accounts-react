@@ -1,4 +1,4 @@
-import moment from 'moment';
+import dayjs from 'dayjs';
 import React, { useEffect } from 'react';
 import { Button, Form, InputNumber, Input, Modal, Space, DatePicker } from 'antd';
 import { useMutation } from '@apollo/client/react';
@@ -21,9 +21,9 @@ const FormOperation = ({ refetch, idPeriod }) => {
 
   useEffect(() => {
     if (entity?.id) {
-      form.setFieldsValue({ dt: moment(new Date(entity.dt)), label: entity.label, amount: entity.amount });
+      form.setFieldsValue({ dt: dayjs(new Date(entity.dt)), label: entity.label, amount: entity.amount });
     } else {
-      form.setFieldsValue({ dt: moment(new Date()), label: null, amount: 0 });
+      form.setFieldsValue({ dt: dayjs(new Date()), label: null, amount: 0 });
     }
   }, [entity, form]);
 
@@ -63,7 +63,7 @@ const FormOperation = ({ refetch, idPeriod }) => {
 
   return (
     <Modal forceRender title="Opération" open={isOpened === 'operations'} onCancel={close} footer={null}>
-      <Form form={form} onFinish={onFinish} name="operations">
+      <Form form={form} onFinish={onFinish} name="operations" defaultValues={{ dt: dayjs() }}>
         <Item label="Date" name="dt" rules={[{ required: true, message: 'Please input date!' }]}>
           <DatePicker format={dateFormat} />
         </Item>
@@ -73,7 +73,7 @@ const FormOperation = ({ refetch, idPeriod }) => {
         <Item label="Montant" name="amount" rules={[{ required: true, message: 'Please input amount!' }]}>
           <InputNumber />
         </Item>
-        <Space style={{ width: '100%' }} align={'end'} direction={'horizontal'}>
+        <Space style={{ width: '100%' }} align={'end'} orientation={'horizontal'}>
           <Button size={'large'} onClick={close}>
             Fermer
           </Button>
